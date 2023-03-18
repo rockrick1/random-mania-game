@@ -15,6 +15,7 @@
 
     public void Initialize ()
     {
+        LowerSongController.Initialize();
         view.SetClip(model.CurrentSongAudio);
         view.Play();
         model.Play();

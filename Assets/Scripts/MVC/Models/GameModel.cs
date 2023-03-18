@@ -1,12 +1,13 @@
 ﻿public class GameModel : IGameModel
 {
-    public GameModel (ISongModel songModel)
-    {
-        SongModel = songModel;
-    }
-
     public ISongModel SongModel { get; }
     public IInputManager InputManager { get; }
+    
+    public GameModel (ISongModel songModel, IInputManager inputManager)
+    {
+        SongModel = songModel;
+        InputManager = inputManager;
+    }
 
     public void Initialize ()
     {
