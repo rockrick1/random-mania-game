@@ -13,6 +13,7 @@
 
     public void Initialize()
     {
-        
+        view.SetClip(model.CurrentSongAudio);
+        view.Play();
     }
 }

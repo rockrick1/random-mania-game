@@ -2,7 +2,9 @@
 {
     public static GameModel Create()
     {
-        ISongModel songModel = new SongModel();
+        INoteSpawnerModel noteSpawnerModel = new NoteSpawnerModel();
+        ISongLoaderModel songLoaderModel = new SongLoaderModel();
+        ISongModel songModel = new SongModel(noteSpawnerModel, songLoaderModel);
         GameModel model = new GameModel(songModel);
         return model;
     }

@@ -1,23 +1,29 @@
-﻿public class SongModel : ISongModel
+﻿using UnityEngine;
+
+public class SongModel : ISongModel
 {
-    INoteSpawnerModel NoteSpawnerModel;
-    ISongProcessorModel SongProcessorModel;
+    public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
+    public AudioClip CurrentSongAudio => songLoaderModel.Audio;
     
-    public SongModel()
+    readonly INoteSpawnerModel noteSpawnerModel;
+    readonly ISongLoaderModel songLoaderModel;
+
+
+    public SongModel(INoteSpawnerModel noteSpawnerModel, ISongLoaderModel songLoaderModel)
     {
-        NoteSpawnerModel = new NoteSpawnerModel();
-        
+        this.noteSpawnerModel = noteSpawnerModel;
+        this.songLoaderModel = songLoaderModel;
     }
 
     public void Initialize()
     {
-        NoteSpawnerModel.Initialize();
-        SongProcessorModel.Initialize();
+        noteSpawnerModel.Initialize();
+        songLoaderModel.Initialize();
     }
 
-    public void InitializeSong(string song)
+    public void InitializeSong(string songId)
     {
-        SongProcessorModel.InitializeSong(song);
+        songLoaderModel.InitializeSong(songId);
     }
 
     public void Dispose()

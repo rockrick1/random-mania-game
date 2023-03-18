@@ -10,6 +10,7 @@
     public void Initialize()
     {
         SongModel.Initialize();
+        SongModel.InitializeSong("test");
     }
 
     public void Dispose()
