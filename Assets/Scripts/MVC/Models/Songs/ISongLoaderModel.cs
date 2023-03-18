@@ -6,5 +6,5 @@ public interface ISongLoaderModel
     AudioClip Audio { get; }
     
     void Initialize();
-    void InitializeSong(string songJson);
+    void LoadSong(string songJson);
 }

@@ -10,7 +10,7 @@ public class SongLoaderModel : ISongLoaderModel
     {
     }
 
-    public void InitializeSong(string songId)
+    public void LoadSong(string songId)
     {
         TextAsset songAsset = Resources.Load<TextAsset>($"Songs/{songId}/song");
         Audio = Resources.Load<AudioClip>($"Songs/{songId}/song");

@@ -43,12 +43,15 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\MVC\Models\IGameModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Songs\SongSettings.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Songs\Note.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\INoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongLoaderModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongSettings.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongLoaderModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\SongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModel.cs" />
@@ -57,16 +60,16 @@
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongModel.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModelFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Songs\SongSettings.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongSettings.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Songs\Note.cs" />
+     <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
+     <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Art\Game" />
+     <Folder Include="Assets\Settings\Resources\Songs\TearRain" />
      <Folder Include="Assets\Scripts\MVC\Models\Songs" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Scripts\MVC\Controllers\Songs" />
      <Folder Include="Assets\Scripts" />
-     <None Include="Assets\Settings\Resources\Songs\Test\song.json" />
+     <None Include="Assets\Settings\Resources\Songs\TearRain\song.json" />
      <Folder Include="Assets\Settings\Resources" />
      <Folder Include="Assets\Art" />
      <Folder Include="Assets\Settings\Resources\Songs" />
@@ -77,7 +80,7 @@
      <Folder Include="Assets\Art\Game\Field" />
      <Folder Include="Assets\Scripts\MVC\Controllers" />
      <Folder Include="Assets\Scripts\MVC" />
-     <Folder Include="Assets\Settings\Resources\Songs\Test" />
+     <Folder Include="Assets\Scripts\Utils" />
      <Folder Include="Assets\Scripts\MVC\Models" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programs\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
