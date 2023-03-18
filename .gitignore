@@ -1,2 +1,5 @@
 ﻿Library/
-Temp/
+Temp/*
+Logs/
+*.log
+*.backup
