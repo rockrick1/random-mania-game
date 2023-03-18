@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManager : MonoBehaviour, IInputManager
 {
-    public InputManager() { }
-    
-    // public 
+    public event Action<int> OnHitterSelect;
+    public event Action OnHitPress;
 }

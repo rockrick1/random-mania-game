@@ -1,7 +1,8 @@
 ﻿public interface IGameModel
 {
     ISongModel SongModel { get; }
-    
-    void Initialize();
-    void Dispose();
+    IInputManager InputManager { get; }
+
+    void Initialize ();
+    void Dispose ();
 }

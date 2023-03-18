@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class CoroutineRunner : MonoBehaviour
 {
-    public static CoroutineRunner Instance { get; private set; }
-    
     readonly Dictionary<string, Coroutine> routines = new();
+    public static CoroutineRunner Instance { get; private set; }
 
-    void Awake()
+    void Awake ()
     {
         Instance = this;
     }
 
-    public void StartCoroutine(string id, IEnumerator routine)
+    public void StartCoroutine (string id, IEnumerator routine)
     {
-        if (routines.TryGetValue(id, out Coroutine existing))
+        if (routines.TryGetValue(id, out var existing))
             StopCoroutine(existing);
         routines[id] = StartCoroutine(routine);
     }

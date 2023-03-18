@@ -4,26 +4,25 @@ using UnityEngine;
 
 public class NoteSpawnerModel : INoteSpawnerModel
 {
-    public event Action<Note> OnNoteSpawned;
-    
     ISongSettings currentSongSettings;
     Coroutine noteSpawnRoutine;
-    
-    public void Initialize()
+    public event Action<Note> OnNoteSpawned;
+
+    public void Initialize ()
     {
     }
 
-    public void SetSong(ISongSettings currentSongSettings)
+    public void SetSong (ISongSettings currentSongSettings)
     {
         this.currentSongSettings = currentSongSettings;
     }
 
-    public void Play()
+    public void Play ()
     {
         CoroutineRunner.Instance.StartCoroutine(nameof(noteSpawnRoutine), NoteSpawnRoutine());
     }
 
-    IEnumerator NoteSpawnRoutine()
+    IEnumerator NoteSpawnRoutine ()
     {
         yield break;
     }

@@ -1,17 +1,19 @@
 ﻿public class SongController
 {
-    public NoteSpawnerController NoteSpawnerController;
-    
-    readonly SongView view;
     readonly ISongModel model;
+    readonly SongView view;
 
-    public SongController(SongView view, ISongModel model)
+    public SongController (SongView view, ISongModel model, LowerSongController lowerSongController)
     {
         this.view = view;
         this.model = model;
+        LowerSongController = lowerSongController;
     }
 
-    public void Initialize()
+    public NoteSpawnerController NoteSpawnerController { get; }
+    public LowerSongController LowerSongController { get; }
+
+    public void Initialize ()
     {
         view.SetClip(model.CurrentSongAudio);
         view.Play();

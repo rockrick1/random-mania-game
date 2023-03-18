@@ -1,59 +1,61 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SongModel : ISongModel
 {
-    public event Action<Note> OnNoteHit;
-    public event Action<Note> OnNoteMissed;
-    public event Action OnSongFinished;
-
     const float HIT_WINDOW = 0.25f;
 
-    public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
-    public AudioClip CurrentSongAudio => songLoaderModel.Audio;
-    
     readonly INoteSpawnerModel noteSpawnerModel;
     readonly ISongLoaderModel songLoaderModel;
 
-    double elapsed = 0;
+    double elapsed;
 
-    public SongModel(INoteSpawnerModel noteSpawnerModel, ISongLoaderModel songLoaderModel)
+    public SongModel (INoteSpawnerModel noteSpawnerModel, ISongLoaderModel songLoaderModel)
     {
         this.noteSpawnerModel = noteSpawnerModel;
         this.songLoaderModel = songLoaderModel;
     }
 
-    public void Initialize()
+    public event Action<Note> OnNoteHit;
+    public event Action<Note> OnNoteMissed;
+    public event Action OnSongFinished;
+
+    public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
+    public AudioClip CurrentSongAudio => songLoaderModel.Audio;
+
+    public void Initialize ()
     {
         noteSpawnerModel.Initialize();
         songLoaderModel.Initialize();
     }
 
-    public void LoadSong(string songId)
+    public void LoadSong (string songId)
     {
         songLoaderModel.LoadSong(songId);
         noteSpawnerModel.SetSong(CurrentSongSettings);
     }
 
-    public void Play()
+    public void Play ()
     {
         noteSpawnerModel.Play();
         CoroutineRunner.Instance.StartCoroutine(nameof(SongRoutine), SongRoutine());
     }
 
-    IEnumerator SongRoutine()
+    public void Dispose ()
     {
-        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
-        TimeSpan hitWindow = TimeSpan.FromSeconds(HIT_WINDOW);
-        int notesIndex = 0;
+    }
+
+    IEnumerator SongRoutine ()
+    {
+        var notes = CurrentSongSettings.Notes;
+        var hitWindow = TimeSpan.FromSeconds(HIT_WINDOW);
+        var notesIndex = 0;
         while (true)
         {
             elapsed += Time.deltaTime;
-            TimeSpan noteDistance = TimeSpan.FromSeconds(notes[notesIndex].Timestamp - elapsed);
+            var noteDistance = TimeSpan.FromSeconds(notes[notesIndex].Timestamp - elapsed);
             if (noteDistance < hitWindow)
-            {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     Debug.Log($"note hit! {noteDistance.TotalMilliseconds}");
@@ -62,7 +64,6 @@ public class SongModel : ISongModel
                         break;
                     continue;
                 }
-            }
 
             if (noteDistance < -hitWindow)
             {
@@ -71,15 +72,11 @@ public class SongModel : ISongModel
                 if (++notesIndex >= notes.Count)
                     break;
             }
+
             yield return null;
         }
 
         yield return new WaitForSeconds(hitWindow.Seconds * 3);
         OnSongFinished?.Invoke();
-    }
-
-    public void Dispose()
-    {
-        
     }
 }

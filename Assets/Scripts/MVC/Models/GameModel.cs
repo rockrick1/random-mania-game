@@ -1,19 +1,20 @@
 ﻿public class GameModel : IGameModel
 {
-    public ISongModel SongModel { get; }
-    
-    public GameModel(ISongModel songModel)
+    public GameModel (ISongModel songModel)
     {
         SongModel = songModel;
     }
 
-    public void Initialize()
+    public ISongModel SongModel { get; }
+    public IInputManager InputManager { get; }
+
+    public void Initialize ()
     {
         SongModel.Initialize();
         SongModel.LoadSong("TearRain");
     }
 
-    public void Dispose()
+    public void Dispose ()
     {
         SongModel.Dispose();
     }
