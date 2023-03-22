@@ -68,7 +68,6 @@ public class SongModel : ISongModel
         yield return new WaitForSeconds(SONG_START_INTERVAL);
         
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
-        float milisForNoteToFall = CurrentSongSettings.ApproachRate * 1000f;
         int noteIndex = 0;
         double elapsed = 0;
 
@@ -100,12 +99,12 @@ public class SongModel : ISongModel
             yield return null;
             
             elapsed += Time.deltaTime;
-            double noteHitTime = notes[noteIndex].Timestamp;
-            if (elapsed > noteHitTime - HIT_WINDOW)
+            double timeToNoteHit = notes[noteIndex].Timestamp - elapsed;
+            if (timeToNoteHit < HIT_WINDOW)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Debug.Log($"note hit! {elapsed - noteHitTime}");
+                    Debug.Log($"note hit! {(int)(timeToNoteHit * 1000f)}");
                     OnNoteHit?.Invoke(notes[noteIndex]);
                     if (++noteIndex >= notes.Count)
                         break;
@@ -113,7 +112,7 @@ public class SongModel : ISongModel
                 }
             }
 
-            if (elapsed > noteHitTime + HIT_WINDOW)
+            if (timeToNoteHit < -HIT_WINDOW)
             {
                 Debug.Log("MISS! YOU SUCK");
                 OnNoteMissed?.Invoke(notes[noteIndex]);
