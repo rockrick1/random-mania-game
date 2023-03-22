@@ -14,12 +14,10 @@ public class NoteView : MonoBehaviour
         animator.SetBool(Hit, true);
     }
 
+    public void Destroy () => Destroy(gameObject);
+
     void Update ()
     {
         transform.position += Vector3.down * (Speed * Time.deltaTime);
-        
-        // TODO improve destruction, use pools
-        if (transform.position.y < -5f)
-            Destroy(gameObject);
     }
 }
