@@ -3,11 +3,13 @@ using UnityEngine;
 
 public interface ISongModel : IDisposable
 {
-    ISongSettings CurrentSongSettings { get; }
-    AudioClip CurrentSongAudio { get; }
+    event Action<Note> OnNoteSpawned;
     event Action<Note> OnNoteHit;
     event Action<Note> OnNoteMissed;
     event Action OnSongFinished;
+    
+    ISongSettings CurrentSongSettings { get; }
+    AudioClip CurrentSongAudio { get; }
 
     void Initialize ();
     void LoadSong (string songId);

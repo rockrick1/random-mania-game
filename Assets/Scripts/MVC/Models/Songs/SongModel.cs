@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SongModel : ISongModel
 {
+    const float SONG_START_INTERVAL = 1f;
     const float HIT_WINDOW = 0.25f;
 
-    readonly INoteSpawnerModel noteSpawnerModel;
-    readonly ISongLoaderModel songLoaderModel;
-
-    double elapsed;
-
-    public SongModel (INoteSpawnerModel noteSpawnerModel, ISongLoaderModel songLoaderModel)
-    {
-        this.noteSpawnerModel = noteSpawnerModel;
-        this.songLoaderModel = songLoaderModel;
-    }
-
+    public event Action<Note> OnNoteSpawned;
     public event Action<Note> OnNoteHit;
     public event Action<Note> OnNoteMissed;
     public event Action OnSongFinished;
@@ -24,59 +16,117 @@ public class SongModel : ISongModel
     public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
     public AudioClip CurrentSongAudio => songLoaderModel.Audio;
 
+    readonly ISongLoaderModel songLoaderModel;
+
+    public SongModel (INoteSpawnerModel noteSpawnerModel, ISongLoaderModel songLoaderModel)
+    {
+        this.songLoaderModel = songLoaderModel;
+    }
+
     public void Initialize ()
     {
-        noteSpawnerModel.Initialize();
         songLoaderModel.Initialize();
     }
 
     public void LoadSong (string songId)
     {
         songLoaderModel.LoadSong(songId);
-        noteSpawnerModel.SetSong(CurrentSongSettings);
     }
 
     public void Play ()
     {
-        noteSpawnerModel.Play();
         CoroutineRunner.Instance.StartCoroutine(nameof(SongRoutine), SongRoutine());
+        CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
+        // CoroutineRunner.Instance.StartCoroutine(nameof(TestRoutine), TestRoutine());
     }
 
-    public void Dispose ()
+    IEnumerator TestRoutine ()
     {
+        yield return new WaitForSeconds(SONG_START_INTERVAL);
+        
+        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
+
+        double elapsed = 0;
+
+        int i = 0;
+        while (true)
+        {
+            yield return null;
+            
+            elapsed += Time.deltaTime;
+
+            if (elapsed > notes[i].Timestamp)
+            {
+                Debug.LogError("BABOOEY");
+                i++;
+            }
+        }
+    }
+
+    IEnumerator NoteSpawnRotutine ()
+    {
+        yield return new WaitForSeconds(SONG_START_INTERVAL);
+        
+        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
+        float milisForNoteToFall = CurrentSongSettings.ApproachRate * 1000f;
+        int noteIndex = 0;
+        double elapsed = 0;
+
+        while (true)
+        {
+            yield return null;
+            
+            elapsed += Time.deltaTime;
+            double noteSpawnTime = notes[noteIndex].Timestamp - CurrentSongSettings.ApproachRate;
+            if (elapsed > noteSpawnTime)
+            {
+                OnNoteSpawned?.Invoke(notes[noteIndex]);
+                if (++noteIndex >= notes.Count)
+                    break;
+            }
+        }
     }
 
     IEnumerator SongRoutine ()
     {
-        var notes = CurrentSongSettings.Notes;
-        var hitWindow = TimeSpan.FromSeconds(HIT_WINDOW);
-        var notesIndex = 0;
+        yield return new WaitForSeconds(SONG_START_INTERVAL);
+        
+        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
+        int noteIndex = 0;
+        double elapsed = 0;
+        
         while (true)
         {
+            yield return null;
+            
             elapsed += Time.deltaTime;
-            var noteDistance = TimeSpan.FromSeconds(notes[notesIndex].Timestamp - elapsed);
-            if (noteDistance < hitWindow)
+            double noteHitTime = notes[noteIndex].Timestamp;
+            if (elapsed > noteHitTime - HIT_WINDOW)
+            {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    Debug.Log($"note hit! {noteDistance.TotalMilliseconds}");
-                    OnNoteHit?.Invoke(notes[notesIndex]);
-                    if (++notesIndex >= notes.Count)
+                    Debug.Log($"note hit! {elapsed - noteHitTime}");
+                    OnNoteHit?.Invoke(notes[noteIndex]);
+                    if (++noteIndex >= notes.Count)
                         break;
                     continue;
                 }
-
-            if (noteDistance < -hitWindow)
-            {
-                Debug.Log("MISS! YOU SUCK");
-                OnNoteMissed?.Invoke(notes[notesIndex]);
-                if (++notesIndex >= notes.Count)
-                    break;
             }
 
-            yield return null;
+            if (elapsed > noteHitTime + HIT_WINDOW)
+            {
+                Debug.Log("MISS! YOU SUCK");
+                OnNoteMissed?.Invoke(notes[noteIndex]);
+                if (++noteIndex >= notes.Count)
+                    break;
+            }
         }
 
-        yield return new WaitForSeconds(hitWindow.Seconds * 3);
+        yield return new WaitForSeconds(HIT_WINDOW * 3);
         OnSongFinished?.Invoke();
+    }
+
+    public void Dispose ()
+    {
     }
 }

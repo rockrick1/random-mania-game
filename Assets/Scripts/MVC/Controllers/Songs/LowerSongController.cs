@@ -11,11 +11,6 @@ public class LowerSongController : IDisposable
         this.inputManager = inputManager;
     }
 
-    public void Dispose ()
-    {
-        RemoveListeners();
-    }
-
     public void Initialize ()
     {
         Addlisteners();
@@ -31,8 +26,13 @@ public class LowerSongController : IDisposable
         inputManager.OnHitterSelect -= HandleHitterSelect;
     }
 
-    public void HandleHitterSelect (int index)
+    void HandleHitterSelect (int index)
     {
         view.SetActiveHitter(index);
+    }
+
+    public void Dispose ()
+    {
+        RemoveListeners();
     }
 }

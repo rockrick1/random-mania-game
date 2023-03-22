@@ -41,12 +41,13 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\MVC\Views\Songs\UpperSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\IGameModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongSettings.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\Note.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Songs\LowerSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\INoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongLoaderModel.cs" />
@@ -57,19 +58,21 @@
      <Compile Include="Assets\Scripts\MVC\Views\Songs\SongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\SongController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Songs\NoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongModel.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModelFactory.cs" />
-     <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Songs\LowerSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\LowerSongController.cs" />
+     <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IInputManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Art\Game" />
      <Folder Include="Assets\Settings\Resources\Songs\TearRain" />
      <Folder Include="Assets\Scripts\MVC\Models\Songs" />
      <Folder Include="Assets\Art\Game\NoteHitUi" />
+     <Folder Include="Assets\Scripts\MVC\Views\Songs\Prefabs" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Scripts\MVC\Controllers\Songs" />
      <Folder Include="Assets\Scripts" />

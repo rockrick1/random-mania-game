@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class NoteSpawnerModel : INoteSpawnerModel
 {
+    public event Action<Note> OnNoteSpawned;
+    
     ISongSettings currentSongSettings;
     Coroutine noteSpawnRoutine;
-    public event Action<Note> OnNoteSpawned;
 
     public void Initialize ()
     {
