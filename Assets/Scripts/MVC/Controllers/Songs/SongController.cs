@@ -31,15 +31,15 @@
 
     void AddListeners ()
     {
-        model.OnNoteHit += HandleNoteHit;
+        // model.OnNoteHit += HandleNoteHit;
     }
 
     void RemoveListeners ()
     {
-        model.OnNoteHit -= HandleNoteHit;
+        // model.OnNoteHit -= HandleNoteHit;
     }
 
-    void HandleNoteHit (Note note) => UpperSongController.HandleNoteHit(note);
+    // void HandleNoteHit (Note note) => UpperSongController.HandleNoteHit(note);
 
     public void Dispose ()
     {

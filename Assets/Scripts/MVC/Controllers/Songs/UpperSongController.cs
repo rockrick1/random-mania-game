@@ -28,17 +28,19 @@ public class UpperSongController : IDisposable
     {
         songModel.OnNoteSpawned += HandleNoteSpawned;
         songModel.OnNoteMissed += HandleNoteMissed;
+        songModel.OnNoteHit += HandleNoteHit;
     }
 
     void RemoveListeners ()
     {
         songModel.OnNoteSpawned -= HandleNoteSpawned;
         songModel.OnNoteMissed -= HandleNoteMissed;
+        songModel.OnNoteHit -= HandleNoteHit;
     }
 
     void HandleNoteSpawned (Note note) => liveNotes.Add(view.SpawnNote(note, noteSpeed));
 
-    public void HandleNoteHit (Note note)
+    void HandleNoteHit (Note note)
     {
         for (int i = 0; i < liveNotes.Count; i++)
         {
