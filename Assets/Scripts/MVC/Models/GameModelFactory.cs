@@ -2,9 +2,8 @@
 {
     public static GameModel Create (IInputManager inputManager)
     {
-        INoteSpawnerModel noteSpawnerModel = new NoteSpawnerModel();
         ISongLoaderModel songLoaderModel = new SongLoaderModel();
-        ISongModel songModel = new SongModel(noteSpawnerModel, songLoaderModel);
+        ISongModel songModel = new SongModel(inputManager, songLoaderModel);
         var model = new GameModel(songModel, inputManager);
         return model;
     }

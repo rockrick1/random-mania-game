@@ -16,10 +16,12 @@ public class SongModel : ISongModel
     public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
     public AudioClip CurrentSongAudio => songLoaderModel.Audio;
 
+    readonly IInputManager inputManager;
     readonly ISongLoaderModel songLoaderModel;
 
-    public SongModel (INoteSpawnerModel noteSpawnerModel, ISongLoaderModel songLoaderModel)
+    public SongModel (IInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
+        this.inputManager = inputManager;
         this.songLoaderModel = songLoaderModel;
     }
 
@@ -102,7 +104,7 @@ public class SongModel : ISongModel
             double timeToNoteHit = notes[noteIndex].Timestamp - elapsed;
             if (timeToNoteHit < HIT_WINDOW)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (inputManager.GetPositionPressed(notes[noteIndex].Position))
                 {
                     Debug.Log($"note hit! {(int)(timeToNoteHit * 1000f)}");
                     OnNoteHit?.Invoke(notes[noteIndex]);
