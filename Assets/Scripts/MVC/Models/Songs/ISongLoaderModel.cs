@@ -2,7 +2,7 @@
 
 public interface ISongLoaderModel
 {
-    ISongSettings Settings { get; }
+    SongSettings Settings { get; }
     AudioClip Audio { get; }
 
     void Initialize ();

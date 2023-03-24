@@ -1,19 +1,14 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-[JsonObject(MemberSerialization.OptIn)]
 public class SongSettings : ISongSettings
 {
-    public SongSettings (float bpm, float approachRate, IReadOnlyList<Note> notes)
+    public double Bpm { get; set; }
+    public float ApproachRate { get; set; }
+    public List<Note> Notes { get; set; }
+    
+    public SongSettings ()
     {
-        Bpm = bpm;
-        ApproachRate = approachRate;
-        Notes = notes;
+        Notes = new List<Note>();
     }
-
-    [JsonProperty] public float Bpm { get; }
-
-    [JsonProperty] public float ApproachRate { get; }
-
-    [JsonProperty] public IReadOnlyList<Note> Notes { get; }
 }

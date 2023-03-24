@@ -2,7 +2,7 @@
 
 public interface ISongSettings
 {
-    float Bpm { get; }
+    double Bpm { get; }
     float ApproachRate { get; }
-    IReadOnlyList<Note> Notes { get; }
+    List<Note> Notes { get; set; }
 }

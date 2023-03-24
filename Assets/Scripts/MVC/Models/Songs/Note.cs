@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-[JsonObject(MemberSerialization.OptIn)]
 public class Note
 {
     public Note (double timestamp, int position)
@@ -9,7 +8,6 @@ public class Note
         Position = position;
     }
 
-    [JsonProperty("t")] public double Timestamp { get; }
-
-    [JsonProperty("p")] public int Position { get; }
+    public double Timestamp { get; set; }
+    public int Position { get; set; }
 }
