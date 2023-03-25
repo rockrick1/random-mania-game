@@ -4,7 +4,7 @@ using UnityEngine;
 public interface ISongModel : IDisposable
 {
     event Action<Note> OnNoteSpawned;
-    event Action<Note> OnNoteHit;
+    event Action<Note, HitScore> OnNoteHit;
     event Action<Note> OnNoteMissed;
     event Action OnSongFinished;
     

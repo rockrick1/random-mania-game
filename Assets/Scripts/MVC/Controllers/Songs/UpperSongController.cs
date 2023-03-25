@@ -40,8 +40,10 @@ public class UpperSongController : IDisposable
 
     void HandleNoteSpawned (Note note) => liveNotes.Add(view.SpawnNote(note, noteSpeed));
 
-    void HandleNoteHit (Note note)
+    void HandleNoteHit (Note note, HitScore score)
     {
+        view.ShowHitFeedback(score);
+        
         for (int i = 0; i < liveNotes.Count; i++)
         {
             if (liveNotes[i].Note != note)

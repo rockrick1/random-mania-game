@@ -6,10 +6,9 @@ using UnityEngine;
 public class SongModel : ISongModel
 {
     const float SONG_START_INTERVAL = 1f;
-    const float HIT_WINDOW = 0.25f;
 
     public event Action<Note> OnNoteSpawned;
-    public event Action<Note> OnNoteHit;
+    public event Action<Note, HitScore> OnNoteHit;
     public event Action<Note> OnNoteMissed;
     public event Action OnSongFinished;
 
@@ -18,6 +17,10 @@ public class SongModel : ISongModel
 
     readonly IInputManager inputManager;
     readonly ISongLoaderModel songLoaderModel;
+    
+    float perfectHitWindow;
+    float greatHitWindow;
+    float okayHitWindow;
 
     public SongModel (IInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
@@ -33,6 +36,9 @@ public class SongModel : ISongModel
     public void LoadSong (string songId)
     {
         songLoaderModel.LoadSong(songId);
+        perfectHitWindow = (80 - 6 * CurrentSongSettings.Difficulty) / 1000f;
+        greatHitWindow = (140 - 8 * CurrentSongSettings.Difficulty) / 1000f;
+        okayHitWindow = (200 - 10 * CurrentSongSettings.Difficulty) / 1000f;
     }
 
     public void Play ()
@@ -102,29 +108,38 @@ public class SongModel : ISongModel
             
             elapsed += Time.deltaTime;
             double timeToNoteHit = notes[noteIndex].Timestamp - elapsed;
-            if (timeToNoteHit < HIT_WINDOW)
+            if (timeToNoteHit < okayHitWindow)
             {
                 if (inputManager.GetPositionPressed(notes[noteIndex].Position))
                 {
-                    Debug.Log($"note hit! {(int)(timeToNoteHit * 1000f)}");
-                    OnNoteHit?.Invoke(notes[noteIndex]);
+                    OnNoteHit?.Invoke(notes[noteIndex], GetHitScrore(Math.Abs(timeToNoteHit)));
                     if (++noteIndex >= notes.Count)
                         break;
                     continue;
                 }
             }
 
-            if (timeToNoteHit < -HIT_WINDOW)
+            if (timeToNoteHit < -okayHitWindow)
             {
-                Debug.Log("MISS! YOU SUCK");
                 OnNoteMissed?.Invoke(notes[noteIndex]);
                 if (++noteIndex >= notes.Count)
                     break;
             }
         }
 
-        yield return new WaitForSeconds(HIT_WINDOW * 3);
+        yield return new WaitForSeconds(okayHitWindow * 3);
         OnSongFinished?.Invoke();
+    }
+
+    HitScore GetHitScrore (double timeToNoteHit)
+    {
+        if (timeToNoteHit <= perfectHitWindow)
+            return HitScore.Perfect;
+        if (timeToNoteHit <= greatHitWindow)
+            return HitScore.Great;
+        if (timeToNoteHit <= okayHitWindow)
+            return HitScore.Okay;
+        return HitScore.Miss;
     }
 
     public void Dispose ()

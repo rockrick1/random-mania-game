@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SongLoaderModel : ISongLoaderModel
 {
-    const string APPROACH_RATE_KEY = "approachRate";
     const string BPM_KEY = "bpm";
+    const string APPROACH_RATE_KEY = "approachRate";
+    const string DIFFICULTY_KEY = "difficulty";
     const string NOTES_KEY = "notes";
     
     public SongSettings Settings { get; private set; }
@@ -36,7 +37,7 @@ public class SongLoaderModel : ISongLoaderModel
 
             if (line.Contains('['))
             {
-                key = Regex.Replace(line, @"[|]", string.Empty);
+                key = Regex.Replace(line, @"\[|\]", string.Empty);
                 continue;
             }
 
@@ -47,6 +48,9 @@ public class SongLoaderModel : ISongLoaderModel
                     break;
                 case APPROACH_RATE_KEY:
                     Settings.ApproachRate = ParseFloat(line);
+                    break;
+                case DIFFICULTY_KEY:
+                    Settings.Difficulty = ParseFloat(line);
                     break;
                 case NOTES_KEY:
                     string[] values = line.Split(',');

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     void Start ()
     {
+        Application.targetFrameRate = 60;
         Model = GameModelFactory.Create(inputManager);
         Controller = GameControllerFactory.Create(View, Model);
         Initialize();
