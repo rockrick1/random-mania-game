@@ -56,6 +56,8 @@ public class UpperSongController : IDisposable
 
     void HandleNoteMissed (Note note)
     {
+        view.ShowHitFeedback(HitScore.Miss);
+        
         foreach (var noteView in liveNotes)
         {
             if (noteView.Note != note)
