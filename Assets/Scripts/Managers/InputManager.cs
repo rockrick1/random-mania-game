@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour, IInputManager
     int selectedPosition;
 
     public bool GetPositionPressed (int pos) =>
-        (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.X)) && selectedPosition == pos;
+        (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X)) && selectedPosition == pos;
 
     public int GetCursorPosition () => selectedPosition;
 
