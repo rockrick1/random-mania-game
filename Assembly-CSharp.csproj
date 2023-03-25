@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\Songs\UpperSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\IGameModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongSettings.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Songs\HitScore.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\Note.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
@@ -67,8 +68,13 @@
      <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IInputManager.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Songs\HitScore.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Songs\ComboView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ComboController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Songs\IComboModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Songs\ComboModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongModelFactory.cs" />
      <Folder Include="Assets" />
+     <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets\Art\Game" />

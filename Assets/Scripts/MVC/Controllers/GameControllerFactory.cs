@@ -12,9 +12,20 @@
             lowerSongController,
             model.SongModel
         );
-        
-        var songController = new SongController(view.SongView, model.SongModel, upperSongController, lowerSongController);
-        var controller = new GameController(songController);
+
+        ComboController comboController = new(
+            view.ComboView,
+            model.ComboModel
+        );
+
+        SongController songController = new(
+            view.SongView,
+            model.SongModel,
+            upperSongController,
+            comboController,
+            lowerSongController
+        );
+        GameController controller = new(songController);
         return controller;
     }
 }

@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: hit
+    m_ConditionEvent: comboChanged
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2527872213274074683}
@@ -32,7 +32,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hit
+  m_Name: ChangeCombo
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -58,10 +58,10 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HitFeedbackAnimationController
+  m_Name: ComboAnimationController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: hit
+  - m_Name: comboChanged
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0

@@ -17,15 +17,15 @@ public class GameManager : MonoBehaviour
         Initialize();
     }
 
-    void OnDestroy ()
-    {
-        Model.Dispose();
-        Controller.Dispose();
-    }
-
     void Initialize ()
     {
         Model.Initialize();
         Controller.Initialize();
+    }
+
+    void OnDestroy ()
+    {
+        Model.Dispose();
+        Controller.Dispose();
     }
 }
