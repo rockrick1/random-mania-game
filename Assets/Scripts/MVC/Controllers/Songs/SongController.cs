@@ -24,21 +24,27 @@
 
     public void Initialize ()
     {
+        AddListeners();
         UpperSongController.Initialize();
         ComboController.Initialize();
         LowerSongController.Initialize();
         view.SetClip(model.CurrentSongAudio);
-        view.Play();
         model.Play();
-        AddListeners();
     }
 
     void AddListeners ()
     {
+        model.OnAudioStartTimeReached += HandleAudioStartTimeReached;
     }
 
     void RemoveListeners ()
     {
+        model.OnAudioStartTimeReached -= HandleAudioStartTimeReached;
+    }
+
+    void HandleAudioStartTimeReached ()
+    {
+        view.Play();
     }
 
 

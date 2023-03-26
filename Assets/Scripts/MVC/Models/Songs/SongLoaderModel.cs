@@ -7,6 +7,7 @@ public class SongLoaderModel : ISongLoaderModel
     const string BPM_KEY = "bpm";
     const string APPROACH_RATE_KEY = "approachRate";
     const string DIFFICULTY_KEY = "difficulty";
+    const string STARTING_TIME_EY = "startingTime";
     const string NOTES_KEY = "notes";
     
     public SongSettings Settings { get; private set; }
@@ -51,6 +52,9 @@ public class SongLoaderModel : ISongLoaderModel
                     break;
                 case DIFFICULTY_KEY:
                     Settings.Difficulty = ParseFloat(line);
+                    break;
+                case STARTING_TIME_EY:
+                    Settings.StartingTime = ParseFloat(line);
                     break;
                 case NOTES_KEY:
                     string[] values = line.Split(',');

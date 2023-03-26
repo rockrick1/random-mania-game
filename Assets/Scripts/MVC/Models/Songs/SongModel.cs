@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class SongModel : ISongModel
 {
-    const float SONG_START_INTERVAL = 1f;
-
     public event Action<Note> OnNoteSpawned;
     public event Action<Note, HitScore> OnNoteHit;
     public event Action<Note> OnNoteMissed;
+    public event Action OnAudioStartTimeReached;
     public event Action OnSongFinished;
 
     public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
@@ -43,41 +42,23 @@ public class SongModel : ISongModel
 
     public void Play ()
     {
+        CoroutineRunner.Instance.StartCoroutine(nameof(AudioStartRoutine), AudioStartRoutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(SongRoutine), SongRoutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
         // CoroutineRunner.Instance.StartCoroutine(nameof(TestRoutine), TestRoutine());
     }
 
-    IEnumerator TestRoutine ()
+    IEnumerator AudioStartRoutine ()
     {
-        yield return new WaitForSeconds(SONG_START_INTERVAL);
-        
-        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
-
-        double elapsed = 0;
-
-        int i = 0;
-        while (true)
-        {
-            yield return null;
-            
-            elapsed += Time.deltaTime;
-
-            if (elapsed > notes[i].Timestamp)
-            {
-                Debug.LogError("BABOOEY");
-                i++;
-            }
-        }
+        yield return new WaitForSeconds(CurrentSongSettings.ApproachRate);
+        OnAudioStartTimeReached?.Invoke();
     }
 
     IEnumerator NoteSpawnRotutine ()
     {
-        yield return new WaitForSeconds(SONG_START_INTERVAL);
-        
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
         int noteIndex = 0;
-        double elapsed = 0;
+        double elapsed = GetStartingElapsed();
 
         while (true)
         {
@@ -96,11 +77,9 @@ public class SongModel : ISongModel
 
     IEnumerator SongRoutine ()
     {
-        yield return new WaitForSeconds(SONG_START_INTERVAL);
-        
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
         int noteIndex = 0;
-        double elapsed = 0;
+        double elapsed = GetStartingElapsed();
         
         while (true)
         {
@@ -130,6 +109,32 @@ public class SongModel : ISongModel
         yield return new WaitForSeconds(okayHitWindow * 3);
         OnSongFinished?.Invoke();
     }
+
+    IEnumerator TestRoutine ()
+    {
+        yield return new WaitForSeconds(CurrentSongSettings.StartingTime);
+        
+        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
+        double elapsed = 0;
+
+        int i = 0;
+        while (true)
+        {
+            yield return null;
+            
+            elapsed += Time.deltaTime;
+
+            if (elapsed > notes[i].Timestamp)
+            {
+                Debug.LogError("BABOOEY");
+                i++;
+            }
+        }
+    }
+
+    double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
+        ? -2 * CurrentSongSettings.ApproachRate + CurrentSongSettings.StartingTime
+        : -CurrentSongSettings.ApproachRate - CurrentSongSettings.StartingTime;
 
     HitScore GetHitScrore (double timeToNoteHit)
     {

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
 
 public class SongSettings : ISongSettings
 {
     public double Bpm { get; set; }
     public float ApproachRate { get; set; }
     public float Difficulty { get; set; }
+    public float StartingTime { get; set; }
     public List<Note> Notes { get; set; }
     
     public SongSettings ()

@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour, IInputManager
     public event Action<int> OnHitterSelect;
     public event Action OnHitPress;
 
-    int selectedPosition;
+    int selectedPosition = 1;
 
     public bool GetPositionPressed (int pos) =>
         (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X)) && selectedPosition == pos;
