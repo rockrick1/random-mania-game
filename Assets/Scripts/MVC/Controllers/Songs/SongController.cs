@@ -1,4 +1,6 @@
-﻿public class SongController
+﻿using System.Threading.Tasks;
+
+public class SongController
 {
     public UpperSongController UpperSongController { get; }
     public ComboController ComboController { get; }
@@ -28,6 +30,12 @@
         UpperSongController.Initialize();
         ComboController.Initialize();
         LowerSongController.Initialize();
+        StartSong().Start();
+    }
+
+    async Task StartSong ()
+    {
+        await Task.Delay(500);
         view.SetClip(model.CurrentSongAudio);
         model.Play();
     }

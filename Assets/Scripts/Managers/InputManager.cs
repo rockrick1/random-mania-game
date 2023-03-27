@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour, IInputManager
             OnHitterSelect?.Invoke(2);
             return;
         }
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
         {
             selectedPosition = 1;
             OnHitterSelect?.Invoke(1);

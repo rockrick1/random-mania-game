@@ -21,6 +21,8 @@ public class SongModel : ISongModel
     float greatHitWindow;
     float okayHitWindow;
 
+    double dspSongStart;
+
     public SongModel (IInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
         this.inputManager = inputManager;
@@ -42,15 +44,21 @@ public class SongModel : ISongModel
 
     public void Play ()
     {
+        dspSongStart = AudioSettings.dspTime - GetStartingElapsed();
+        
         CoroutineRunner.Instance.StartCoroutine(nameof(AudioStartRoutine), AudioStartRoutine());
-        CoroutineRunner.Instance.StartCoroutine(nameof(SongRoutine), SongRoutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
-        // CoroutineRunner.Instance.StartCoroutine(nameof(TestRoutine), TestRoutine());
+        CoroutineRunner.Instance.StartCoroutine(nameof(SongRoutine), SongRoutine());
     }
+
+    double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
+        ? CurrentSongSettings.ApproachRate + CurrentSongSettings.StartingTime
+        : CurrentSongSettings.StartingTime;
 
     IEnumerator AudioStartRoutine ()
     {
-        yield return new WaitForSeconds(CurrentSongSettings.ApproachRate);
+        if (CurrentSongSettings.ApproachRate > CurrentSongSettings.StartingTime)
+            yield return new WaitForSeconds(CurrentSongSettings.ApproachRate);
         OnAudioStartTimeReached?.Invoke();
     }
 
@@ -58,13 +66,11 @@ public class SongModel : ISongModel
     {
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
         int noteIndex = 0;
-        double elapsed = GetStartingElapsed();
-
         while (true)
         {
             yield return null;
             
-            elapsed += Time.deltaTime;
+            double elapsed = AudioSettings.dspTime - dspSongStart;
             double noteSpawnTime = notes[noteIndex].Timestamp - CurrentSongSettings.ApproachRate;
             if (elapsed > noteSpawnTime)
             {
@@ -79,13 +85,11 @@ public class SongModel : ISongModel
     {
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
         int noteIndex = 0;
-        double elapsed = GetStartingElapsed();
-        
         while (true)
         {
             yield return null;
-            
-            elapsed += Time.deltaTime;
+
+            double elapsed = AudioSettings.dspTime - dspSongStart;
             double timeToNoteHit = notes[noteIndex].Timestamp - elapsed;
             if (timeToNoteHit < okayHitWindow)
             {
@@ -109,32 +113,6 @@ public class SongModel : ISongModel
         yield return new WaitForSeconds(okayHitWindow * 3);
         OnSongFinished?.Invoke();
     }
-
-    IEnumerator TestRoutine ()
-    {
-        yield return new WaitForSeconds(CurrentSongSettings.StartingTime);
-        
-        IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
-        double elapsed = 0;
-
-        int i = 0;
-        while (true)
-        {
-            yield return null;
-            
-            elapsed += Time.deltaTime;
-
-            if (elapsed > notes[i].Timestamp)
-            {
-                Debug.LogError("BABOOEY");
-                i++;
-            }
-        }
-    }
-
-    double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
-        ? -2 * CurrentSongSettings.ApproachRate + CurrentSongSettings.StartingTime
-        : -CurrentSongSettings.ApproachRate - CurrentSongSettings.StartingTime;
 
     HitScore GetHitScrore (double timeToNoteHit)
     {

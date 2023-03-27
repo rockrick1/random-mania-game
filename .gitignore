@@ -2,5 +2,6 @@
 Temp/
 Logs/
 UserSettings/
+Build/
 *.log
 *.backup
