@@ -44,7 +44,7 @@ public class SongModel : ISongModel
 
     public void Play ()
     {
-        dspSongStart = AudioSettings.dspTime - GetStartingElapsed();
+        dspSongStart = AudioSettings.dspTime + GetStartingElapsed();
         
         CoroutineRunner.Instance.StartCoroutine(nameof(AudioStartRoutine), AudioStartRoutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
