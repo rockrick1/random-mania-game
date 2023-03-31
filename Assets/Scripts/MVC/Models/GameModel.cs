@@ -2,9 +2,9 @@
 {
     public ISongModel SongModel { get; }
     public IComboModel ComboModel { get; }
-    public IInputManager InputManager { get; }
+    public IGameInputManager InputManager { get; }
     
-    public GameModel (ISongModel songModel, IComboModel comboModel, IInputManager inputManager)
+    public GameModel (ISongModel songModel, IComboModel comboModel, IGameInputManager inputManager)
     {
         SongModel = songModel;
         ComboModel = comboModel;

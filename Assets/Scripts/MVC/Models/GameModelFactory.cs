@@ -1,6 +1,6 @@
 ﻿public static class GameModelFactory
 {
-    public static GameModel Create (IInputManager inputManager)
+    public static GameModel Create (IGameInputManager inputManager)
     {
         ISongModel songModel = SongModelFactory.Create(inputManager);
         IComboModel comboModel = new ComboModel(songModel);

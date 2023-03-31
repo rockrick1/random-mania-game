@@ -21,6 +21,11 @@ public class SongLoaderModel : ISongLoaderModel
     {
         Audio = Resources.Load<AudioClip>($"Songs/{songId}/song");
         TextAsset songAsset = Resources.Load<TextAsset>($"Songs/{songId}/song");
+        if (songAsset == null)
+        {
+            Debug.LogException(new ArgumentException($"Song {songId} not found!"));
+            return;
+        }
         LoadSongTextData(songAsset.text);
     }
 

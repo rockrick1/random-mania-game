@@ -14,7 +14,7 @@ public class SongModel : ISongModel
     public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
     public AudioClip CurrentSongAudio => songLoaderModel.Audio;
 
-    readonly IInputManager inputManager;
+    readonly IGameInputManager inputManager;
     readonly ISongLoaderModel songLoaderModel;
     
     float perfectHitWindow;
@@ -23,7 +23,7 @@ public class SongModel : ISongModel
 
     double dspSongStart;
 
-    public SongModel (IInputManager inputManager, ISongLoaderModel songLoaderModel)
+    public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
         this.inputManager = inputManager;
         this.songLoaderModel = songLoaderModel;

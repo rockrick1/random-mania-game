@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class InputManager : MonoBehaviour, IInputManager
+public class GameInputManager : MonoBehaviour, IGameInputManager
 {
     public event Action<int> OnHitterSelect;
     public event Action OnHitPress;
@@ -12,6 +12,8 @@ public class InputManager : MonoBehaviour, IInputManager
         (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X)) && selectedPosition == pos;
 
     public int GetCursorPosition () => selectedPosition;
+
+    public bool GetKeyDown (KeyCode key) => Input.GetKeyDown(key);
 
     void Start ()
     {

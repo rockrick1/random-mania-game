@@ -3,7 +3,7 @@
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameView view;
-    [SerializeField] InputManager inputManager;
+    [SerializeField] GameInputManager inputManager;
 
     public GameModel Model { get; private set; }
     public GameController Controller { get; private set; }

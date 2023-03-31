@@ -8,7 +8,7 @@
 1.269714
 
 [approachRate]
-2.5
+0.7
 
 [notes]
 0,1

@@ -2,12 +2,12 @@
 
 public class LowerSongController : IDisposable
 {
-    readonly IInputManager inputManager;
+    readonly IGameInputManager inputManager;
     readonly LowerSongView view;
 
     public float HitterYPos => view.HitterYPos;
 
-    public LowerSongController (LowerSongView view, IInputManager inputManager)
+    public LowerSongController (LowerSongView view, IGameInputManager inputManager)
     {
         this.view = view;
         this.inputManager = inputManager;
