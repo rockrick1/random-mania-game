@@ -18,6 +18,7 @@ public class SongEditorController : IDisposable
     )
     {
         this.songPickerController = songPickerController;
+        this.songDetailsController = songDetailsController;
         this.view = view;
         this.model = model;
         this.inputManager = inputManager;
