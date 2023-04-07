@@ -37,12 +37,13 @@ public class EditorSongController : IDisposable
 
     void HandleSongLoaded ()
     {
-        CreateNotes(songLoaderModel.Settings);
+        view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
+        CreateNotes();
     }
 
-    void CreateNotes (ISongSettings settings)
+    void CreateNotes ()
     {
-        foreach (Note note in settings.Notes)
+        foreach (Note note in songLoaderModel.Settings.Notes)
             view.SpawnNote(note);
     }
 
