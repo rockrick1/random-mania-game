@@ -11,6 +11,8 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
     {
     }
 
+    public Vector3 GetMousePos () => Input.mousePosition;
+
     void Update ()
     {
         EditorInputCheck();

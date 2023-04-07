@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SongEditorView : MonoBehaviour
+public class EditorView : MonoBehaviour
 {
     [SerializeField] AudioSource songPlayer;
     [SerializeField] WaveForm2D waveForm2D;
     [SerializeField] EditorSongPickerView editorSongPickerView;
     [SerializeField] EditorSongDetailsView editorSongDetailsView;
     [SerializeField] EditorTopBarView editorTopBarView;
+    [SerializeField] EditorSongView editorSongView;
     [SerializeField] Transform horizontalSeparatorsParent;
     [SerializeField] RectTransform horizontalSeparatorPrefab;
 
@@ -17,6 +18,7 @@ public class SongEditorView : MonoBehaviour
     public EditorSongPickerView EditorSongPickerView => editorSongPickerView;
     public EditorSongDetailsView EditorSongDetailsView => editorSongDetailsView;
     public EditorTopBarView EditorTopBarView => editorTopBarView;
+    public EditorSongView EditorSongView => editorSongView;
 
     public void SetSong (AudioClip clip) => songPlayer.clip = clip;
 

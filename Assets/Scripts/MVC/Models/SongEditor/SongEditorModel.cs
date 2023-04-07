@@ -6,17 +6,20 @@ public class SongEditorModel : ISongEditorModel
     public event Action<AudioClip, ISongSettings> OnSongLoaded;
     
     public ISongLoaderModel SongLoaderModel { get; }
-    public IEditorSongPickerModel EditorSongPickerModel { get; }
+    public IEditorSongPickerModel SongPickerModel { get; }
     public IEditorInputManager InputManager { get; }
+    public IEditorSongModel SongModel { get; }
 
     public SongEditorModel (
         ISongLoaderModel songLoaderModel,
-        IEditorSongPickerModel editorSongPickerModel,
+        IEditorSongPickerModel songPickerModel,
+        IEditorSongModel songModel,
         IEditorInputManager inputManager
     )
     {
         SongLoaderModel = songLoaderModel;
-        EditorSongPickerModel = editorSongPickerModel;
+        SongPickerModel = songPickerModel;
+        SongModel = songModel;
         InputManager = inputManager;
     }
 
@@ -27,17 +30,16 @@ public class SongEditorModel : ISongEditorModel
 
     public void ProcessSong (AudioClip clip)
     {
-        // throw new NotImplementedException();
     }
 
     void AddListeners ()
     {
-        EditorSongPickerModel.OnSongPicked += HandleSongPicked;
+        SongPickerModel.OnSongPicked += HandleSongPicked;
     }
 
     void RemoveListeners ()
     {
-        EditorSongPickerModel.OnSongPicked -= HandleSongPicked;
+        SongPickerModel.OnSongPicked -= HandleSongPicked;
     }
 
     void HandleSongPicked (string songId)

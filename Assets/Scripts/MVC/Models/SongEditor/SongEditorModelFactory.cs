@@ -2,9 +2,10 @@
 {
     public static SongEditorModel Create (IEditorInputManager inputManager)
     {
-        ISongLoaderModel songModel = new SongLoaderModel();
-        IEditorSongPickerModel editorSongPickerModel = new EditorSongPickerModel();
-        var model = new SongEditorModel(songModel, editorSongPickerModel, inputManager);
+        ISongLoaderModel songLoaderModel = new SongLoaderModel();
+        IEditorSongPickerModel songPickerModel = new EditorSongPickerModel();
+        IEditorSongModel songModel = new EditorSongModel(inputManager);
+        SongEditorModel model = new SongEditorModel(songLoaderModel, songPickerModel, songModel, inputManager);
         return model;
     }
 }

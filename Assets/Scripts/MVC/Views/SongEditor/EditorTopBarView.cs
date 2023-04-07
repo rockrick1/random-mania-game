@@ -28,13 +28,9 @@ public class EditorTopBarView : MonoBehaviour
 
     void Update ()
     {
-        if (!songPlayer.isPlaying || songPlayer == null)
+        if (!songPlayer.isPlaying || songPlayer.clip == null)
             return;
         progress = songPlayer.time / songPlayer.clip.length;
-        // waveLine.anchorMax = new Vector2(startAnchor - progress, 0.5f);
-        // waveLine.anchorMin = new Vector2(startAnchor - progress, 0.5f);
-        // waveLine.anchoredPosition = Vector2.zero;
-
         waveLine.anchoredPosition = new Vector3(-progress * waveLineWidth, 0);
     }
 }

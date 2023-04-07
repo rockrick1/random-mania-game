@@ -67,9 +67,9 @@
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ComboModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\ISongEditorModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\SongEditorControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\SongEditorView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\SongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\WaveForm2D.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\NoteView.cs" />
@@ -77,7 +77,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongDetailsController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\SongEditorController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongModelFactory.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModelFactory.cs" />
@@ -91,6 +91,10 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorTopBarController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -2,19 +2,19 @@
 
 public class SongEditorManager : MonoBehaviour
 {
-    [SerializeField] SongEditorView view;
+    [SerializeField] EditorView view;
     [SerializeField] EditorInputManager inputManager;
 
     public SongEditorModel Model { get; private set; }
-    public SongEditorController Controller { get; private set; }
-    public SongEditorView View => view;
+    public EditorController Controller { get; private set; }
+    public EditorView View => view;
 
     void Start ()
     {
         Application.targetFrameRate = 60;
         AudioListener.volume = 0.2f;
         Model = SongEditorModelFactory.Create(inputManager);
-        Controller = SongEditorControllerFactory.Create(View, Model);
+        Controller = EditorControllerFactory.Create(View, Model);
         Initialize();
     }
 
