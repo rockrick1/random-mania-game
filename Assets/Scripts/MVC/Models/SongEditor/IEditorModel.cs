@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public interface ISongEditorModel : IDisposable
+public interface IEditorModel : IDisposable
 {
     event Action<AudioClip, ISongSettings> OnSongLoaded;
     

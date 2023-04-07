@@ -2,6 +2,7 @@
 
 public class SongSettings : ISongSettings
 {
+    public string Id { get; set; }
     public double Bpm { get; set; }
     public float ApproachRate { get; set; }
     public float Difficulty { get; set; }

@@ -5,7 +5,7 @@ public class SongEditorManager : MonoBehaviour
     [SerializeField] EditorView view;
     [SerializeField] EditorInputManager inputManager;
 
-    public SongEditorModel Model { get; private set; }
+    public EditorModel Model { get; private set; }
     public EditorController Controller { get; private set; }
     public EditorView View => view;
 

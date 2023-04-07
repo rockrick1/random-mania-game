@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SongEditorModel : ISongEditorModel
+public class EditorModel : IEditorModel
 {
     public event Action<AudioClip, ISongSettings> OnSongLoaded;
     
@@ -10,7 +10,7 @@ public class SongEditorModel : ISongEditorModel
     public IEditorInputManager InputManager { get; }
     public IEditorSongModel SongModel { get; }
 
-    public SongEditorModel (
+    public EditorModel (
         ISongLoaderModel songLoaderModel,
         IEditorSongPickerModel songPickerModel,
         IEditorSongModel songModel,
@@ -26,6 +26,8 @@ public class SongEditorModel : ISongEditorModel
     public void Initialize ()
     {
         AddListeners();
+        
+        SongModel.Initialize();
     }
 
     public void ProcessSong (AudioClip clip)
@@ -51,5 +53,7 @@ public class SongEditorModel : ISongEditorModel
     public void Dispose ()
     {
         RemoveListeners();
+        
+        SongModel.Dispose();
     }
 }

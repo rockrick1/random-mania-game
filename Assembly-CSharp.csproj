@@ -51,7 +51,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongDetailsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\SongEditorModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\LowerSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongPickerController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\INoteSpawnerModel.cs" />
@@ -66,7 +66,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\Songs\SongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ComboModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongPickerModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\ISongEditorModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorView.cs" />

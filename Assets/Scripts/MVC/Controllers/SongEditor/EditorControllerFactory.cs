@@ -1,6 +1,6 @@
 ﻿public static class EditorControllerFactory
 {
-    public static EditorController Create (EditorView view, SongEditorModel model)
+    public static EditorController Create (EditorView view, EditorModel model)
     {
         EditorSongPickerController songPickerController =
             new EditorSongPickerController(view.EditorSongPickerView, model.SongPickerModel);

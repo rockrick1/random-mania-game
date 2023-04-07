@@ -6,6 +6,8 @@ public class EditorTopBarView : MonoBehaviour
     [SerializeField] RectTransform waveLine;
     [SerializeField] RectTransform lineParent;
 
+    public float CurrentZoom => lineParent.localScale.x;
+
     float waveLineWidth;
     float progress;
 
@@ -28,7 +30,7 @@ public class EditorTopBarView : MonoBehaviour
 
     void Update ()
     {
-        if (!songPlayer.isPlaying || songPlayer.clip == null)
+        if (songPlayer.clip == null)
             return;
         progress = songPlayer.time / songPlayer.clip.length;
         waveLine.anchoredPosition = new Vector3(-progress * waveLineWidth, 0);

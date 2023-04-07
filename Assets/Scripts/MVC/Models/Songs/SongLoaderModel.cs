@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Text.RegularExpressions;
+using UnityEditor;
 using UnityEngine;
 
 public class SongLoaderModel : ISongLoaderModel
@@ -9,7 +11,10 @@ public class SongLoaderModel : ISongLoaderModel
     const string DIFFICULTY_KEY = "difficulty";
     const string STARTING_TIME_EY = "startingTime";
     const string NOTES_KEY = "notes";
-    
+
+    public event Action OnSongLoaded;
+    public event Action OnSongSaved;
+
     public SongSettings Settings { get; private set; }
     public AudioClip Audio { get; private set; }
 
@@ -27,6 +32,21 @@ public class SongLoaderModel : ISongLoaderModel
             return;
         }
         LoadSongTextData(songAsset.text);
+        Settings.Id = songId;
+        OnSongLoaded?.Invoke();
+    }
+
+    public void SaveSong (ISongSettings settings)
+    {
+        string path = $"Songs/{settings.Id}/song";
+        TextAsset songAsset = Resources.Load<TextAsset>(path);
+        if (songAsset == null)
+        {
+            Debug.LogException(new ArgumentException($"Song {settings.Id} not found while saving!"));
+            return;
+        }
+        SaveSongTextData(songAsset, settings);
+        OnSongSaved?.Invoke();
     }
 
     void LoadSongTextData (string file)
@@ -69,6 +89,23 @@ public class SongLoaderModel : ISongLoaderModel
                     throw new Exception($"Unknown key found while parsing song: {key}");
             }
         }
+    }
+    
+    void SaveSongTextData (TextAsset songAsset, ISongSettings settings)
+    {
+        string text = string.Empty;
+
+        text += $"[{BPM_KEY}]\n{settings.Bpm}\n\n";
+        text += $"[{DIFFICULTY_KEY}]\n{settings.Difficulty}\n\n";
+        text += $"[{STARTING_TIME_EY}]\n{settings.StartingTime}\n\n";
+        text += $"[{APPROACH_RATE_KEY}]\n{settings.ApproachRate}\n\n";
+        text += $"[{NOTES_KEY}]\n";
+
+        foreach (Note note in settings.Notes)
+            text += $"{note.Timestamp},{note.Position}\n";
+
+        File.WriteAllText(AssetDatabase.GetAssetPath(songAsset), text);
+        EditorUtility.SetDirty(songAsset);
     }
 
     double ParseDouble (string s) => double.Parse(s.Replace('.', ','));

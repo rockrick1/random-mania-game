@@ -7,5 +7,7 @@ public interface IEditorInputManager
     event Action<float> OnSongScroll;
     event Action<float> OnZoomScroll;
 
+    event Action OnSavePressed;
+
     Vector3 GetMousePos ();
 }

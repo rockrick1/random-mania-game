@@ -7,6 +7,8 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
     public event Action<float> OnSongScroll;
     public event Action<float> OnZoomScroll;
 
+    public event Action OnSavePressed;
+    
     void Start ()
     {
     }
@@ -21,9 +23,7 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
     void EditorInputCheck ()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-        {
             OnSongPlayPause?.Invoke();
-        }
 
         if (Input.mouseScrollDelta.y != 0)
         {
@@ -32,5 +32,8 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
             else
                 OnSongScroll?.Invoke(Input.mouseScrollDelta.y);
         }
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))
+            OnSavePressed?.Invoke();
     }
 }
