@@ -7,7 +7,7 @@
         EditorSongDetailsController songDetailsController =
             new EditorSongDetailsController(view.EditorSongDetailsView);
         EditorTopBarController topBarController = new(view.EditorTopBarView, model.InputManager);
-        EditorSongController songController = new(view.EditorSongView, model.SongModel);
+        EditorSongController songController = new(view.EditorSongView, model.SongModel, model.SongLoaderModel);
         EditorController controller =
             new(songPickerController,
                 songDetailsController,

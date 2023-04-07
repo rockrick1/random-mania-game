@@ -39,7 +39,6 @@ public class EditorTopBarController : IDisposable
 
     void HandleSongScroll (float amount)
     {
-        
     }
 
     void HandleZoomScroll (float amount)
