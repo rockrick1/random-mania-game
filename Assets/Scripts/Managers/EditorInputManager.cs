@@ -5,6 +5,7 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
 {
     public event Action OnSongPlayPause;
     public event Action<float> OnSongScroll;
+    public event Action<float> OnZoomScroll;
 
     void Start ()
     {
@@ -24,7 +25,10 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
 
         if (Input.mouseScrollDelta.y != 0)
         {
-            OnSongScroll?.Invoke(Input.mouseScrollDelta.y);
+            if (Input.GetKey(KeyCode.LeftShift))
+                OnZoomScroll?.Invoke(Input.mouseScrollDelta.y);
+            else
+                OnSongScroll?.Invoke(Input.mouseScrollDelta.y);
         }
     }
 }

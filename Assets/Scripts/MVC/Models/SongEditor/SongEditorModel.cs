@@ -27,7 +27,7 @@ public class SongEditorModel : ISongEditorModel
 
     public void ProcessSong (AudioClip clip)
     {
-        throw new NotImplementedException();
+        // throw new NotImplementedException();
     }
 
     void AddListeners ()

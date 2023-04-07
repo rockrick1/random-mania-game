@@ -12,6 +12,7 @@ public class SongEditorManager : MonoBehaviour
     void Start ()
     {
         Application.targetFrameRate = 60;
+        AudioListener.volume = 0.2f;
         Model = SongEditorModelFactory.Create(inputManager);
         Controller = SongEditorControllerFactory.Create(View, Model);
         Initialize();

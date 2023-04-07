@@ -6,8 +6,9 @@
             new EditorSongPickerController(view.EditorSongPickerView, model.EditorSongPickerModel);
         EditorSongDetailsController songDetailsController =
             new EditorSongDetailsController(view.EditorSongDetailsView);
+        EditorTopBarController topBarController = new(view.EditorTopBarView, model.InputManager);
         SongEditorController controller =
-            new(songPickerController, songDetailsController, view, model, model.InputManager);
+            new(songPickerController, songDetailsController, topBarController, view, model, model.InputManager);
         return controller;
     }
 }

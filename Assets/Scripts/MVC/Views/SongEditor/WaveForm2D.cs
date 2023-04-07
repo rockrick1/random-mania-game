@@ -4,6 +4,7 @@ using UnityEngine;
 public class WaveForm2D : MonoBehaviour
 {
     [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] RectTransform lineContainer;
     [SerializeField] AudioSource audioSource;
     [SerializeField] uint sampleReductionRate = 100;
 
@@ -18,9 +19,9 @@ public class WaveForm2D : MonoBehaviour
     {
         GetWaveFormData();
 
-        var transform1 = lineRenderer.transform;
-        float lineWidth = ((RectTransform) transform1).rect.width;
-        float lineHeight = ((RectTransform) transform1).rect.height;
+        Rect rect = lineContainer.rect;
+        float lineWidth = rect.width;
+        float lineHeight = rect.height;
         int sampleAmount = (int) (samples.Length / sampleReductionRate);
 
         float xRatio = lineWidth / sampleAmount;

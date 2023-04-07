@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     void Start ()
     {
         Application.targetFrameRate = 60;
+        AudioListener.volume = 0.2f;
         Model = GameModelFactory.Create(inputManager);
         Controller = GameControllerFactory.Create(View, Model);
         Initialize();

@@ -7,6 +7,7 @@ public class SongEditorView : MonoBehaviour
     [SerializeField] WaveForm2D waveForm2D;
     [SerializeField] EditorSongPickerView editorSongPickerView;
     [SerializeField] EditorSongDetailsView editorSongDetailsView;
+    [SerializeField] EditorTopBarView editorTopBarView;
     [SerializeField] Transform horizontalSeparatorsParent;
     [SerializeField] RectTransform horizontalSeparatorPrefab;
 
@@ -15,6 +16,7 @@ public class SongEditorView : MonoBehaviour
     public WaveForm2D WaveForm2D => waveForm2D;
     public EditorSongPickerView EditorSongPickerView => editorSongPickerView;
     public EditorSongDetailsView EditorSongDetailsView => editorSongDetailsView;
+    public EditorTopBarView EditorTopBarView => editorTopBarView;
 
     public void SetSong (AudioClip clip) => songPlayer.clip = clip;
 
@@ -26,7 +28,8 @@ public class SongEditorView : MonoBehaviour
             songPlayer.Play();
     }
 
-    public void ChangeSongTime (float amount) => songPlayer.time += amount;
+    public void ChangeSongTime (float amount) =>
+        songPlayer.time = Mathf.Clamp(songPlayer.time - amount, 0, songPlayer.clip.length);
 
     public void AddHorizontalSeparator (float distance)
     {

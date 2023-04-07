@@ -89,6 +89,8 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorTopBarController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
