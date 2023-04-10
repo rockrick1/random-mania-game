@@ -29,6 +29,10 @@ public class EditorSongView : MonoBehaviour
     float progress;
     float zoomScale;
     float songLength;
+    float songSpeed;
+    float approachRate;
+
+    double beatInterval;
     
     void Start ()
     {
@@ -40,9 +44,13 @@ public class EditorSongView : MonoBehaviour
 
     public void SetupSong (ISongSettings settings, float songLength)
     {
+        approachRate = settings.ApproachRate;
         this.songLength = songLength;
-        zoomScale = songLength / settings.ApproachRate;
-        songObjectsParent.localScale = new Vector3(1, zoomScale, 1);
+        beatInterval = settings.Bpm / 60f;
+        // zoomScale = songLength / settings.ApproachRate;
+        songSpeed = height / approachRate;
+        float totalHeight = (height * songLength) / approachRate;
+        songObjectsParent.sizeDelta = new Vector2(songObjectsParent.sizeDelta.x, totalHeight);
         ChangeSeparatorsDistance(2);
     }
 
@@ -60,26 +68,27 @@ public class EditorSongView : MonoBehaviour
         noteInstances.Clear();
     }
 
+    //OK
     public void SetStartingTime (float settingsStartingTime)
     {
-        separatorsParent.transform.position += Vector3.up * zoomScale * settingsStartingTime / zoomScale;
+        float startingPosition = settingsStartingTime * songSpeed;
+        separatorsParent.transform.position = Vector3.up * startingPosition;
     }
 
     public void CreateSeparator ()
     {
         GameObject instance = Instantiate(separatorPrefab, separatorsParent.transform);
-        RectTransform rect = (RectTransform) instance.transform;
-        rect.localScale = new Vector3(1, 1 / zoomScale, 1);
     }
 
+    //OK
     public void ChangeSeparatorsDistance (int interval)
     {
-        separatorsParent.spacing = (height / songLength) / interval;
+        separatorsParent.spacing = (float) ((beatInterval * approachRate) * height) / interval;
     }
     
     void Update ()
     {
-        progress = songPlayer.time / songLength;
-        songObjects.anchoredPosition = new Vector2(0, -progress * height);
+        progress = songSpeed * songPlayer.time;
+        songObjects.anchoredPosition = new Vector2(0, -progress);
     }
 }
