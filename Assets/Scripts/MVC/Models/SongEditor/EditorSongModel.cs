@@ -45,6 +45,7 @@ public class EditorSongModel : IEditorSongModel
 
     public void ButtonClicked (int pos)
     {
+        float y = inputManager.GetMousePos().y;
         Debug.Log(pos);
     }
 

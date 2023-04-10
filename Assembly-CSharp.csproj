@@ -41,6 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorTopBarController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\UpperSongView.cs" />
      <Compile Include="Assets\Scripts\Managers\IEditorInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\IGameModel.cs" />
@@ -48,6 +49,8 @@
      <Compile Include="Assets\Scripts\MVC\Models\Songs\HitScore.cs" />
      <Compile Include="Assets\Scripts\Managers\SongEditorManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\Note.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongDetailsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
@@ -58,15 +61,18 @@
      <Compile Include="Assets\Scripts\MVC\Views\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongLoaderModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\Managers\GameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongSettings.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\SongEditorModelFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongLoaderModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\SongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ComboModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorView.cs" />
@@ -89,12 +95,6 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorTopBarController.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongController.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

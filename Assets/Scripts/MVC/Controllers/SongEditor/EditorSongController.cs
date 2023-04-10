@@ -39,6 +39,7 @@ public class EditorSongController : IDisposable
     {
         view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
         CreateNotes();
+        CreateHorizontalSeparators();
     }
 
     void CreateNotes ()
@@ -46,6 +47,16 @@ public class EditorSongController : IDisposable
         foreach (Note note in songLoaderModel.Settings.Notes)
             view.SpawnNote(note);
     }
+
+    void CreateHorizontalSeparators ()
+    {
+        view.SetStartingTime(songLoaderModel.Settings.StartingTime);
+        double beatInterval = songLoaderModel.Settings.Bpm / 60f;
+        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / 4)
+            view.CreateSeparator();
+    }
+
+    void ChangeSeparatorsDistance (int interval) => view.ChangeSeparatorsDistance(interval);
 
     public void Dispose ()
     {
