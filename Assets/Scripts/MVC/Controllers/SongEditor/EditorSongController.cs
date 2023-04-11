@@ -51,9 +51,13 @@ public class EditorSongController : IDisposable
     void CreateHorizontalSeparators ()
     {
         view.SetStartingTime(songLoaderModel.Settings.StartingTime);
-        double beatInterval = songLoaderModel.Settings.Bpm / 60f;
-        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / 4)
+        double beatInterval = 60f / songLoaderModel.Settings.Bpm;
+        int i = 0;
+        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / 2)
+        {
             view.CreateSeparator();
+            i++;
+        }
     }
 
     void ChangeSeparatorsDistance (int interval) => view.ChangeSeparatorsDistance(interval);

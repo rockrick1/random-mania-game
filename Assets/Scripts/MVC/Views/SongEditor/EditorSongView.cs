@@ -49,7 +49,7 @@ public class EditorSongView : MonoBehaviour
         beatInterval = 60f / settings.Bpm;
         objectsSpeed = height / approachRate;
         float totalHeight = (height * songLength) / approachRate;
-        songObjects.sizeDelta = new Vector2(songObjects.sizeDelta.x, totalHeight * 10);
+        songObjects.sizeDelta = new Vector2(songObjects.sizeDelta.x, totalHeight);
         ChangeSeparatorsDistance(2);
     }
 
@@ -70,7 +70,7 @@ public class EditorSongView : MonoBehaviour
     public void SetStartingTime (float settingsStartingTime)
     {
         float startingPosition = settingsStartingTime * objectsSpeed;
-        ((RectTransform) separatorsParent.transform).anchoredPosition = new Vector3(0, startingPosition, 0);
+        ((RectTransform) separatorsParent.transform).localPosition = new Vector3(0, startingPosition, 0);
     }
 
     public void CreateSeparator ()
