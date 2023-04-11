@@ -13,7 +13,6 @@ public class EditorSongView : MonoBehaviour
     [SerializeField] Button fieldButtonCenter;
     [SerializeField] Button fieldButtonRight;
 
-    [SerializeField] RectTransform songObjectsParent;
     [SerializeField] RectTransform songObjects;
     [SerializeField] Transform notesParent;
     [SerializeField] VerticalLayoutGroup separatorsParent;
@@ -29,7 +28,7 @@ public class EditorSongView : MonoBehaviour
     float progress;
     float zoomScale;
     float songLength;
-    float songSpeed;
+    float objectsSpeed;
     float approachRate;
 
     double beatInterval;
@@ -46,11 +45,11 @@ public class EditorSongView : MonoBehaviour
     {
         approachRate = settings.ApproachRate;
         this.songLength = songLength;
-        beatInterval = settings.Bpm / 60f;
-        // zoomScale = songLength / settings.ApproachRate;
-        songSpeed = height / approachRate;
+        
+        beatInterval = 60f / settings.Bpm;
+        objectsSpeed = height / approachRate;
         float totalHeight = (height * songLength) / approachRate;
-        songObjectsParent.sizeDelta = new Vector2(songObjectsParent.sizeDelta.x, totalHeight);
+        songObjects.sizeDelta = new Vector2(songObjects.sizeDelta.x, totalHeight * 10);
         ChangeSeparatorsDistance(2);
     }
 
@@ -68,11 +67,10 @@ public class EditorSongView : MonoBehaviour
         noteInstances.Clear();
     }
 
-    //OK
     public void SetStartingTime (float settingsStartingTime)
     {
-        float startingPosition = settingsStartingTime * songSpeed;
-        separatorsParent.transform.position = Vector3.up * startingPosition;
+        float startingPosition = settingsStartingTime * objectsSpeed;
+        ((RectTransform) separatorsParent.transform).anchoredPosition = new Vector3(0, startingPosition, 0);
     }
 
     public void CreateSeparator ()
@@ -80,15 +78,14 @@ public class EditorSongView : MonoBehaviour
         GameObject instance = Instantiate(separatorPrefab, separatorsParent.transform);
     }
 
-    //OK
     public void ChangeSeparatorsDistance (int interval)
     {
-        separatorsParent.spacing = (float) ((beatInterval * approachRate) * height) / interval;
+        separatorsParent.spacing = (float) ((beatInterval * height) / approachRate) / interval;
     }
     
     void Update ()
     {
-        progress = songSpeed * songPlayer.time;
+        progress = objectsSpeed * songPlayer.time;
         songObjects.anchoredPosition = new Vector2(0, -progress);
     }
 }
