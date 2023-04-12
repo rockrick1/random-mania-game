@@ -20,12 +20,17 @@ public class EditorSongView : MonoBehaviour
     [SerializeField] NoteView noteViewPrefab;
     [SerializeField] GameObject separatorPrefab;
 
+    [SerializeField] Color beatColor;
+    [SerializeField] Color halfBeatColor;
+    [SerializeField] Color thirdBeatColor;
+    [SerializeField] Color quarterBeatColor;
+
     public AudioSource SongPlayer => songPlayer;
+    public float Progress { get; private set; }
 
     readonly List<NoteView> noteInstances = new();
 
     float height;
-    float progress;
     float zoomScale;
     float songLength;
     float objectsSpeed;
@@ -50,7 +55,6 @@ public class EditorSongView : MonoBehaviour
         objectsSpeed = height / approachRate;
         float totalHeight = (height * songLength) / approachRate;
         songObjects.sizeDelta = new Vector2(songObjects.sizeDelta.x, totalHeight);
-        ChangeSeparatorsDistance(1);
     }
 
     public void SpawnNote (Note note)
@@ -73,9 +77,18 @@ public class EditorSongView : MonoBehaviour
         ((RectTransform) separatorsParent.transform).localPosition = new Vector3(0, startingPosition, 0);
     }
 
-    public void CreateSeparator ()
+    public void CreateSeparator (int i)
     {
         GameObject instance = Instantiate(separatorPrefab, separatorsParent.transform);
+        instance.GetComponentInChildren<Image>().color = i switch
+        {
+            1 => beatColor,
+            2 => halfBeatColor,
+            3 => thirdBeatColor,
+            4 => quarterBeatColor,
+            _ => instance.GetComponentInChildren<Image>().color
+        };
+        instance.transform.SetAsFirstSibling();
     }
 
     public void ChangeSeparatorsDistance (int interval)
@@ -85,7 +98,7 @@ public class EditorSongView : MonoBehaviour
     
     void Update ()
     {
-        progress = objectsSpeed * songPlayer.time;
-        songObjects.anchoredPosition = new Vector2(0, -progress);
+        Progress = objectsSpeed * songPlayer.time;
+        songObjects.anchoredPosition = new Vector2(0, -Progress);
     }
 }

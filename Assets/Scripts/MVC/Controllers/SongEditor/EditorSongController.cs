@@ -38,8 +38,9 @@ public class EditorSongController : IDisposable
     void HandleSongLoaded ()
     {
         view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
+        view.SetStartingTime(songLoaderModel.Settings.StartingTime);
         CreateNotes();
-        CreateHorizontalSeparators();
+        CreateHorizontalSeparators(model.SelectedSignature);
     }
 
     void CreateNotes ()
@@ -48,17 +49,16 @@ public class EditorSongController : IDisposable
             view.SpawnNote(note);
     }
 
-    void CreateHorizontalSeparators ()
+    void CreateHorizontalSeparators (int signature)
     {
-        view.SetStartingTime(songLoaderModel.Settings.StartingTime);
         double beatInterval = 60f / songLoaderModel.Settings.Bpm;
-        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / 1)
+        int i = 0;
+        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / signature, i++)
         {
-            view.CreateSeparator();
+            view.CreateSeparator(model.GetIntervalByIndex(i, signature));
         }
+        view.ChangeSeparatorsDistance(model.SelectedSignature);
     }
-
-    void ChangeSeparatorsDistance (int interval) => view.ChangeSeparatorsDistance(interval);
 
     public void Dispose ()
     {
