@@ -50,7 +50,7 @@ public class EditorSongView : MonoBehaviour
         objectsSpeed = height / approachRate;
         float totalHeight = (height * songLength) / approachRate;
         songObjects.sizeDelta = new Vector2(songObjects.sizeDelta.x, totalHeight);
-        ChangeSeparatorsDistance(2);
+        ChangeSeparatorsDistance(1);
     }
 
     public void SpawnNote (Note note)

@@ -52,11 +52,9 @@ public class EditorSongController : IDisposable
     {
         view.SetStartingTime(songLoaderModel.Settings.StartingTime);
         double beatInterval = 60f / songLoaderModel.Settings.Bpm;
-        int i = 0;
-        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / 2)
+        for (double t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / 1)
         {
             view.CreateSeparator();
-            i++;
         }
     }
 
