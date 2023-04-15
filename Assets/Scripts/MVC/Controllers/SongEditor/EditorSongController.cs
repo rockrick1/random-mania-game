@@ -81,7 +81,7 @@ public class EditorSongController : IDisposable
             return;
         model.ChangeSignature(signature);
         view.ClearSeparators();
-        CreateHorizontalSeparators(signature);
+        CreateHorizontalSeparators();
     }
 
     void HandleSongLoaded ()
@@ -90,7 +90,7 @@ public class EditorSongController : IDisposable
         view.ClearSeparators();
         view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
         CreateNotes();
-        CreateHorizontalSeparators(model.SelectedSignature);
+        CreateHorizontalSeparators();
     }
 
     void CreateNotes ()
@@ -99,13 +99,14 @@ public class EditorSongController : IDisposable
             view.CreateNote(note);
     }
 
-    void CreateHorizontalSeparators (int signature)
+    void CreateHorizontalSeparators ()
     {
-        float beatInterval = 60f / songLoaderModel.Settings.Bpm;
         int i = 0;
-        for (float t = songLoaderModel.Settings.StartingTime; t < songLoaderModel.Audio.length; t += beatInterval / signature, i++)
+        for (float t = songLoaderModel.Settings.StartingTime;
+             t < songLoaderModel.Audio.length;
+             t += model.SignedBeatInterval, i++)
         {
-            view.CreateSeparator(model.GetSeparatorColorByIndex(i, signature));
+            view.CreateSeparator(model.GetSeparatorColorByIndex(i));
         }
         view.ChangeSeparatorsDistance(model.SelectedSignature);
     }

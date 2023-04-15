@@ -6,6 +6,7 @@ public class EditorSongModel : IEditorSongModel
     const int DEFAULT_SIGNATURE = 4;
     
     public int SelectedSignature { get; private set; }
+    public float SignedBeatInterval { get; private set; }
     
     readonly IEditorInputManager inputManager;
     readonly ISongLoaderModel songLoaderModel;
@@ -19,7 +20,6 @@ public class EditorSongModel : IEditorSongModel
     SongSettings currentSongSettings;
 
     float beatInterval;
-    float signedBeatInterval;
     
     public EditorSongModel (IEditorInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
@@ -98,15 +98,15 @@ public class EditorSongModel : IEditorSongModel
         return index;
     }
 
-    public int GetSeparatorColorByIndex (int i, int signature)
+    public int GetSeparatorColorByIndex (int i)
     {
-        return signature switch
+        return SelectedSignature switch
         {
-            1 => colors1_1[i % signature],
-            2 => colors1_2[i % signature],
-            3 => colors1_3[i % signature],
-            4 => colors1_4[i % signature],
-            6 => colors1_6[i % signature],
+            1 => colors1_1[i % SelectedSignature],
+            2 => colors1_2[i % SelectedSignature],
+            3 => colors1_3[i % SelectedSignature],
+            4 => colors1_4[i % SelectedSignature],
+            6 => colors1_6[i % SelectedSignature],
             _ => 1
         };
     }
@@ -126,10 +126,10 @@ public class EditorSongModel : IEditorSongModel
     public void ChangeSignature (int signature)
     {
         SelectedSignature = signature;
-        signedBeatInterval = beatInterval / signature;
+        SignedBeatInterval = beatInterval / signature;
     }
     
-    public float GetNextBeat (float time, int direction) => SnapToBeat(time) + (direction * signedBeatInterval);
+    public float GetNextBeat (float time, int direction) => SnapToBeat(time) + (direction * SignedBeatInterval);
     
     float GetTimeClicked (float songProgress, float height)
     {
@@ -137,7 +137,7 @@ public class EditorSongModel : IEditorSongModel
                (inputManager.GetMousePos().y / height * currentSongSettings.ApproachRate);
     }
 
-    float SnapToBeat (float time) => Mathf.RoundToInt(time / signedBeatInterval) * signedBeatInterval;
+    float SnapToBeat (float time) => Mathf.RoundToInt(time / SignedBeatInterval) * SignedBeatInterval;
 
     bool TryFindNote (int pos, float time, out int noteIndex, out bool substituted)
     {
@@ -166,7 +166,7 @@ public class EditorSongModel : IEditorSongModel
     void SetBeatInterval (float bpm)
     {
         beatInterval = 60f / bpm;
-        signedBeatInterval = beatInterval / SelectedSignature;
+        SignedBeatInterval = beatInterval / SelectedSignature;
     }
 
     public void Dispose ()
