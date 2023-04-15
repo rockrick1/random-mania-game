@@ -121,6 +121,7 @@
      <Folder Include="Assets\Scripts\MVC\Views\SongEditor" />
      <Folder Include="Assets\Scripts" />
      <None Include="Assets\Settings\Resources\Songs\TearRain\song.txt" />
+     <None Include="Assets\Art\UI\Fonts\maldini\misc\!!! READ THIS FIRST !!!.txt" />
      <Folder Include="Assets\Scripts\MVC\Views\Prefabs" />
      <Folder Include="Assets\Settings\Resources" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -131,7 +132,9 @@
      <Folder Include="Assets\Settings" />
      <Folder Include="Assets\Scripts\MVC\Views" />
      <Folder Include="Assets\Scripts\Managers" />
+     <Folder Include="Assets\Art\UI\Fonts\maldini" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\Art\UI\Fonts\maldini\info.txt" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
@@ -149,6 +152,7 @@
      <Folder Include="Assets\Scripts\MVC" />
      <Folder Include="Assets\Art\UI" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <Folder Include="Assets\Art\UI\Fonts" />
      <Folder Include="Assets\Scripts\MVC\Views\Combo\Prefabs" />
      <Folder Include="Assets\Scripts\MVC\Controllers\SongEditor" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
@@ -156,6 +160,7 @@
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <Folder Include="Assets\TextMesh Pro\Documentation" />
      <Folder Include="Assets\Scripts\MVC\Views\Songs\Prefabs\Lower" />
+     <Folder Include="Assets\Art\UI\Fonts\maldini\misc" />
      <Folder Include="Assets\Scripts\Utils" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />

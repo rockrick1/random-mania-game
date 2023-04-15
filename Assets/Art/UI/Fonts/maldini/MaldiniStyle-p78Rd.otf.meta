@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 92b60cfbad2c78c4c9f2699d2ed97cb2
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - MALDINI
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 62a8a2a3e225d4e4381b9917cf70eea4, type: 3}
+  - {fileID: 12800000, guid: e198262ac810c3d4b87d1c89323a4adb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
