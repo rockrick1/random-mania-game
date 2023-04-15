@@ -30,7 +30,12 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
             if (Input.GetKey(KeyCode.LeftShift))
                 OnZoomScroll?.Invoke(Input.mouseScrollDelta.y);
             else
-                OnSongScroll?.Invoke(Input.mouseScrollDelta.y);
+            {
+                if (Input.GetKey(KeyCode.LeftControl))
+                    OnSongScroll?.Invoke(Input.mouseScrollDelta.y * 10);
+                else
+                    OnSongScroll?.Invoke(Input.mouseScrollDelta.y);
+            }
         }
 
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.S))

@@ -69,7 +69,7 @@ public class EditorController : IDisposable
 
     void HandleSongScroll (float amount)
     {
-        view.SetSongTime(songModel.GetNextBeat(view.SongPlayer.time, amount > 0 ? -1 : 1));
+        view.SetSongTime(songModel.GetNextBeat(view.SongPlayer.time, Mathf.RoundToInt(-amount)));
     }
 
     public void Dispose ()

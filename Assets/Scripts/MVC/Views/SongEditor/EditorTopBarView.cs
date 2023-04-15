@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EditorTopBarView : MonoBehaviour
 {
+    public event Action OnClick;
+    public event Action OnRelease;
+    
     [SerializeField] AudioSource songPlayer;
     [SerializeField] RectTransform waveLine;
     [SerializeField] RectTransform lineParent;
+    [SerializeField] UIClickHandler button;
 
     public float CurrentZoom => lineParent.localScale.x;
 
@@ -17,6 +22,8 @@ public class EditorTopBarView : MonoBehaviour
     void Start ()
     {
         waveLineWidth = lineParent.rect.width;
+        button.OnLeftClick.AddListener(() => OnClick?.Invoke());
+        button.OnLeftRelease.AddListener(() => OnRelease?.Invoke());
     }
 
     public void ChangeZoom (float amount)

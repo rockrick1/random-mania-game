@@ -20,24 +20,34 @@ public class EditorSongController : IDisposable
 
     void AddListeners ()
     {
-        view.OnFieldButtonClicked += HandleFieldButtonClicked;
+        view.OnFieldButtonLeftClicked += HandleFieldButtonLeftClicked;
+        view.OnFieldButtonRightClicked += HandleFieldButtonRightClicked;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
     }
 
     void RemoveListeners ()
     {
-        view.OnFieldButtonClicked -= HandleFieldButtonClicked;
+        view.OnFieldButtonLeftClicked -= HandleFieldButtonLeftClicked;
+        view.OnFieldButtonRightClicked -= HandleFieldButtonRightClicked;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
     }
 
-    void HandleFieldButtonClicked (int pos)
+    void HandleFieldButtonLeftClicked (int pos)
     {
-        NoteCreationResult? result = model.ButtonClicked(pos, view.SongPlayer.time, view.Height);
+        NoteCreationResult? result = model.ButtonLeftClicked(pos, view.SongPlayer.time, view.Height);
         if (result == null)
             return;
         if (result.Value.Substituted)
             view.RemoveNote(result.Value.Index);
         view.CreateNote(result.Value.Note, result.Value.Index);
+    }
+
+    void HandleFieldButtonRightClicked (int pos)
+    {
+        int result = model.ButtonRightClicked(pos, view.SongPlayer.time, view.Height);
+        if (result == -1)
+            return;
+        view.RemoveNote(result);
     }
 
     void HandleSongLoaded ()

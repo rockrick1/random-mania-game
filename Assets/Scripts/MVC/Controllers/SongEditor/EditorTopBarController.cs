@@ -21,6 +21,8 @@ public class EditorTopBarController : IDisposable
 
     void AddListeners ()
     {
+        view.OnClick += HandleClick;
+        view.OnRelease += HandleRelease;
         inputManager.OnSongPlayPause += HandlePlayPause;
         inputManager.OnSongScroll += HandleSongScroll;
         inputManager.OnZoomScroll += HandleZoomScroll;
@@ -28,6 +30,8 @@ public class EditorTopBarController : IDisposable
 
     void RemoveListeners ()
     {
+        view.OnClick -= HandleClick;
+        view.OnRelease -= HandleRelease;
         inputManager.OnSongPlayPause -= HandlePlayPause;
         inputManager.OnSongScroll -= HandleSongScroll;
         inputManager.OnZoomScroll -= HandleZoomScroll;
@@ -44,6 +48,16 @@ public class EditorTopBarController : IDisposable
     void HandleZoomScroll (float amount)
     {
         view.ChangeZoom(amount);
+    }
+
+    void HandleClick ()
+    {
+        throw new NotImplementedException();
+    }
+
+    void HandleRelease ()
+    {
+        throw new NotImplementedException();
     }
 
     public void Dispose ()

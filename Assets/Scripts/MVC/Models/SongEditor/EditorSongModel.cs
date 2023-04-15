@@ -56,11 +56,10 @@ public class EditorSongModel : IEditorSongModel
         songLoaderModel.SaveSong(currentSongSettings);
     }
     
-    public NoteCreationResult? ButtonClicked (int pos, float songProgress, float height)
+    public NoteCreationResult? ButtonLeftClicked (int pos, float songProgress, float height)
     {
-        float mouseY = inputManager.GetMousePos().y;
-        float time = songProgress - currentSongSettings.StartingTime +
-                     (mouseY / height * currentSongSettings.ApproachRate);
+        float time = GetTimeClicked(songProgress, height);
+        
         if (time < 0)
             return null;
         
@@ -80,6 +79,23 @@ public class EditorSongModel : IEditorSongModel
             Index = index,
             Note = note
         };
+    }
+    
+    public int ButtonRightClicked (int pos, float songProgress, float height)
+    {
+        float time = GetTimeClicked(songProgress, height);
+        
+        if (time < 0)
+            return -1;
+        
+        time = SnapToBeat(time);
+        
+        if (!TryFindNote(pos, time, out int index, out bool _))
+            return -1;
+
+        currentSongSettings.Notes.RemoveAt(index);
+
+        return index;
     }
 
     public int GetSeparatorColorByIndex (int i, int signature)
@@ -102,6 +118,12 @@ public class EditorSongModel : IEditorSongModel
     }
     
     public float GetNextBeat (float time, int direction) => SnapToBeat(time) + (direction * signedBeatInterval);
+    
+    float GetTimeClicked (float songProgress, float height)
+    {
+        return songProgress - currentSongSettings.StartingTime +
+               (inputManager.GetMousePos().y / height * currentSongSettings.ApproachRate);
+    }
 
     float SnapToBeat (float time) => Mathf.RoundToInt(time / signedBeatInterval) * signedBeatInterval;
 

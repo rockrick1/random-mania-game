@@ -92,10 +92,11 @@
      <Compile Include="Assets\Scripts\Managers\EditorInputManager.cs" />
      <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ComboController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\NoteCreationResult.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\NoteCreationResult.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Utils\UIClickHandler.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -123,6 +124,7 @@
      <Folder Include="Assets\Scripts\MVC\Views\Prefabs" />
      <Folder Include="Assets\Settings\Resources" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets\Scripts\MVC\Views\Utils" />
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\Art" />
      <Folder Include="Assets\Settings\Resources\Songs" />

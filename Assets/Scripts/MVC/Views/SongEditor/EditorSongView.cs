@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class EditorSongView : MonoBehaviour
 {
-    public event Action<int> OnFieldButtonClicked;
+    public event Action<int> OnFieldButtonLeftClicked;
+    public event Action<int> OnFieldButtonRightClicked;
     
     [SerializeField] AudioSource songPlayer;
     
-    [SerializeField] Button fieldButtonLeft;
-    [SerializeField] Button fieldButtonCenter;
-    [SerializeField] Button fieldButtonRight;
+    [SerializeField] UIClickHandler fieldButtonLeft;
+    [SerializeField] UIClickHandler fieldButtonCenter;
+    [SerializeField] UIClickHandler fieldButtonRight;
 
     [SerializeField] RectTransform songObjects;
 
@@ -48,9 +49,13 @@ public class EditorSongView : MonoBehaviour
     
     void Start ()
     {
-        fieldButtonLeft.onClick.AddListener(() => OnFieldButtonClicked?.Invoke(0));
-        fieldButtonCenter.onClick.AddListener(() => OnFieldButtonClicked?.Invoke(1));
-        fieldButtonRight.onClick.AddListener(() => OnFieldButtonClicked?.Invoke(2));
+        fieldButtonLeft.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(0));
+        fieldButtonCenter.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(1));
+        fieldButtonRight.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(2));
+        fieldButtonLeft.OnRightClick.AddListener(() => OnFieldButtonRightClicked?.Invoke(0));
+        fieldButtonCenter.OnRightClick.AddListener(() => OnFieldButtonRightClicked?.Invoke(1));
+        fieldButtonRight.OnRightClick.AddListener(() => OnFieldButtonRightClicked?.Invoke(2));
+        
         Height = ((RectTransform) transform).rect.height;
     }
 
