@@ -31,7 +31,7 @@ public class EditorView : MonoBehaviour
     }
 
     public void ChangeSongTime (float amount) =>
-        songPlayer.time = Mathf.Clamp(songPlayer.time - amount, 0, songPlayer.clip.length);
+        songPlayer.time = Mathf.Clamp(songPlayer.time - amount, 0, songPlayer.clip.length - .1f);
 
     public void AddHorizontalSeparator (float distance)
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEditor;
@@ -70,7 +71,7 @@ public class SongLoaderModel : ISongLoaderModel
             switch (key)
             {
                 case BPM_KEY:
-                    Settings.Bpm = ParseDouble(line);
+                    Settings.Bpm = ParseFloat(line);
                     break;
                 case APPROACH_RATE_KEY:
                     Settings.ApproachRate = ParseFloat(line);
@@ -83,7 +84,7 @@ public class SongLoaderModel : ISongLoaderModel
                     break;
                 case NOTES_KEY:
                     string[] values = line.Split(',');
-                    Settings.Notes.Add(new Note(ParseDouble(values[0]), int.Parse(values[1])));
+                    Settings.Notes.Add(new Note(ParseFloat(values[0]), int.Parse(values[1])));
                     break;
                 default:
                     throw new Exception($"Unknown key found while parsing song: {key}");
@@ -95,19 +96,20 @@ public class SongLoaderModel : ISongLoaderModel
     {
         string text = string.Empty;
 
-        text += $"[{BPM_KEY}]\n{settings.Bpm}\n\n";
-        text += $"[{DIFFICULTY_KEY}]\n{settings.Difficulty}\n\n";
-        text += $"[{STARTING_TIME_EY}]\n{settings.StartingTime}\n\n";
-        text += $"[{APPROACH_RATE_KEY}]\n{settings.ApproachRate}\n\n";
+        text += $"[{BPM_KEY}]\n{settings.Bpm.ToString(CultureInfo.InvariantCulture)}\n\n";
+        text += $"[{DIFFICULTY_KEY}]\n{settings.Difficulty.ToString(CultureInfo.InvariantCulture)}\n\n";
+        text += $"[{STARTING_TIME_EY}]\n{settings.StartingTime.ToString(CultureInfo.InvariantCulture)}\n\n";
+        text += $"[{APPROACH_RATE_KEY}]\n{settings.ApproachRate.ToString(CultureInfo.InvariantCulture)}\n\n";
         text += $"[{NOTES_KEY}]\n";
 
         foreach (Note note in settings.Notes)
-            text += $"{note.Timestamp},{note.Position}\n";
+            text += $"{note.Timestamp.ToString(CultureInfo.InvariantCulture)},{note.Position}\n";
 
         File.WriteAllText(AssetDatabase.GetAssetPath(songAsset), text);
         EditorUtility.SetDirty(songAsset);
     }
 
-    double ParseDouble (string s) => double.Parse(s.Replace('.', ','));
-    float ParseFloat (string s) => float.Parse(s.Replace('.', ','));
+    double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);
+    float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);
+    // string StringifyDouble (double d) => d.ToString(CultureInfo.InvariantCulture).Replace(',', '.');
 }

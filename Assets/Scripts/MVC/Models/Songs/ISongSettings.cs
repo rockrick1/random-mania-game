@@ -3,7 +3,7 @@
 public interface ISongSettings
 {
     string Id { get; }
-    double Bpm { get; }
+    float Bpm { get; }
     float ApproachRate { get; }
     float Difficulty { get; }
     float StartingTime { get; }

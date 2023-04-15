@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json;
-
-public class Note
+﻿public class Note
 {
-    public Note (double timestamp, int position)
+    public float Timestamp { get; set; }
+    public int Position { get; set; }
+    
+    public Note (float timestamp, int position)
     {
         Timestamp = timestamp;
         Position = position;
     }
-
-    public double Timestamp { get; set; }
-    public int Position { get; set; }
 }

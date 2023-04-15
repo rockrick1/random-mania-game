@@ -5,6 +5,6 @@ public interface IEditorSongModel : IDisposable
     int SelectedSignature { get; }
     
     void Initialize ();
-    void ButtonClicked (int pos);
-    int GetIntervalByIndex (int i, int signature);
+    NoteCreationResult? ButtonClicked (int pos, float songProgress, float height);
+    int GetSeparatorColorByIndex (int i, int signature);
 }
