@@ -63,7 +63,6 @@ public class EditorSongController : IDisposable
 
     void HandleSetStartingTime ()
     {
-        throw new NotImplementedException();
     }
 
     void HandleApplySongDetails (float bpm, float ar, float diff, float startingTime)

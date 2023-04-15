@@ -5785,6 +5785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b815789197440acad3665d883a988ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songPlayer: {fileID: 2011961488}
   bpmInput: {fileID: 1397303474}
   arInput: {fileID: 1997195245}
   diffInput: {fileID: 2094135}
