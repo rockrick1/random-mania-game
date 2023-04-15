@@ -111,5 +111,4 @@ public class SongLoaderModel : ISongLoaderModel
 
     double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);
     float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);
-    // string StringifyDouble (double d) => d.ToString(CultureInfo.InvariantCulture).Replace(',', '.');
 }

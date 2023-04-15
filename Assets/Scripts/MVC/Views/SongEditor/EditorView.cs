@@ -12,14 +12,14 @@ public class EditorView : MonoBehaviour
     [SerializeField] Transform horizontalSeparatorsParent;
     [SerializeField] RectTransform horizontalSeparatorPrefab;
 
-    List<RectTransform> horizontalSeparators = new();
-
     public AudioSource SongPlayer => songPlayer;
     public WaveForm2D WaveForm2D => waveForm2D;
     public EditorSongPickerView EditorSongPickerView => editorSongPickerView;
     public EditorSongDetailsView EditorSongDetailsView => editorSongDetailsView;
     public EditorTopBarView EditorTopBarView => editorTopBarView;
     public EditorSongView EditorSongView => editorSongView;
+    
+    List<RectTransform> horizontalSeparators = new();
 
     public void SetSong (AudioClip clip) => songPlayer.clip = clip;
 

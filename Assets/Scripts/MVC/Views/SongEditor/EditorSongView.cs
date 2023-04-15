@@ -44,7 +44,7 @@ public class EditorSongView : MonoBehaviour
     float objectsSpeed;
     float approachRate;
 
-    double beatInterval;
+    float beatInterval;
     
     void Start ()
     {
@@ -128,7 +128,7 @@ public class EditorSongView : MonoBehaviour
         };
     }
 
-    float GetNoteYPosition (double time)
+    float GetNoteYPosition (float time)
     {
         return (float) ((totalHeight * time) / songLength);
     }
