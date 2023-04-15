@@ -92,14 +92,18 @@ public class EditorSongView : MonoBehaviour
         noteInstances.RemoveAt(index);
     }
 
-    public void ClearObjects ()
+    public void ClearNotes ()
+    {
+        foreach (NoteView noteView in noteInstances)
+            Destroy(noteView.gameObject);
+        noteInstances.Clear();
+    }
+
+    public void ClearSeparators ()
     {
         foreach (GameObject separator in separatorInstances)
             Destroy(separator);
-        foreach (NoteView noteView in noteInstances)
-            Destroy(noteView.gameObject);
         separatorInstances.Clear();
-        noteInstances.Clear();
     }
 
     public void CreateSeparator (int color)
@@ -119,7 +123,7 @@ public class EditorSongView : MonoBehaviour
 
     public void ChangeSeparatorsDistance (int interval)
     {
-        separatorsParent.spacing = (float) ((beatInterval * Height) / approachRate) / interval;
+        separatorsParent.spacing = (beatInterval * Height) / approachRate / interval;
     }
 
     float GetNoteXPosition (int pos)
@@ -135,7 +139,7 @@ public class EditorSongView : MonoBehaviour
 
     float GetNoteYPosition (float time)
     {
-        return (float) ((totalHeight * time) / songLength);
+        return (totalHeight * time) / songLength;
     }
     
     void Update ()

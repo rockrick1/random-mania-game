@@ -9,23 +9,30 @@ public class EditorSongDetailsView : MonoBehaviour
     public event Action<float> OnBPMChanged;
     public event Action<float> OnARChanged;
     public event Action<float> OnDiffChanged;
-    public event Action<double> OnOffsetChanged;
-    public event Action OnSetOffsetClick;
+    public event Action<float> OnStartingTimeChanged;
+    public event Action<string> OnSignatureChanged;
+    public event Action OnSetStartingTimeClick;
     
     [SerializeField] TMP_InputField bpmInput;
     [SerializeField] TMP_InputField arInput;
     [SerializeField] TMP_InputField diffInput;
     [SerializeField] TMP_InputField offsetInput;
-    [SerializeField] Button setOffsetButton;
+    [SerializeField] Button setStartingTimeButton;
+    [SerializeField] TMP_Dropdown signatureDropdown;
 
     void Awake ()
     {
-        bpmInput.onValueChanged.AddListener((val) => OnBPMChanged?.Invoke(float.Parse(val)));
-        arInput.onValueChanged.AddListener((val) => OnARChanged?.Invoke(float.Parse(val)));
-        diffInput.onValueChanged.AddListener((val) => OnDiffChanged?.Invoke(float.Parse(val)));
-        offsetInput.onValueChanged.AddListener((val) => OnOffsetChanged?.Invoke(double.Parse(val)));
-        setOffsetButton.onClick.AddListener(() => OnSetOffsetClick?.Invoke());
+        bpmInput.onValueChanged.AddListener((val) => OnBPMChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
+        arInput.onValueChanged.AddListener((val) => OnARChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
+        diffInput.onValueChanged.AddListener((val) => OnDiffChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
+        offsetInput.onValueChanged.AddListener((val) => OnStartingTimeChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
+        setStartingTimeButton.onClick.AddListener(() => OnSetStartingTimeClick?.Invoke());
     }
 
-    public void SetOffset (double val) => offsetInput.text = val.ToString(CultureInfo.InvariantCulture);
+    public void SetStartingTime (double val) => offsetInput.text = val.ToString(CultureInfo.InvariantCulture);
+
+    public void HandleSignatureChanged ()
+    {
+        OnSignatureChanged?.Invoke(signatureDropdown.options[signatureDropdown.value].text);
+    }
 }

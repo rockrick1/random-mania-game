@@ -2,6 +2,8 @@
 
 public class EditorSongDetailsController : IDisposable
 {
+    public event Action<int> OnSignatureChanged;
+    
     readonly EditorSongDetailsView view;
     
     public EditorSongDetailsController (EditorSongDetailsView view)
@@ -19,7 +21,8 @@ public class EditorSongDetailsController : IDisposable
         view.OnBPMChanged += HandleBPMChanged;
         view.OnARChanged += HandleARChanged;
         view.OnDiffChanged += HandleDiffChanged;
-        view.OnOffsetChanged += HandleOffsetChanged;
+        view.OnStartingTimeChanged += HandleStartingTimeChanged;
+        view.OnSignatureChanged += HandleSignatureChanged;
     }
 
     void RemoveListeners ()
@@ -27,7 +30,8 @@ public class EditorSongDetailsController : IDisposable
         view.OnBPMChanged -= HandleBPMChanged;
         view.OnARChanged -= HandleARChanged;
         view.OnDiffChanged -= HandleDiffChanged;
-        view.OnOffsetChanged -= HandleOffsetChanged;
+        view.OnStartingTimeChanged -= HandleStartingTimeChanged;
+        view.OnSignatureChanged -= HandleSignatureChanged;
     }
     
     void HandleBPMChanged (float val)
@@ -45,9 +49,14 @@ public class EditorSongDetailsController : IDisposable
         throw new NotImplementedException();
     }
 
-    void HandleOffsetChanged (double val)
+    void HandleStartingTimeChanged (float val)
     {
         throw new NotImplementedException();
+    }
+
+    void HandleSignatureChanged (string signature)
+    {
+        OnSignatureChanged?.Invoke(int.Parse(signature.Substring(signature.IndexOf('/') + 1)));
     }
 
     public void Dispose ()

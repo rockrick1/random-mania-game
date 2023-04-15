@@ -9,4 +9,5 @@ public interface IEditorSongModel : IDisposable
     int ButtonRightClicked (int pos, float songProgress, float height);
     int GetSeparatorColorByIndex (int i, int signature);
     float GetNextBeat (float time, int direction);
+    void ChangeSignature (int signature);
 }

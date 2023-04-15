@@ -3,12 +3,19 @@
 public class EditorSongController : IDisposable
 {
     readonly EditorSongView view;
+    readonly EditorSongDetailsController songDetailsController;
     readonly IEditorSongModel model;
     readonly ISongLoaderModel songLoaderModel;
 
-    public EditorSongController (EditorSongView view, IEditorSongModel model, ISongLoaderModel songLoaderModel)
+    public EditorSongController (
+        EditorSongView view,
+        EditorSongDetailsController songDetailsController,
+        IEditorSongModel model,
+        ISongLoaderModel songLoaderModel
+    )
     {
         this.view = view;
+        this.songDetailsController = songDetailsController;
         this.model = model;
         this.songLoaderModel = songLoaderModel;
     }
@@ -22,6 +29,7 @@ public class EditorSongController : IDisposable
     {
         view.OnFieldButtonLeftClicked += HandleFieldButtonLeftClicked;
         view.OnFieldButtonRightClicked += HandleFieldButtonRightClicked;
+        songDetailsController.OnSignatureChanged += HandleSignatureChanged;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
     }
 
@@ -29,6 +37,7 @@ public class EditorSongController : IDisposable
     {
         view.OnFieldButtonLeftClicked -= HandleFieldButtonLeftClicked;
         view.OnFieldButtonRightClicked -= HandleFieldButtonRightClicked;
+        songDetailsController.OnSignatureChanged -= HandleSignatureChanged;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
     }
 
@@ -50,9 +59,19 @@ public class EditorSongController : IDisposable
         view.RemoveNote(result);
     }
 
+    void HandleSignatureChanged (int signature)
+    {
+        if (model.SelectedSignature == signature)
+            return;
+        model.ChangeSignature(signature);
+        view.ClearSeparators();
+        CreateHorizontalSeparators(signature);
+    }
+
     void HandleSongLoaded ()
     {
-        view.ClearObjects();
+        view.ClearNotes();
+        view.ClearSeparators();
         view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
         CreateNotes();
         CreateHorizontalSeparators(model.SelectedSignature);
