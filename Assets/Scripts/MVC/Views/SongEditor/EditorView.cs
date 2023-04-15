@@ -14,6 +14,7 @@ public class EditorView : MonoBehaviour
 
     List<RectTransform> horizontalSeparators = new();
 
+    public AudioSource SongPlayer => songPlayer;
     public WaveForm2D WaveForm2D => waveForm2D;
     public EditorSongPickerView EditorSongPickerView => editorSongPickerView;
     public EditorSongDetailsView EditorSongDetailsView => editorSongDetailsView;
@@ -30,8 +31,8 @@ public class EditorView : MonoBehaviour
             songPlayer.Play();
     }
 
-    public void ChangeSongTime (float amount) =>
-        songPlayer.time = Mathf.Clamp(songPlayer.time - amount, 0, songPlayer.clip.length - .1f);
+    public void SetSongTime (float time) =>
+        songPlayer.time = Mathf.Clamp(time, 0, songPlayer.clip.length - .1f);
 
     public void AddHorizontalSeparator (float distance)
     {

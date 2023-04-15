@@ -100,6 +100,10 @@ public class EditorSongModel : IEditorSongModel
         SelectedSignature = signature;
         signedBeatInterval = beatInterval / signature;
     }
+    
+    public float SnapToBeat (float time) => Mathf.RoundToInt(time / signedBeatInterval) * signedBeatInterval;
+
+    public float GetNextBeat (float time, int direction) => SnapToBeat(time) + (direction * signedBeatInterval);
 
     bool TryFindNote (int pos, float time, out int noteIndex, out bool substituted)
     {
@@ -124,8 +128,6 @@ public class EditorSongModel : IEditorSongModel
         }
         return false;
     }
-
-    float SnapToBeat (float time) => Mathf.RoundToInt(time / signedBeatInterval) * signedBeatInterval;
 
     public void Dispose ()
     {

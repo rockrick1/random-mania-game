@@ -15,6 +15,7 @@
                 songController,
                 view,
                 model,
+                model.SongModel,
                 model.InputManager
             );
         return controller;

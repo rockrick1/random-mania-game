@@ -9,6 +9,7 @@ public class EditorController : IDisposable
     readonly EditorSongController songController;
     readonly EditorView view;
     readonly IEditorModel model;
+    readonly IEditorSongModel songModel;
     readonly IEditorInputManager inputManager;
 
     public EditorController (
@@ -18,6 +19,7 @@ public class EditorController : IDisposable
         EditorSongController songController,
         EditorView view,
         IEditorModel model,
+        IEditorSongModel songModel,
         IEditorInputManager inputManager
     )
     {
@@ -27,6 +29,7 @@ public class EditorController : IDisposable
         this.songController = songController;
         this.view = view;
         this.model = model;
+        this.songModel = songModel;
         this.inputManager = inputManager;
     }
 
@@ -66,8 +69,7 @@ public class EditorController : IDisposable
 
     void HandleSongScroll (float amount)
     {
-        //TODO implement some sort of snap here
-        view.ChangeSongTime(amount * 5 / view.EditorTopBarView.CurrentZoom);
+        view.SetSongTime(songModel.GetNextBeat(view.SongPlayer.time, amount > 0 ? -1 : 1));
     }
 
     public void Dispose ()
