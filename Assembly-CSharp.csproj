@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongLoaderModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Utils\UIClickHandler.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\Managers\GameInputManager.cs" />
@@ -96,7 +97,6 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Utils\UIClickHandler.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
