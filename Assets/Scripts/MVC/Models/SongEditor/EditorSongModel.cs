@@ -47,8 +47,8 @@ public class EditorSongModel : IEditorSongModel
     void HandleSongLoaded ()
     {
         currentSongSettings = songLoaderModel.Settings;
-        beatInterval = 60f / currentSongSettings.Bpm;
-        ChangeSignature(DEFAULT_SIGNATURE);
+        SelectedSignature = DEFAULT_SIGNATURE;
+        SetBeatInterval(songLoaderModel.Settings.Bpm);
     }
     
     void HandleSavePressed ()
@@ -111,6 +111,18 @@ public class EditorSongModel : IEditorSongModel
         };
     }
 
+    public void ChangeBpm (float val)
+    {
+        SetBeatInterval(val);
+        currentSongSettings.Bpm = val;
+    }
+
+    public void ChangeAr (float val) => currentSongSettings.ApproachRate = val;
+
+    public void ChangeDiff (float val) => currentSongSettings.Difficulty = val;
+
+    public void ChangeStartingTime (float val) => currentSongSettings.StartingTime = val;
+
     public void ChangeSignature (int signature)
     {
         SelectedSignature = signature;
@@ -149,6 +161,12 @@ public class EditorSongModel : IEditorSongModel
                 break;
         }
         return false;
+    }
+
+    void SetBeatInterval (float bpm)
+    {
+        beatInterval = 60f / bpm;
+        signedBeatInterval = beatInterval / SelectedSignature;
     }
 
     public void Dispose ()

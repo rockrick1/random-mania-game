@@ -29,6 +29,8 @@ public class EditorSongController : IDisposable
     {
         view.OnFieldButtonLeftClicked += HandleFieldButtonLeftClicked;
         view.OnFieldButtonRightClicked += HandleFieldButtonRightClicked;
+        songDetailsController.OnSetStartingTimeClicked += HandleSetStartingTime;
+        songDetailsController.OnApplyClicked += HandleApplySongDetails;
         songDetailsController.OnSignatureChanged += HandleSignatureChanged;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
     }
@@ -57,6 +59,20 @@ public class EditorSongController : IDisposable
         if (result == -1)
             return;
         view.RemoveNote(result);
+    }
+
+    void HandleSetStartingTime ()
+    {
+        throw new NotImplementedException();
+    }
+
+    void HandleApplySongDetails (float bpm, float ar, float diff, float startingTime)
+    {
+        model.ChangeBpm(bpm);
+        model.ChangeAr(ar);
+        model.ChangeDiff(diff);
+        model.ChangeStartingTime(startingTime);
+        HandleSongLoaded();
     }
 
     void HandleSignatureChanged (int signature)

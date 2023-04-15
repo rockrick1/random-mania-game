@@ -2,13 +2,13 @@
 128
 
 [difficulty]
-9
+7
 
 [startingTime]
 1.269714
 
 [approachRate]
-0.7
+1
 
 [notes]
 0,1

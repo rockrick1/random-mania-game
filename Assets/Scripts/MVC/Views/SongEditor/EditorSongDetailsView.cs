@@ -6,30 +6,33 @@ using UnityEngine.UI;
 
 public class EditorSongDetailsView : MonoBehaviour
 {
-    public event Action<float> OnBPMChanged;
-    public event Action<float> OnARChanged;
-    public event Action<float> OnDiffChanged;
-    public event Action<float> OnStartingTimeChanged;
+    public event Action OnSetStartingTimeClicked;
+    public event Action OnApplyClicked;
     public event Action<string> OnSignatureChanged;
-    public event Action OnSetStartingTimeClick;
     
     [SerializeField] TMP_InputField bpmInput;
     [SerializeField] TMP_InputField arInput;
     [SerializeField] TMP_InputField diffInput;
-    [SerializeField] TMP_InputField offsetInput;
+    [SerializeField] TMP_InputField startingTimeInput;
     [SerializeField] Button setStartingTimeButton;
+    [SerializeField] Button applyButton;
     [SerializeField] TMP_Dropdown signatureDropdown;
+
+    public string BpmValue => bpmInput.text;
+    public string ArValue => arInput.text;
+    public string DiffValue => diffInput.text;
+    public string StartingTimeValue => startingTimeInput.text;
 
     void Awake ()
     {
-        bpmInput.onValueChanged.AddListener((val) => OnBPMChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
-        arInput.onValueChanged.AddListener((val) => OnARChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
-        diffInput.onValueChanged.AddListener((val) => OnDiffChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
-        offsetInput.onValueChanged.AddListener((val) => OnStartingTimeChanged?.Invoke(float.Parse(val, CultureInfo.CurrentCulture)));
-        setStartingTimeButton.onClick.AddListener(() => OnSetStartingTimeClick?.Invoke());
+        setStartingTimeButton.onClick.AddListener(() => OnSetStartingTimeClicked?.Invoke());
+        applyButton.onClick.AddListener(() => OnApplyClicked?.Invoke());
     }
 
-    public void SetStartingTime (double val) => offsetInput.text = val.ToString(CultureInfo.InvariantCulture);
+    public void SetBPM (float val) => bpmInput.text = val.ToString(CultureInfo.CurrentCulture);
+    public void SetAR (float val) => arInput.text = val.ToString(CultureInfo.CurrentCulture);
+    public void SetDiff (float val) => diffInput.text = val.ToString(CultureInfo.CurrentCulture);
+    public void SetStartingTime (float val) => startingTimeInput.text = val.ToString(CultureInfo.CurrentCulture);
 
     public void HandleSignatureChanged ()
     {
