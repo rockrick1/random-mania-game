@@ -21,7 +21,7 @@ public class EditorModel : IEditorModel
         SongPickerModel = songPickerModel;
         SongModel = songModel;
         InputManager = inputManager;
-        audioManager = audioManager;
+        AudioManager = audioManager;
     }
 
     public void Initialize ()

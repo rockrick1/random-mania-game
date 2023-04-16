@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SongEditorManager : MonoBehaviour
+public class EditorManager : MonoBehaviour
 {
     [SerializeField] EditorView view;
     [SerializeField] EditorInputManager inputManager;
