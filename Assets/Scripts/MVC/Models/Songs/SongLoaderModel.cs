@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
-using Object = UnityEngine.Object;
 
 public class SongLoaderModel : ISongLoaderModel
 {
@@ -25,7 +23,6 @@ public class SongLoaderModel : ISongLoaderModel
     public SongSettings Settings { get; private set; }
     public AudioClip Audio { get; private set; }
 
-    string songId;
     string textPath;
     string audioPath;
 
@@ -38,74 +35,45 @@ public class SongLoaderModel : ISongLoaderModel
     {
         if (!Directory.Exists(songsPath))
             Directory.CreateDirectory(songsPath);
-        Object[] resources = Resources.LoadAll(songResourcesPath);
-
-        foreach (Object obj in resources)
+        TextAsset[] songAssets = Resources.LoadAll<TextAsset>(songResourcesPath);
+    
+        foreach (TextAsset songAsset in songAssets)
         {
-            string dirPath = Path.Combine(songsPath, obj.name);
-            
-            if (obj is not TextAsset && obj is not AudioClip)
-                throw new Exception($"object {obj.name} in {dirPath} is neither text nor audio!");
-
-            bool isText = obj is TextAsset;
-            string filePath = Path.Combine(dirPath, "song" + (isText ? ".txt" : ".mp3"));
+            string dirPath = Path.Combine(songsPath, songAsset.name);
+            string filePath = Path.Combine(dirPath, "song.txt");
             
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);
             if (File.Exists(filePath))
                 continue;
-            if (isText)
-                File.WriteAllBytes(filePath, (obj as TextAsset).bytes);
-            else
-            {
-                
-                AudioClip clip = (AudioClip) obj;
-                // byte[] bytes = new byte[data.Length];
-                // Buffer.BlockCopy(data, 0, bytes, 0, clip.samples);
-                
-
-                int numSamples = clip.samples;
-                int numChannels = clip.channels;
-                int sampleRate = clip.frequency;
-
-                // Calculate the multiplier for converting float samples to the desired bit depth
-                float multiplier = Mathf.Pow(2, 16 - 1);
-
-                float[] audioData = new float[numSamples * numChannels];
-                clip.GetData(audioData, 0);
-
-                short[] shortData = new short[audioData.Length];
-                for (int i = 0; i < audioData.Length; i++)
-                {
-                    shortData[i] = (short)(audioData[i] * multiplier);
-                }
-
-                byte[] byteArray = new byte[shortData.Length * sizeof(short)];
-                Buffer.BlockCopy(shortData, 0, byteArray, 0, byteArray.Length);
-
-                File.WriteAllBytes(filePath, byteArray);
-            }
+            File.WriteAllBytes(filePath, songAsset.bytes);
         }
     }
 
     public void LoadSong (string songId)
     {
-        this.songId = songId;
-        CoroutineRunner.Instance.StartCoroutine(nameof(LoadSong), LoadSong());
+        bool isDefault = false;
+        Settings = new SongSettings { Id = songId };
+        AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
+        if (clip != null)
+        {
+            isDefault = true;
+            Audio = clip;
+        }
+        CoroutineRunner.Instance.StartCoroutine(nameof(LoadSong), LoadSong(isDefault));
     }
 
-    IEnumerator LoadSong ()
+    IEnumerator LoadSong (bool isDefaultSong)
     {
-        Settings = new SongSettings { Id = songId };
-
-        textPath = GetTextPath(songId);
-        audioPath = GetAudioPath(songId);
+        textPath = GetTextPath(Settings.Id);
+        audioPath = GetAudioPath(Settings.Id);
         
         string songText = File.ReadAllText(textPath);
-        yield return ReadAudioFile(audioPath);
+        if (!isDefaultSong)
+            yield return ReadAudioFile(audioPath);
         if (Audio == null || songText == string.Empty)
         {
-            Debug.LogException(new ArgumentException($"Could not load song {songId}!"));
+            Debug.LogException(new ArgumentException($"Could not load song {Settings.Id}!"));
             yield break;
         }
         
@@ -185,6 +153,7 @@ public class SongLoaderModel : ISongLoaderModel
     
     string GetTextPath(string songId) => Path.Combine(songsPath, songId, "song.txt");
     string GetAudioPath(string songId) => Path.Combine(songsPath, songId, "song.mp3");
+    string GetResourcePath(string songId) => Path.Combine(songResourcesPath, songId);
 
     double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);
     float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);
