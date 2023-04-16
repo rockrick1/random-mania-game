@@ -41,7 +41,9 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Folder Include="Assets\DOTween\Editor" />
      <Folder Include="Assets\Scripts\MVC\Views\Editor" />
+     <Folder Include="Assets\DOTween\Editor\Imgs" />
      <Folder Include="Assets\Scripts\MVC\Views\Editor\Song" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programs\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

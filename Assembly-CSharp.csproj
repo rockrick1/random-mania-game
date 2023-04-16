@@ -44,6 +44,7 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorTopBarController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\UpperSongView.cs" />
      <Compile Include="Assets\Scripts\Managers\IEditorInputManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\IGameModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongSettings.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\HitScore.cs" />
@@ -57,10 +58,12 @@
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\LowerSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongPickerController.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\INoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongLoaderModel.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Utils\UIClickHandler.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerModel.cs" />
@@ -79,16 +82,23 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\SongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\WaveForm2D.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUtils.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\NoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\ComboView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongDetailsController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\SongModel.cs" />
+     <Compile Include="Assets\Scripts\Managers\IAudioManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongModelFactory.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\GameModelFactory.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\IComboModel.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
+     <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\LowerSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\EditorInputManager.cs" />
      <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
@@ -97,8 +107,6 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
-     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\IAudioManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -106,6 +114,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets\Art\Game" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
+     <Folder Include="Assets\Resources" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
      <Folder Include="Assets\Scripts\MVC\Models\Songs" />
      <Folder Include="Assets\Art\Game\NoteHitUi" />
@@ -130,6 +139,7 @@
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\Art" />
      <Folder Include="Assets\Settings\Resources\Songs" />
+     <Folder Include="Assets\DOTween" />
      <Folder Include="Assets\Settings" />
      <Folder Include="Assets\Scripts\MVC\Views" />
      <Folder Include="Assets\Scripts\Managers" />
@@ -145,6 +155,7 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <Folder Include="Assets\Art\Game\Field" />
+     <None Include="Assets\DOTween\readme.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <Folder Include="Assets\TextMesh Pro\Shaders" />
      <Folder Include="Assets\Art\SFX\Resources\Hitsounds" />
@@ -167,6 +178,7 @@
      <Folder Include="Assets\Art\UI\Fonts\maldini\misc" />
      <Folder Include="Assets\Scripts\Utils" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <Folder Include="Assets\DOTween\Modules" />
      <Folder Include="Assets\Art\SFX\Resources" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
      <Folder Include="Assets\Scripts\MVC\Models" />
@@ -434,6 +446,9 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="DOTween">
+     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Assets\DOTween\DOTween.dll</HintPath>
      </Reference>
      <Reference Include="Newtonsoft.Json">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\PackageCache\jillejr.newtonsoft.json-for-unity@13.0.102\Plugins\Newtonsoft.Json Editor\Newtonsoft.Json.dll</HintPath>
