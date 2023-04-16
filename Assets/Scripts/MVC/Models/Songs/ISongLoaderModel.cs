@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface ISongLoaderModel
@@ -12,4 +13,5 @@ public interface ISongLoaderModel
     void Initialize ();
     void LoadSong (string songId);
     void SaveSong (ISongSettings settings);
+    IReadOnlyList<string> GetAllSongDirs ();
 }

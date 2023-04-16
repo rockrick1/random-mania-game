@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -67,11 +69,16 @@ public class SongLoaderModel : ISongLoaderModel
     {
         textPath = GetTextPath(Settings.Id);
         audioPath = GetAudioPath(Settings.Id);
-        
-        string songText = File.ReadAllText(textPath);
+
+        string songText = string.Empty;
+        if (File.Exists(textPath))
+            songText = File.ReadAllText(textPath);
+        else
+            File.WriteAllText(textPath, songText);
+
         if (!isDefaultSong)
             yield return ReadAudioFile(audioPath);
-        if (Audio == null || songText == string.Empty)
+        if (Audio == null)
         {
             Debug.LogException(new ArgumentException($"Could not load song {Settings.Id}!"));
             yield break;
@@ -85,6 +92,15 @@ public class SongLoaderModel : ISongLoaderModel
     {
         SaveSongSettings(settings);
         OnSongSaved?.Invoke();
+    }
+
+    public IReadOnlyList<string> GetAllSongDirs ()
+    {
+        List<string> ret = new();
+        string[] dirs = Directory.GetDirectories(songsPath);
+        foreach (string dir in dirs)
+            ret.Add(dir.Split('\\').Last());
+        return ret;
     }
 
     void LoadSongSettings (string file)

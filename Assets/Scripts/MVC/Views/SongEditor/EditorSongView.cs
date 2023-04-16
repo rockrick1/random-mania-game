@@ -62,7 +62,7 @@ public class EditorSongView : MonoBehaviour
     public void SetupSong (ISongSettings settings, float songLength)
     {
         progress = 0;
-        approachRate = settings.ApproachRate;
+        approachRate = Mathf.Approximately(settings.ApproachRate, default) ? 1 : settings.ApproachRate;
         this.songLength = songLength;
         
         beatInterval = 60f / settings.Bpm;

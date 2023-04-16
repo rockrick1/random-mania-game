@@ -9,9 +9,9 @@ public class EditorSongPickerView : MonoBehaviour
     
     [SerializeField] TMP_Dropdown dropdown;
 
-    public void LoadOptions (List<string> options)
+    public void LoadOptions (IEnumerable<string> options)
     {
-        dropdown.AddOptions(options);
+        dropdown.AddOptions((List<string>) options);
     }
 
     public void HandleInputChanged ()
