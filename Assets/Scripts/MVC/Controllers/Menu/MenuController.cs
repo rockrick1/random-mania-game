@@ -31,7 +31,9 @@ public class MenuController : IDisposable
     {
         mainMenuController.Initialize();
         songMenuController.Initialize();
+        songMenuController.Close();
         settingsController.Initialize();
+        settingsController.Close();
         AddListeners();
     }
 
@@ -41,6 +43,8 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu += HandleOpenSongMenu;
         mainMenuController.OnOpenEditor += HandleOpenEditor;
         mainMenuController.OnOpenSettings += HandleOpenSettings;
+        songMenuController.OnSongSelected += HandleSongSelected;
+        songMenuController.OnBackPressed += HandleBackPressed;
     }
 
     void RemoveListeners ()
@@ -49,6 +53,13 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu -= HandleOpenSongMenu;
         mainMenuController.OnOpenEditor -= HandleOpenEditor;
         mainMenuController.OnOpenSettings -= HandleOpenSettings;
+        songMenuController.OnSongSelected -= HandleSongSelected;
+    }
+
+    void HandleSongSelected (string songId)
+    {
+        GameContext.Current.SelectedSongId = songId;
+        SceneManager.LoadScene("Game");
     }
 
     void HandleBackPressed () => CloseMenu(currentMenu);
@@ -65,11 +76,11 @@ public class MenuController : IDisposable
         {
             case MenuType.Settings:
                 settingsController.Open();
-                currentMenu = MenuType.MainMenu;
+                currentMenu = MenuType.Settings;
                 break;
             case MenuType.SongMenu:
                 songMenuController.Open();
-                currentMenu = MenuType.MainMenu;
+                currentMenu = MenuType.SongMenu;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

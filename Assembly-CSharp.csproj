@@ -130,6 +130,8 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SongMenuController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SettingsController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarDragHandler.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Menu\SongEntryView.cs" />
+     <Compile Include="Assets\Scripts\Managers\GameContext.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -138,6 +140,7 @@
      <Folder Include="Assets\Art\Game" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
      <Folder Include="Assets\Resources" />
+     <Folder Include="Assets\Scripts\MVC\Views\Menu\Prefabs" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
      <Folder Include="Assets\Scripts\MVC\Models\Game\Songs" />
      <Folder Include="Assets\Art\Game\NoteHitUi" />

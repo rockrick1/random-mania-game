@@ -103,6 +103,23 @@ public class SongLoaderModel : ISongLoaderModel
         return ret;
     }
 
+    public IReadOnlyList<ISongSettings> GetAllSongSettings ()
+    {
+        List<ISongSettings> ret = new();
+        foreach (string dir in GetAllSongDirs())
+        {
+            textPath = GetTextPath(dir);
+
+            Settings = new SongSettings {Id = dir};
+
+            string songText = File.ReadAllText(textPath);
+            LoadSongSettings(songText);
+            ret.Add(Settings.Clone());
+        }
+
+        return ret;
+    }
+
     void LoadSongSettings (string file)
     {
         string[] lines = file.Split('\n');

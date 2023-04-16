@@ -2,6 +2,9 @@
 
 public class SongMenuController : IDisposable
 {
+    public event Action<string> OnSongSelected;
+    public event Action OnBackPressed;
+    
     readonly SongMenuView view;
     readonly ISongMenuModel model;
     
@@ -14,15 +17,24 @@ public class SongMenuController : IDisposable
     public void Initialize ()
     {
         AddListeners();
+        view.Setup(model.GetAllSongs());
     }
 
     void AddListeners ()
     {
+        view.OnSongClicked += HandleSongClicked;
+        view.OnBackPressed += HandleBackPressed;
     }
 
     void RemoveListeners ()
     {
+        view.OnSongClicked -= HandleSongClicked;
+        view.OnBackPressed -= HandleBackPressed;
     }
+
+    void HandleSongClicked (string songId) => OnSongSelected?.Invoke(songId);
+    
+    void HandleBackPressed () => OnBackPressed?.Invoke();
 
     public void Open () => view.Open();
     

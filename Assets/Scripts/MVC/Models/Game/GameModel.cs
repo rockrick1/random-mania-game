@@ -16,7 +16,7 @@
     public void Initialize ()
     {
         SongModel.Initialize();
-        SongModel.LoadSong("TearRain");
+        SongModel.LoadSong(GameContext.Current.SelectedSongId);
         ComboModel.Initialize();
     }
 

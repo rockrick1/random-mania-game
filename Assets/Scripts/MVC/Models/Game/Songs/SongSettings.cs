@@ -17,4 +17,15 @@ public class SongSettings : ISongSettings
         StartingTime = default;
         Notes = new List<Note>();
     }
+
+    public SongSettings Clone () =>
+        new SongSettings
+        {
+            Id = Id,
+            Bpm = Bpm,
+            ApproachRate = ApproachRate,
+            Difficulty = Difficulty,
+            StartingTime = StartingTime,
+            Notes = new List<Note>(Notes)
+        };
 }

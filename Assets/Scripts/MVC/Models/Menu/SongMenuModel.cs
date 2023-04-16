@@ -1,4 +1,6 @@
-﻿public class SongMenuModel : ISongMenuModel
+﻿using System.Collections.Generic;
+
+public class SongMenuModel : ISongMenuModel
 {
     readonly SongMenuView view;
     readonly ISongLoaderModel songLoaderModel;
@@ -21,6 +23,8 @@
     void RemoveListeners ()
     {
     }
+
+    public IReadOnlyList<ISongSettings> GetAllSongs () => songLoaderModel.GetAllSongSettings();
 
     public void Dispose ()
     {
