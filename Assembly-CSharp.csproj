@@ -129,6 +129,7 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SongMenuController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SettingsController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarDragHandler.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

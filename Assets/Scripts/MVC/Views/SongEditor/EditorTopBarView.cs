@@ -1,15 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class EditorTopBarView : MonoBehaviour
 {
-    public event Action OnClick;
-    public event Action OnRelease;
-    
     [SerializeField] AudioSource songPlayer;
     [SerializeField] RectTransform waveLine;
     [SerializeField] RectTransform lineParent;
-    [SerializeField] UIClickHandler button;
+    [SerializeField] EditorTopBarDragHandler dragHandler;
 
     public float CurrentZoom => lineParent.localScale.x;
 
@@ -22,8 +20,6 @@ public class EditorTopBarView : MonoBehaviour
     void Start ()
     {
         waveLineWidth = lineParent.rect.width;
-        button.OnLeftClick.AddListener(() => OnClick?.Invoke());
-        button.OnLeftRelease.AddListener(() => OnRelease?.Invoke());
     }
 
     public void ChangeZoom (float amount)
@@ -39,7 +35,15 @@ public class EditorTopBarView : MonoBehaviour
     {
         if (songPlayer.clip == null)
             return;
-        progress = songPlayer.time / songPlayer.clip.length;
-        waveLine.anchoredPosition = new Vector3(-progress * waveLineWidth, 0);
+        if (dragHandler.IsDragging)
+        {
+            AudioClip clip = songPlayer.clip;
+            songPlayer.time = Mathf.Clamp(dragHandler.Progress * clip.length, 0, clip.length - .1f);
+        }
+        else
+        {
+            progress = songPlayer.time / songPlayer.clip.length;
+            dragHandler.SetProgress(progress);
+        }
     }
 }
