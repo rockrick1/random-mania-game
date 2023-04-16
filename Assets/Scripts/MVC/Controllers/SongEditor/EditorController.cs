@@ -10,6 +10,7 @@ public class EditorController : IDisposable
     readonly EditorView view;
     readonly IEditorModel model;
     readonly IEditorSongModel songModel;
+    readonly ISongLoaderModel songLoaderModel;
     readonly IEditorInputManager inputManager;
 
     public EditorController (
@@ -20,6 +21,7 @@ public class EditorController : IDisposable
         EditorView view,
         IEditorModel model,
         IEditorSongModel songModel,
+        ISongLoaderModel songLoaderModel,
         IEditorInputManager inputManager
     )
     {
@@ -30,6 +32,7 @@ public class EditorController : IDisposable
         this.view = view;
         this.model = model;
         this.songModel = songModel;
+        this.songLoaderModel = songLoaderModel;
         this.inputManager = inputManager;
     }
 
@@ -44,24 +47,24 @@ public class EditorController : IDisposable
 
     void AddListeners ()
     {
-        model.OnSongLoaded += HandleSongLoaded;
+        songLoaderModel.OnSongLoaded += HandleSongLoaded;
         inputManager.OnSongPlayPause += HandlePlayPause;
         inputManager.OnSongScroll += HandleSongScroll;
     }
 
     void RemoveListeners ()
     {
-        model.OnSongLoaded -= HandleSongLoaded;
+        songLoaderModel.OnSongLoaded -= HandleSongLoaded;
         inputManager.OnSongPlayPause -= HandlePlayPause;
         inputManager.OnSongScroll -= HandleSongScroll;
     }
 
-    void HandleSongLoaded (AudioClip clip, ISongSettings settings)
+    void HandleSongLoaded ()
     {
-        view.SetSong(clip);
-        view.WaveForm2D.SetAudio(clip);
+        view.SetSong(songLoaderModel.Audio);
+        view.WaveForm2D.SetAudio(songLoaderModel.Audio);
         view.WaveForm2D.ShowWave();
-        model.ProcessSong(clip);
+        model.ProcessSong(songLoaderModel.Audio);
         view.ClearSeparators();
     }
 

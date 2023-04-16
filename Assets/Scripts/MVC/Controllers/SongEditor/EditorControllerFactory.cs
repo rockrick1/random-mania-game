@@ -28,6 +28,7 @@
             view,
             model,
             model.SongModel,
+            model.SongLoaderModel,
             model.InputManager
         );
         return controller;

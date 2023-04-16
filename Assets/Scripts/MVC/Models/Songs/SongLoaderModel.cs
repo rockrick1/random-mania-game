@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
+using Object = UnityEngine.Object;
 
 public class SongLoaderModel : ISongLoaderModel
 {
@@ -13,46 +16,111 @@ public class SongLoaderModel : ISongLoaderModel
     const string STARTING_TIME_EY = "startingTime";
     const string NOTES_KEY = "notes";
 
+    static readonly string songsPath = Path.Combine(Application.persistentDataPath, "SongsDatabase");
+    static readonly string songResourcesPath = "Songs";
+
     public event Action OnSongLoaded;
     public event Action OnSongSaved;
 
     public SongSettings Settings { get; private set; }
     public AudioClip Audio { get; private set; }
 
+    string songId;
+    string textPath;
+    string audioPath;
+
     public void Initialize ()
     {
+        TryCreateDefaultFiles();
+    }
+
+    void TryCreateDefaultFiles ()
+    {
+        if (!Directory.Exists(songsPath))
+            Directory.CreateDirectory(songsPath);
+        Object[] resources = Resources.LoadAll(songResourcesPath);
+
+        foreach (Object obj in resources)
+        {
+            string dirPath = Path.Combine(songsPath, obj.name);
+            
+            if (obj is not TextAsset && obj is not AudioClip)
+                throw new Exception($"object {obj.name} in {dirPath} is neither text nor audio!");
+
+            bool isText = obj is TextAsset;
+            string filePath = Path.Combine(dirPath, "song" + (isText ? ".txt" : ".mp3"));
+            
+            if (!Directory.Exists(dirPath))
+                Directory.CreateDirectory(dirPath);
+            if (File.Exists(filePath))
+                continue;
+            if (isText)
+                File.WriteAllBytes(filePath, (obj as TextAsset).bytes);
+            else
+            {
+                
+                AudioClip clip = (AudioClip) obj;
+                // byte[] bytes = new byte[data.Length];
+                // Buffer.BlockCopy(data, 0, bytes, 0, clip.samples);
+                
+
+                int numSamples = clip.samples;
+                int numChannels = clip.channels;
+                int sampleRate = clip.frequency;
+
+                // Calculate the multiplier for converting float samples to the desired bit depth
+                float multiplier = Mathf.Pow(2, 16 - 1);
+
+                float[] audioData = new float[numSamples * numChannels];
+                clip.GetData(audioData, 0);
+
+                short[] shortData = new short[audioData.Length];
+                for (int i = 0; i < audioData.Length; i++)
+                {
+                    shortData[i] = (short)(audioData[i] * multiplier);
+                }
+
+                byte[] byteArray = new byte[shortData.Length * sizeof(short)];
+                Buffer.BlockCopy(shortData, 0, byteArray, 0, byteArray.Length);
+
+                File.WriteAllBytes(filePath, byteArray);
+            }
+        }
     }
 
     public void LoadSong (string songId)
     {
-        Audio = Resources.Load<AudioClip>($"Songs/{songId}/song");
-        TextAsset songAsset = Resources.Load<TextAsset>($"Songs/{songId}/song");
-        if (songAsset == null)
+        this.songId = songId;
+        CoroutineRunner.Instance.StartCoroutine(nameof(LoadSong), LoadSong());
+    }
+
+    IEnumerator LoadSong ()
+    {
+        Settings = new SongSettings { Id = songId };
+
+        textPath = GetTextPath(songId);
+        audioPath = GetAudioPath(songId);
+        
+        string songText = File.ReadAllText(textPath);
+        yield return ReadAudioFile(audioPath);
+        if (Audio == null || songText == string.Empty)
         {
-            Debug.LogException(new ArgumentException($"Song {songId} not found!"));
-            return;
+            Debug.LogException(new ArgumentException($"Could not load song {songId}!"));
+            yield break;
         }
-        LoadSongTextData(songAsset.text);
-        Settings.Id = songId;
+        
+        LoadSongSettings(songText);
         OnSongLoaded?.Invoke();
     }
 
     public void SaveSong (ISongSettings settings)
     {
-        string path = $"Songs/{settings.Id}/song";
-        TextAsset songAsset = Resources.Load<TextAsset>(path);
-        if (songAsset == null)
-        {
-            Debug.LogException(new ArgumentException($"Song {settings.Id} not found while saving!"));
-            return;
-        }
-        SaveSongTextData(songAsset, settings);
+        SaveSongSettings(settings);
         OnSongSaved?.Invoke();
     }
 
-    void LoadSongTextData (string file)
+    void LoadSongSettings (string file)
     {
-        Settings = new SongSettings();
         string[] lines = file.Split('\n');
 
         string key = "";
@@ -92,7 +160,7 @@ public class SongLoaderModel : ISongLoaderModel
         }
     }
     
-    void SaveSongTextData (TextAsset songAsset, ISongSettings settings)
+    void SaveSongSettings (ISongSettings settings)
     {
         string text = string.Empty;
 
@@ -105,9 +173,18 @@ public class SongLoaderModel : ISongLoaderModel
         foreach (Note note in settings.Notes)
             text += $"{note.Timestamp.ToString(CultureInfo.InvariantCulture)},{note.Position}\n";
 
-        File.WriteAllText(AssetDatabase.GetAssetPath(songAsset), text);
-        EditorUtility.SetDirty(songAsset);
+        File.WriteAllText(textPath, text);
     }
+    
+    IEnumerator ReadAudioFile (string path)
+    {
+        UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG);
+        yield return req.SendWebRequest();
+        Audio = DownloadHandlerAudioClip.GetContent(req);
+    }
+    
+    string GetTextPath(string songId) => Path.Combine(songsPath, songId, "song.txt");
+    string GetAudioPath(string songId) => Path.Combine(songsPath, songId, "song.mp3");
 
     double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);
     float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);

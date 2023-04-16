@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EditorModel : IEditorModel
 {
-    public event Action<AudioClip, ISongSettings> OnSongLoaded;
-    
     public ISongLoaderModel SongLoaderModel { get; }
     public IEditorSongPickerModel SongPickerModel { get; }
     public IEditorInputManager InputManager { get; }
@@ -48,7 +46,6 @@ public class EditorModel : IEditorModel
     void HandleSongPicked (string songId)
     {
         SongLoaderModel.LoadSong(songId);
-        OnSongLoaded?.Invoke(SongLoaderModel.Audio, SongLoaderModel.Settings);
     }
 
     public void Dispose ()

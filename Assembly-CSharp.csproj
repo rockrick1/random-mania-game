@@ -105,7 +105,6 @@
      <Folder Include="Assets\Art\Game" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
-     <Folder Include="Assets\Settings\Resources\Songs\TearRain" />
      <Folder Include="Assets\Scripts\MVC\Models\Songs" />
      <Folder Include="Assets\Art\Game\NoteHitUi" />
      <Folder Include="Assets\Scripts\MVC\Views\Songs\Prefabs" />
@@ -120,7 +119,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources" />
      <Folder Include="Assets\Scripts\MVC\Views\SongEditor" />
      <Folder Include="Assets\Scripts" />
-     <None Include="Assets\Settings\Resources\Songs\TearRain\song.txt" />
+     <None Include="Assets\Settings\Resources\Songs\TearRain.txt" />
      <None Include="Assets\Art\UI\Fonts\maldini\misc\!!! READ THIS FIRST !!!.txt" />
      <Folder Include="Assets\Scripts\MVC\Views\Prefabs" />
      <Folder Include="Assets\Settings\Resources" />
