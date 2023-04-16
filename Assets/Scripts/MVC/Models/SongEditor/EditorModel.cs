@@ -6,25 +6,29 @@ public class EditorModel : IEditorModel
     public ISongLoaderModel SongLoaderModel { get; }
     public IEditorSongPickerModel SongPickerModel { get; }
     public IEditorInputManager InputManager { get; }
+    public IAudioManager AudioManager { get; }
     public IEditorSongModel SongModel { get; }
 
     public EditorModel (
         ISongLoaderModel songLoaderModel,
         IEditorSongPickerModel songPickerModel,
         IEditorSongModel songModel,
-        IEditorInputManager inputManager
+        IEditorInputManager inputManager,
+        IAudioManager audioManager
     )
     {
         SongLoaderModel = songLoaderModel;
         SongPickerModel = songPickerModel;
         SongModel = songModel;
         InputManager = inputManager;
+        audioManager = audioManager;
     }
 
     public void Initialize ()
     {
         AddListeners();
         
+        AudioManager.Initialize();
         SongLoaderModel.Initialize();
         SongModel.Initialize();
     }
@@ -43,10 +47,7 @@ public class EditorModel : IEditorModel
         SongPickerModel.OnSongPicked -= HandleSongPicked;
     }
 
-    void HandleSongPicked (string songId)
-    {
-        SongLoaderModel.LoadSong(songId);
-    }
+    void HandleSongPicked (string songId) => SongLoaderModel.LoadSong(songId);
 
     public void Dispose ()
     {

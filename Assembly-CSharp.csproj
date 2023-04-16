@@ -66,7 +66,7 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\Managers\GameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongSettings.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\SongEditorModelFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModelFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Songs\ISongLoaderModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Songs\SongView.cs" />
@@ -97,6 +97,8 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
+     <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\IAudioManager.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -137,6 +139,7 @@
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <Folder Include="Assets\Art\SFX\Hitsounds" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <Folder Include="Assets\Scripts\MVC\Views\Songs" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
@@ -144,6 +147,7 @@
      <Folder Include="Assets\Art\Game\Field" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <Folder Include="Assets\TextMesh Pro\Shaders" />
+     <Folder Include="Assets\Art\SFX\Resources\Hitsounds" />
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
      <Folder Include="Assets\TextMesh Pro\Fonts" />
      <Folder Include="Assets\Scripts\MVC\Controllers" />
@@ -155,6 +159,7 @@
      <Folder Include="Assets\Scripts\MVC\Views\Combo\Prefabs" />
      <Folder Include="Assets\Scripts\MVC\Controllers\SongEditor" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <Folder Include="Assets\Art\SFX" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <Folder Include="Assets\TextMesh Pro\Documentation" />
@@ -162,6 +167,7 @@
      <Folder Include="Assets\Art\UI\Fonts\maldini\misc" />
      <Folder Include="Assets\Scripts\Utils" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <Folder Include="Assets\Art\SFX\Resources" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
      <Folder Include="Assets\Scripts\MVC\Models" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />

@@ -27,16 +27,23 @@ public class EditorSongPickerController : IDisposable
     void AddListeners ()
     {
         view.OnSongPicked += HandleSongPicked;
+        view.OnOpenFolderClicked += HandleOpenFolderClicked;
     }
 
     void RemoveListeners ()
     {
         view.OnSongPicked -= HandleSongPicked;
+        view.OnOpenFolderClicked -= HandleOpenFolderClicked;
     }
 
     void HandleSongPicked (string song)
     {
         model.PickSong(song);
+    }
+
+    void HandleOpenFolderClicked ()
+    {
+        System.Diagnostics.Process.Start("explorer.exe", "/select," + songLoaderModel.SongsPath.Replace(@"/", @"\"));
     }
 
     public void Dispose ()

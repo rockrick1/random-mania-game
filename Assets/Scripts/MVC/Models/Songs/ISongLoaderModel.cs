@@ -9,6 +9,7 @@ public interface ISongLoaderModel
     
     SongSettings Settings { get; }
     AudioClip Audio { get; }
+    string SongsPath { get; }
 
     void Initialize ();
     void LoadSong (string songId);

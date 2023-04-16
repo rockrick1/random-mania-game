@@ -15,8 +15,7 @@ public class SongLoaderModel : ISongLoaderModel
     const string DIFFICULTY_KEY = "difficulty";
     const string STARTING_TIME_EY = "startingTime";
     const string NOTES_KEY = "notes";
-
-    static readonly string songsPath = Path.Combine(Application.persistentDataPath, "SongsDatabase");
+    
     static readonly string songResourcesPath = "Songs";
 
     public event Action OnSongLoaded;
@@ -24,6 +23,7 @@ public class SongLoaderModel : ISongLoaderModel
 
     public SongSettings Settings { get; private set; }
     public AudioClip Audio { get; private set; }
+    public string SongsPath => Path.Combine(Application.persistentDataPath, "SongsDatabase");
 
     string textPath;
     string audioPath;
@@ -35,13 +35,13 @@ public class SongLoaderModel : ISongLoaderModel
 
     void TryCreateDefaultFiles ()
     {
-        if (!Directory.Exists(songsPath))
-            Directory.CreateDirectory(songsPath);
+        if (!Directory.Exists(SongsPath))
+            Directory.CreateDirectory(SongsPath);
         TextAsset[] songAssets = Resources.LoadAll<TextAsset>(songResourcesPath);
     
         foreach (TextAsset songAsset in songAssets)
         {
-            string dirPath = Path.Combine(songsPath, songAsset.name);
+            string dirPath = Path.Combine(SongsPath, songAsset.name);
             string filePath = Path.Combine(dirPath, "song.txt");
             
             if (!Directory.Exists(dirPath))
@@ -97,7 +97,7 @@ public class SongLoaderModel : ISongLoaderModel
     public IReadOnlyList<string> GetAllSongDirs ()
     {
         List<string> ret = new();
-        string[] dirs = Directory.GetDirectories(songsPath);
+        string[] dirs = Directory.GetDirectories(SongsPath);
         foreach (string dir in dirs)
             ret.Add(dir.Split('\\').Last());
         return ret;
@@ -167,8 +167,8 @@ public class SongLoaderModel : ISongLoaderModel
         Audio = DownloadHandlerAudioClip.GetContent(req);
     }
     
-    string GetTextPath(string songId) => Path.Combine(songsPath, songId, "song.txt");
-    string GetAudioPath(string songId) => Path.Combine(songsPath, songId, "song.mp3");
+    string GetTextPath(string songId) => Path.Combine(SongsPath, songId, "song.txt");
+    string GetAudioPath(string songId) => Path.Combine(SongsPath, songId, "song.mp3");
     string GetResourcePath(string songId) => Path.Combine(songResourcesPath, songId);
 
     double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);
