@@ -21,6 +21,7 @@
         SongController songController = new(
             view.SongView,
             model.SongModel,
+            model.AudioManager,
             upperSongController,
             comboController,
             lowerSongController

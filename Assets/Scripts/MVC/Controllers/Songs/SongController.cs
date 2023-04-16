@@ -2,16 +2,20 @@
 
 public class SongController
 {
+    const string HIT_SOUND = "soft-hitnormal";
+    
     public UpperSongController UpperSongController { get; }
     public ComboController ComboController { get; }
     public LowerSongController LowerSongController { get; }
     
     readonly ISongModel model;
+    readonly IAudioManager audioManager;
     readonly SongView view;
 
     public SongController (
         SongView view,
         ISongModel model,
+        IAudioManager audioManager,
         UpperSongController upperSongController,
         ComboController comboController,
         LowerSongController lowerSongController
@@ -19,6 +23,7 @@ public class SongController
     {
         this.view = view;
         this.model = model;
+        this.audioManager = audioManager;
         UpperSongController = upperSongController;
         ComboController = comboController;
         LowerSongController = lowerSongController;
@@ -43,11 +48,13 @@ public class SongController
     void AddListeners ()
     {
         model.OnAudioStartTimeReached += HandleAudioStartTimeReached;
+        model.OnNoteHit += HandleNoteHit;
     }
 
     void RemoveListeners ()
     {
         model.OnAudioStartTimeReached -= HandleAudioStartTimeReached;
+        model.OnNoteHit -= HandleNoteHit;
     }
 
     void HandleAudioStartTimeReached ()
@@ -55,7 +62,12 @@ public class SongController
         view.Play();
     }
 
-
+    void HandleNoteHit (Note _, HitScore __)
+    {
+        //TODO add dynamic hit sound check based on note settings
+        audioManager.PlaySfx(HIT_SOUND);
+    }
+    
     public void Dispose ()
     {
         RemoveListeners();

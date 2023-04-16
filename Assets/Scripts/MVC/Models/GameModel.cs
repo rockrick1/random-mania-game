@@ -3,12 +3,14 @@
     public ISongModel SongModel { get; }
     public IComboModel ComboModel { get; }
     public IGameInputManager InputManager { get; }
-    
-    public GameModel (ISongModel songModel, IComboModel comboModel, IGameInputManager inputManager)
+    public IAudioManager AudioManager { get; }
+
+    public GameModel (ISongModel songModel, IComboModel comboModel, IGameInputManager inputManager, IAudioManager audioManager)
     {
         SongModel = songModel;
         ComboModel = comboModel;
         InputManager = inputManager;
+        AudioManager = audioManager;
     }
 
     public void Initialize ()

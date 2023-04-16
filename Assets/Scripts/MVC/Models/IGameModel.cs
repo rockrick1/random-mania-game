@@ -2,6 +2,7 @@
 {
     ISongModel SongModel { get; }
     IGameInputManager InputManager { get; }
+    IAudioManager AudioManager { get; }
 
     void Initialize ();
     void Dispose ();

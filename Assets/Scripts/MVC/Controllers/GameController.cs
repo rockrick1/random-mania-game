@@ -16,5 +16,6 @@ public class GameController : IDisposable
 
     public void Dispose ()
     {
+        SongController.Dispose();
     }
 }
