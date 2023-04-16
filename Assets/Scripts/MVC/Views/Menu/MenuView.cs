@@ -3,12 +3,12 @@
 public class MenuView : MonoBehaviour
 {
     [SerializeField] MainMenuView mainMenuView;
-    [SerializeField] SettingsView settingsView;
     [SerializeField] SongMenuView songMenuView;
+    [SerializeField] SettingsView settingsView;
     
     public MainMenuView MainMenuView => mainMenuView;
-    public SettingsView SettingsView => settingsView;
     public SongMenuView SongMenuView => songMenuView;
+    public SettingsView SettingsView => settingsView;
     
     
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine.Device;
+using UnityEngine.SceneManagement;
 
 public class MenuController : IDisposable
 {
@@ -38,6 +39,7 @@ public class MenuController : IDisposable
     {
         model.OnBackPressed += HandleBackPressed;
         mainMenuController.OnOpenSongMenu += HandleOpenSongMenu;
+        mainMenuController.OnOpenEditor += HandleOpenEditor;
         mainMenuController.OnOpenSettings += HandleOpenSettings;
     }
 
@@ -45,6 +47,7 @@ public class MenuController : IDisposable
     {
         model.OnBackPressed -= HandleBackPressed;
         mainMenuController.OnOpenSongMenu -= HandleOpenSongMenu;
+        mainMenuController.OnOpenEditor -= HandleOpenEditor;
         mainMenuController.OnOpenSettings -= HandleOpenSettings;
     }
 
@@ -53,6 +56,8 @@ public class MenuController : IDisposable
     void HandleOpenSongMenu () => OpenMenu(MenuType.SongMenu);
 
     void HandleOpenSettings () => OpenMenu(MenuType.Settings);
+    
+    void HandleOpenEditor () => SceneManager.LoadScene("SongEditor");
 
     void OpenMenu (MenuType menu)
     {

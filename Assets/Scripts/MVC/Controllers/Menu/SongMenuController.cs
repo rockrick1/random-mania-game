@@ -18,12 +18,10 @@ public class SongMenuController : IDisposable
 
     void AddListeners ()
     {
-        throw new NotImplementedException();
     }
 
     void RemoveListeners ()
     {
-        throw new NotImplementedException();
     }
 
     public void Open () => view.Open();

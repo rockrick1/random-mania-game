@@ -3,6 +3,7 @@
 public class MainMenuController : IDisposable
 {
     public event Action OnOpenSongMenu;
+    public event Action OnOpenEditor;
     public event Action OnOpenSettings;
     public event Action OnQuit;
     
@@ -23,6 +24,7 @@ public class MainMenuController : IDisposable
     void AddListeners ()
     {
         view.OnOpenSongMenu += HandleOpenSongMenu;
+        view.OnOpenEditor += HandleOpenEditor;
         view.OnOpenSettings += HandleOpenSettings;
         view.OnQuit += HandleQuit;
     }
@@ -30,11 +32,14 @@ public class MainMenuController : IDisposable
     void RemoveListeners ()
     {
         view.OnOpenSongMenu -= HandleOpenSongMenu;
+        view.OnOpenEditor -= HandleOpenEditor;
         view.OnOpenSettings -= HandleOpenSettings;
         view.OnQuit -= HandleQuit;
     }
 
     void HandleOpenSongMenu () => OnOpenSongMenu?.Invoke();
+
+    void HandleOpenEditor () => OnOpenEditor?.Invoke();
 
     void HandleOpenSettings () => OnOpenSettings?.Invoke();
     
