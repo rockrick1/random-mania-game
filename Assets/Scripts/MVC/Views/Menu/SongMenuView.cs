@@ -21,10 +21,12 @@ public class SongMenuView : MonoBehaviour
 
     public void Setup (IReadOnlyList<ISongSettings> songs)
     {
+        SetupSongsListSize(songs.Count);
+
         foreach (ISongSettings song in songs)
         {
             SongEntryView entry = Instantiate(songEntryPrefab, songsList.transform);
-            entry.transform.Rotate(Vector3.forward, -scrollRect.transform.rotation.z);
+            entry.transform.localRotation = Quaternion.Euler(0f, 0f, 20f);
             entry.Setup(song);
             entry.Button.OnLeftClick.AddListener(() => OnSongClicked?.Invoke(song.Id));
         }
@@ -38,5 +40,14 @@ public class SongMenuView : MonoBehaviour
     public void Close ()
     {
         gameObject.SetActive(false);
+    }
+
+    void SetupSongsListSize (int songCount)
+    {
+        float height = ((RectTransform) songEntryPrefab.transform).rect.height;
+        height *= songCount + 2;
+        height += songsList.spacing * (songCount + 2);
+        var transform1 = songsList.transform;
+        ((RectTransform) transform1).sizeDelta = new Vector2(((RectTransform) transform1).sizeDelta.x, height);
     }
 }

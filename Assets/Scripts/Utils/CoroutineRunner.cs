@@ -14,7 +14,7 @@ public class CoroutineRunner : MonoBehaviour
 
     public void StartCoroutine (string id, IEnumerator routine)
     {
-        if (routines.TryGetValue(id, out var existing))
+        if (routines.TryGetValue(id, out var existing) && existing != null)
             StopCoroutine(existing);
         routines[id] = StartCoroutine(routine);
     }

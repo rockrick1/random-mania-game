@@ -10,6 +10,7 @@ using UnityEngine.Networking;
 
 public class SongLoaderModel : ISongLoaderModel
 {
+    const string AUDIO_EXTENSION = ".mp3";
     const string BPM_KEY = "bpm";
     const string APPROACH_RATE_KEY = "approachRate";
     const string DIFFICULTY_KEY = "difficulty";
@@ -20,6 +21,7 @@ public class SongLoaderModel : ISongLoaderModel
 
     public event Action OnSongLoaded;
     public event Action OnSongSaved;
+    public event Action OnSongCreated;
 
     public SongSettings Settings { get; private set; }
     public AudioClip Audio { get; private set; }
@@ -50,6 +52,15 @@ public class SongLoaderModel : ISongLoaderModel
                 continue;
             File.WriteAllBytes(filePath, songAsset.bytes);
         }
+    }
+
+    public void CreateSongFolder (string songId)
+    {
+        if (!Directory.Exists(SongsPath))
+            throw new Exception("Songs path doest not exist! something went wrong on initialization, it seems.");
+        string dirPath = Path.Combine(SongsPath, songId);
+        Directory.CreateDirectory(dirPath);
+        OnSongCreated?.Invoke();
     }
 
     public void LoadSong (string songId)
@@ -109,7 +120,9 @@ public class SongLoaderModel : ISongLoaderModel
         foreach (string dir in GetAllSongDirs())
         {
             textPath = GetTextPath(dir);
-
+            if (!File.Exists(textPath))
+                continue;
+            
             Settings = new SongSettings {Id = dir};
 
             string songText = File.ReadAllText(textPath);
@@ -179,13 +192,27 @@ public class SongLoaderModel : ISongLoaderModel
     
     IEnumerator ReadAudioFile (string path)
     {
+        if (string.IsNullOrEmpty(path))
+            throw new Exception(
+                $"audio file was not found on driectory {path}. Make sure there is a {AUDIO_EXTENSION} file in the song directory.");
         UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG);
         yield return req.SendWebRequest();
         Audio = DownloadHandlerAudioClip.GetContent(req);
     }
     
     string GetTextPath(string songId) => Path.Combine(SongsPath, songId, "song.txt");
-    string GetAudioPath(string songId) => Path.Combine(SongsPath, songId, "song.mp3");
+    
+    string GetAudioPath(string songId)
+    {
+        string songPath = Path.Combine(SongsPath, songId);
+        foreach (string file in Directory.GetFiles(songPath))
+        {
+            if (file.EndsWith(AUDIO_EXTENSION))
+                return file;
+        }
+        return string.Empty;
+    }
+
     string GetResourcePath(string songId) => Path.Combine(songResourcesPath, songId);
 
     double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);

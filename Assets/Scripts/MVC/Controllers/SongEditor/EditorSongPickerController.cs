@@ -21,20 +21,28 @@ public class EditorSongPickerController : IDisposable
     public void Initialize ()
     {
         AddListeners();
-        view.LoadOptions(songLoaderModel.GetAllSongDirs());
+        RefreshOptions();
     }
 
     void AddListeners ()
     {
+        songLoaderModel.OnSongCreated += HandleSongCreated;
         view.OnSongPicked += HandleSongPicked;
         view.OnOpenFolderClicked += HandleOpenFolderClicked;
+        view.OnNewSongClicked += HandleNewSongClicked;
+        view.OnRefreshClicked += HandleRefreshClicked;
     }
 
     void RemoveListeners ()
     {
+        songLoaderModel.OnSongCreated -= HandleSongCreated;
         view.OnSongPicked -= HandleSongPicked;
         view.OnOpenFolderClicked -= HandleOpenFolderClicked;
+        view.OnNewSongClicked -= HandleNewSongClicked;
+        view.OnRefreshClicked -= HandleRefreshClicked;
     }
+
+    void HandleSongCreated () => RefreshOptions();
 
     void HandleSongPicked (string song)
     {
@@ -44,6 +52,18 @@ public class EditorSongPickerController : IDisposable
     void HandleOpenFolderClicked ()
     {
         System.Diagnostics.Process.Start("explorer.exe", "/select," + songLoaderModel.SongsPath.Replace(@"/", @"\"));
+    }
+
+    void HandleNewSongClicked ()
+    {
+        //TODO call a popup with text input and instructions here
+    }
+
+    void HandleRefreshClicked () => RefreshOptions();
+
+    void RefreshOptions ()
+    {
+        view.LoadOptions(songLoaderModel.GetAllSongDirs());
     }
 
     public void Dispose ()
