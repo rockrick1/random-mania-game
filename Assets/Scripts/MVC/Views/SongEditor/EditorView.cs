@@ -12,6 +12,7 @@ public class EditorView : MonoBehaviour
     [SerializeField] EditorSongView editorSongView;
     [SerializeField] Transform horizontalSeparatorsParent;
     [SerializeField] RectTransform horizontalSeparatorPrefab;
+    [SerializeField] UIClickHandler backButton;
 
     public AudioSource SongPlayer => songPlayer;
     public WaveForm2D WaveForm2D => waveForm2D;
@@ -20,6 +21,7 @@ public class EditorView : MonoBehaviour
     public EditorSongDetailsView EditorSongDetailsView => editorSongDetailsView;
     public EditorTopBarView EditorTopBarView => editorTopBarView;
     public EditorSongView EditorSongView => editorSongView;
+    public UIClickHandler BackButton => backButton;
 
     List<RectTransform> horizontalSeparators = new();
 

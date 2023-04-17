@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class EditorController : IDisposable
 {
@@ -47,6 +49,7 @@ public class EditorController : IDisposable
 
     void AddListeners ()
     {
+        view.BackButton.OnLeftClick.AddListener(HandleBack);
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
         inputManager.OnSongPlayPause += HandlePlayPause;
         inputManager.OnSongScroll += HandleSongScroll;
@@ -54,9 +57,15 @@ public class EditorController : IDisposable
 
     void RemoveListeners ()
     {
+        view.BackButton.OnLeftClick.RemoveListener(HandleBack);
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
         inputManager.OnSongPlayPause -= HandlePlayPause;
         inputManager.OnSongScroll -= HandleSongScroll;
+    }
+
+    void HandleBack ()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     void HandleSongLoaded ()
