@@ -6,6 +6,7 @@ public class EditorView : MonoBehaviour
     [SerializeField] AudioSource songPlayer;
     [SerializeField] WaveForm2D waveForm2D;
     [SerializeField] EditorSongPickerView editorSongPickerView;
+    [SerializeField] NewSongView editorNewSongView;
     [SerializeField] EditorSongDetailsView editorSongDetailsView;
     [SerializeField] EditorTopBarView editorTopBarView;
     [SerializeField] EditorSongView editorSongView;
@@ -15,10 +16,11 @@ public class EditorView : MonoBehaviour
     public AudioSource SongPlayer => songPlayer;
     public WaveForm2D WaveForm2D => waveForm2D;
     public EditorSongPickerView EditorSongPickerView => editorSongPickerView;
+    public NewSongView EditorNewSongView => editorNewSongView;
     public EditorSongDetailsView EditorSongDetailsView => editorSongDetailsView;
     public EditorTopBarView EditorTopBarView => editorTopBarView;
     public EditorSongView EditorSongView => editorSongView;
-    
+
     List<RectTransform> horizontalSeparators = new();
 
     public void SetSong (AudioClip clip) => songPlayer.clip = clip;

@@ -18,4 +18,5 @@ public interface ISongLoaderModel
     void SaveSong (ISongSettings settings);
     IReadOnlyList<string> GetAllSongDirs ();
     IReadOnlyList<ISongSettings> GetAllSongSettings();
+    bool SongExists (string songId);
 }

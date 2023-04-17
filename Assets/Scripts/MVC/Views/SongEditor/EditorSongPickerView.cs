@@ -29,4 +29,9 @@ public class EditorSongPickerView : MonoBehaviour
     {
         OnSongPicked?.Invoke(dropdown.options[dropdown.value].text);
     }
+
+    public void ShowError (string error)
+    {
+        throw new NotImplementedException();
+    }
 }

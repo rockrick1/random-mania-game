@@ -133,6 +133,8 @@ public class SongLoaderModel : ISongLoaderModel
         return ret;
     }
 
+    public bool SongExists (string songId) => Directory.Exists(Path.Combine(SongsPath, songId));
+
     void LoadSongSettings (string file)
     {
         string[] lines = file.Split('\n');

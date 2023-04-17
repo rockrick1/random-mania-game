@@ -4,6 +4,7 @@
     {
         EditorSongPickerController songPickerController = new(
             view.EditorSongPickerView,
+            view.EditorNewSongView,
             model.SongPickerModel,
             model.SongLoaderModel
         );
