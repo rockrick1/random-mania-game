@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class EditorController : IDisposable
@@ -9,6 +8,7 @@ public class EditorController : IDisposable
     readonly EditorSongDetailsController songDetailsController;
     readonly EditorTopBarController topBarController;
     readonly EditorSongController songController;
+    readonly EditorNewSongController newSongController;
     readonly EditorView view;
     readonly IEditorModel model;
     readonly IEditorSongModel songModel;
@@ -20,6 +20,7 @@ public class EditorController : IDisposable
         EditorSongDetailsController songDetailsController,
         EditorTopBarController topBarController,
         EditorSongController songController,
+        EditorNewSongController newSongController,
         EditorView view,
         IEditorModel model,
         IEditorSongModel songModel,
@@ -31,6 +32,7 @@ public class EditorController : IDisposable
         this.songDetailsController = songDetailsController;
         this.topBarController = topBarController;
         this.songController = songController;
+        this.newSongController = newSongController;
         this.view = view;
         this.model = model;
         this.songModel = songModel;
@@ -44,6 +46,7 @@ public class EditorController : IDisposable
         songDetailsController.Initialize();
         topBarController.Initialize();
         songController.Initialize();
+        newSongController.Initialize();
         AddListeners();
     }
 
@@ -91,5 +94,6 @@ public class EditorController : IDisposable
         songDetailsController.Dispose();
         topBarController.Dispose();
         songController.Dispose();
+        newSongController.Dispose();
     }
 }

@@ -83,7 +83,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ISongLoaderModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\SettingsView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\NewSongView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorNewSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\SongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ComboModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongPickerModel.cs" />
@@ -133,6 +133,7 @@
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorNewSongController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -3,19 +3,19 @@
 public class EditorSongPickerController : IDisposable
 {
     readonly EditorSongPickerView view;
-    readonly NewSongView newSongView;
+    readonly EditorNewSongController newSongController;
     readonly IEditorSongPickerModel model;
     readonly ISongLoaderModel songLoaderModel;
 
     public EditorSongPickerController (
         EditorSongPickerView view,
-        NewSongView newSongView,
+        EditorNewSongController newSongController,
         IEditorSongPickerModel model,
         ISongLoaderModel songLoaderModel
     )
     {
         this.view = view;
-        this.newSongView = newSongView;
+        this.newSongController = newSongController;
         this.model = model;
         this.songLoaderModel = songLoaderModel;
     }
@@ -33,7 +33,6 @@ public class EditorSongPickerController : IDisposable
         view.OnOpenFolderClicked += HandleOpenFolderClicked;
         view.OnNewSongClicked += HandleNewSongClicked;
         view.OnRefreshClicked += HandleRefreshClicked;
-        newSongView.OnCreateSong += HandleCreateSong;
     }
 
     void RemoveListeners ()
@@ -57,20 +56,9 @@ public class EditorSongPickerController : IDisposable
         System.Diagnostics.Process.Start("explorer.exe", "/select," + songLoaderModel.SongsPath.Replace(@"/", @"\"));
     }
 
-    void HandleNewSongClicked () => newSongView.Open();
+    void HandleNewSongClicked () => newSongController.Open();
 
     void HandleRefreshClicked () => RefreshOptions();
-
-    void HandleCreateSong (string songId)
-    {
-        if (songLoaderModel.SongExists(songId))
-        {
-            view.ShowError("A song with that name was already created! Pick another name or editr this song's existing file.");
-            return;
-        }
-        songLoaderModel.CreateSongFolder(songId);
-        newSongView.Close();
-    }
 
     void RefreshOptions () => view.LoadOptions(songLoaderModel.GetAllSongDirs());
 

@@ -2,9 +2,13 @@
 {
     public static EditorController Create (EditorView view, EditorModel model)
     {
+        EditorNewSongController newSongController = new(
+            view.EditorNewSongView,
+            model.SongLoaderModel
+        );
         EditorSongPickerController songPickerController = new(
             view.EditorSongPickerView,
-            view.EditorNewSongView,
+            newSongController,
             model.SongPickerModel,
             model.SongLoaderModel
         );
@@ -27,6 +31,7 @@
             songDetailsController,
             topBarController,
             songController,
+            newSongController,
             view,
             model,
             model.SongModel,
