@@ -2,16 +2,18 @@
 
 public class EditorNewSongController : IDisposable
 {
+    public event Action<string> OnEditNewSong;
+    
     readonly EditorNewSongView view;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly IEditorNewSongModel model;
 
     public EditorNewSongController (
         EditorNewSongView view,
-        ISongLoaderModel songLoaderModel
+        IEditorNewSongModel model
     )
     {
         this.view = view;
-        this.songLoaderModel = songLoaderModel;
+        this.model = model;
     }
 
     public void Initialize ()
@@ -46,24 +48,18 @@ public class EditorNewSongController : IDisposable
             view.ShowError("Please enter a song name.");
             return;
         }
-        if (songLoaderModel.SongExists(songId))
+        if (model.SongExists(songId))
         {
             view.ShowError("A song with that name already exists! Pick another name or edit this song's existing file.");
             return;
         }
-        songLoaderModel.CreateSongFolder(songId);
+        model.CreateSongFolder(songId);
         view.SetCreationState(true);
     }
 
-    void HandleOpenNewSongFolder ()
-    {
-        throw new NotImplementedException();
-    }
+    void HandleOpenNewSongFolder () => model.OpenSongFolder();
 
-    void HandleEditNewSong ()
-    {
-        throw new NotImplementedException();
-    }
+    void HandleEditNewSong () => OnEditNewSong?.Invoke(model.LastCreatedSongId);
 
     public void Dispose ()
     {

@@ -11,10 +11,10 @@ public class SongSettings : ISongSettings
     
     public SongSettings ()
     {
-        Bpm = default;
-        ApproachRate = default;
-        Difficulty = default;
-        StartingTime = default;
+        Bpm = 60;
+        ApproachRate = 1;
+        Difficulty = 0;
+        StartingTime = 0;
         Notes = new List<Note>();
     }
 

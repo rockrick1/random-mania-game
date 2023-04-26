@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class EditorSongPickerController : IDisposable
 {
@@ -28,6 +29,7 @@ public class EditorSongPickerController : IDisposable
 
     void AddListeners ()
     {
+        newSongController.OnEditNewSong += HandleEditNewSong;
         songLoaderModel.OnSongCreated += HandleSongCreated;
         view.OnSongPicked += HandleSongPicked;
         view.OnOpenFolderClicked += HandleOpenFolderClicked;
@@ -37,6 +39,7 @@ public class EditorSongPickerController : IDisposable
 
     void RemoveListeners ()
     {
+        newSongController.OnEditNewSong -= HandleEditNewSong;
         songLoaderModel.OnSongCreated -= HandleSongCreated;
         view.OnSongPicked -= HandleSongPicked;
         view.OnOpenFolderClicked -= HandleOpenFolderClicked;
@@ -44,17 +47,20 @@ public class EditorSongPickerController : IDisposable
         view.OnRefreshClicked -= HandleRefreshClicked;
     }
 
+    void HandleEditNewSong (string songId)
+    {
+        view.PickSong(songId);
+        model.PickSong(songId);
+    }
+
     void HandleSongCreated () => RefreshOptions();
 
-    void HandleSongPicked (string song)
+    void HandleSongPicked (string songId)
     {
-        model.PickSong(song);
+        model.PickSong(songId);
     }
 
-    void HandleOpenFolderClicked ()
-    {
-        System.Diagnostics.Process.Start("explorer.exe", "/select," + songLoaderModel.SongsPath.Replace(@"/", @"\"));
-    }
+    void HandleOpenFolderClicked () => Application.OpenURL($"file://{songLoaderModel.SongsPath}");
 
     void HandleNewSongClicked () => newSongController.Open();
 

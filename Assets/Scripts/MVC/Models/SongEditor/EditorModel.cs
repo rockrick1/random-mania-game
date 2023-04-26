@@ -7,11 +7,13 @@ public class EditorModel : IEditorModel
     public IEditorInputManager InputManager { get; }
     public IAudioManager AudioManager { get; }
     public IEditorSongModel SongModel { get; }
+    public IEditorNewSongModel NewSongModel { get; set; }
 
     public EditorModel (
         ISongLoaderModel songLoaderModel,
         IEditorSongPickerModel songPickerModel,
         IEditorSongModel songModel,
+        IEditorNewSongModel newSongModel,
         IEditorInputManager inputManager,
         IAudioManager audioManager
     )
@@ -19,6 +21,7 @@ public class EditorModel : IEditorModel
         SongLoaderModel = songLoaderModel;
         SongPickerModel = songPickerModel;
         SongModel = songModel;
+        NewSongModel = newSongModel;
         InputManager = inputManager;
         AudioManager = audioManager;
     }

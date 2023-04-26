@@ -16,6 +16,7 @@ public class EditorNewSongView : MonoBehaviour
     [SerializeField] UIClickHandler cancel;
     [SerializeField] UIClickHandler openFolder;
     [SerializeField] UIClickHandler edit;
+    [SerializeField] UIClickHandler closeButton;
 
     [SerializeField] float shakeStrength;
 
@@ -30,6 +31,7 @@ public class EditorNewSongView : MonoBehaviour
         errorBox.alpha = 0f;
         create.OnLeftClick.AddListener(HandleCreate);
         cancel.OnLeftClick.AddListener(HandleCancel);
+        closeButton.OnLeftClick.AddListener(HandleCancel);
         openFolder.OnLeftClick.AddListener(HandleOpenFolder);
         edit.OnLeftClick.AddListener(HandleEdit);
         errorOriginalPos = errorBox.transform.position;
@@ -52,6 +54,7 @@ public class EditorNewSongView : MonoBehaviour
     {
         errorBox.alpha = 0f;
         gameObject.SetActive(true);
+        SetCreationState(false);
     }
 
     public void Close () => gameObject.SetActive(false);
