@@ -7,6 +7,8 @@ public class SongModel : ISongModel
 {
     public event Action<Note> OnNoteSpawned;
     public event Action<Note, HitScore> OnNoteHit;
+    public event Action<Note, HitScore> OnLongNoteHit;
+    public event Action<Note, HitScore> OnLongNoteReleased;
     public event Action<Note> OnNoteMissed;
     public event Action OnAudioStartTimeReached;
     public event Action OnSongFinished;
@@ -48,7 +50,7 @@ public class SongModel : ISongModel
         
         CoroutineRunner.Instance.StartCoroutine(nameof(AudioStartRoutine), AudioStartRoutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
-        CoroutineRunner.Instance.StartCoroutine(nameof(SongRoutine), SongRoutine());
+        CoroutineRunner.Instance.StartCoroutine(nameof(NotesHitRoutine), NotesHitRoutine());
     }
 
     double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
@@ -71,7 +73,8 @@ public class SongModel : ISongModel
             yield return null;
             
             double elapsed = AudioSettings.dspTime - dspSongStart;
-            double noteSpawnTime = notes[noteIndex].Timestamp - CurrentSongSettings.ApproachRate;
+            double noteSpawnTime = notes[noteIndex].Time - CurrentSongSettings.ApproachRate;
+            
             if (elapsed > noteSpawnTime)
             {
                 OnNoteSpawned?.Invoke(notes[noteIndex]);
@@ -81,46 +84,129 @@ public class SongModel : ISongModel
         }
     }
 
-    IEnumerator SongRoutine ()
+    IEnumerator NotesHitRoutine ()
     {
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
         int noteIndex = 0;
+        bool hittingCurrentLongNote = false;
+        
         while (true)
         {
+            if (noteIndex >= notes.Count)
+                break;
+            
             yield return null;
 
+            Note currentNote = notes[noteIndex];
+
             double elapsed = AudioSettings.dspTime - dspSongStart;
-            double timeToNoteHit = notes[noteIndex].Timestamp - elapsed;
-            if (timeToNoteHit < okayHitWindow)
+            double timeToNote = currentNote.Time - elapsed;
+            double timeToNoteEnd = currentNote.EndTime - elapsed;
+
+            if (!currentNote.IsLong)
             {
-                if (inputManager.GetPositionPressed(notes[noteIndex].Position))
+                if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
                 {
-                    OnNoteHit?.Invoke(notes[noteIndex], GetHitScrore(Math.Abs(timeToNoteHit)));
-                    if (++noteIndex >= notes.Count)
-                        break;
+                    OnNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
+                    noteIndex++;
                     continue;
                 }
             }
-
-            if (timeToNoteHit < -okayHitWindow)
+            else
             {
-                OnNoteMissed?.Invoke(notes[noteIndex]);
-                if (++noteIndex >= notes.Count)
-                    break;
+                if (hittingCurrentLongNote)
+                {
+                    if (timeToNoteEnd < 0 || !inputManager.GetPositionHeld(currentNote.Position))
+                    {
+                        hittingCurrentLongNote = false;
+                        OnLongNoteReleased?.Invoke(currentNote, GetHitScore(timeToNoteEnd));
+                        noteIndex++;
+                        continue;
+                    }
+                }
+                
+                else if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
+                {
+                    OnLongNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
+                    hittingCurrentLongNote = true;
+                    continue;
+                }
+            }
+            
+            if (timeToNote < -okayHitWindow)
+            {
+                OnNoteMissed?.Invoke(currentNote);
+                noteIndex++;
             }
         }
 
         yield return new WaitForSeconds(okayHitWindow * 3);
         OnSongFinished?.Invoke();
     }
-
-    HitScore GetHitScrore (double timeToNoteHit)
+    
+    // IEnumerator LongNotesHitRoutine ()
+    // {
+    //     IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
+    //     int noteIndex = 0;
+    //
+    //     while (true)
+    //     {
+    //         if (noteIndex >= notes.Count)
+    //             break;
+    //         yield return null;
+    //
+    //         Note currentNote = notes[noteIndex];
+    //
+    //         if (!currentNote.IsLong)
+    //         {
+    //             noteIndex++;
+    //             continue;
+    //         }
+    //
+    //         double elapsed = AudioSettings.dspTime - dspSongStart;
+    //         double timeToNote = currentNote.Time - elapsed;
+    //         double timeToNoteEnd = currentNote.EndTime - elapsed;
+    //
+    //         if (!currentLongNoteHit && timeToNote < okayHitWindow)
+    //         {
+    //             if (inputManager.GetPositionPressed(currentNote.Position))
+    //             {
+    //                 OnLongNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
+    //                 currentLongNoteHit = true;
+    //                 continue;
+    //             }
+    //         }
+    //
+    //         if (currentLongNoteHit)
+    //         {
+    //             if (timeToNoteEnd < 0 || !inputManager.GetPositionHeld(currentNote.Position))
+    //             {
+    //                 currentLongNoteHit = false;
+    //                 OnLongNoteReleased?.Invoke(currentNote, GetHitScore(timeToNoteEnd));
+    //                 noteIndex++;
+    //                 continue;
+    //             }
+    //         }
+    //
+    //         if (timeToNote < -okayHitWindow)
+    //         {
+    //             OnNoteMissed?.Invoke(currentNote);
+    //             noteIndex++;
+    //         }
+    //     }
+    //
+    //     yield return new WaitForSeconds(okayHitWindow * 3);
+    //     OnSongFinished?.Invoke();
+    // }
+    
+    HitScore GetHitScore (double timeToNoteHit)
     {
-        if (timeToNoteHit <= perfectHitWindow)
+        double absValue = Math.Abs(timeToNoteHit);
+        if (absValue <= perfectHitWindow)
             return HitScore.Perfect;
-        if (timeToNoteHit <= greatHitWindow)
+        if (absValue <= greatHitWindow)
             return HitScore.Great;
-        if (timeToNoteHit <= okayHitWindow)
+        if (absValue <= okayHitWindow)
             return HitScore.Okay;
         return HitScore.Miss;
     }

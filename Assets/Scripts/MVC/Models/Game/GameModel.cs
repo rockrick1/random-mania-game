@@ -1,14 +1,14 @@
 ﻿public class GameModel : IGameModel
 {
     public ISongModel SongModel { get; }
-    public IComboModel ComboModel { get; }
+    public IScoreModel ScoreModel { get; }
     public IGameInputManager InputManager { get; }
     public IAudioManager AudioManager { get; }
 
-    public GameModel (ISongModel songModel, IComboModel comboModel, IGameInputManager inputManager, IAudioManager audioManager)
+    public GameModel (ISongModel songModel, IScoreModel scoreModel, IGameInputManager inputManager, IAudioManager audioManager)
     {
         SongModel = songModel;
-        ComboModel = comboModel;
+        ScoreModel = scoreModel;
         InputManager = inputManager;
         AudioManager = audioManager;
     }
@@ -17,12 +17,12 @@
     {
         SongModel.Initialize();
         SongModel.LoadSong(GameContext.Current.SelectedSongId);
-        ComboModel.Initialize();
+        ScoreModel.Initialize();
     }
 
     public void Dispose ()
     {
         SongModel.Dispose();
-        ComboModel.Dispose();
+        ScoreModel.Dispose();
     }
 }

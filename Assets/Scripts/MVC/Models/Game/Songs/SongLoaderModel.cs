@@ -168,7 +168,20 @@ public class SongLoaderModel : ISongLoaderModel
                     break;
                 case NOTES_KEY:
                     string[] values = line.Split(',');
-                    Settings.Notes.Add(new Note(ParseFloat(values[0]), int.Parse(values[1])));
+                    string[] times = values[0].Split(':');
+                    Note n;
+                    if (times.Length > 1)
+                        n = new Note(
+                            ParseFloat(times[0]),
+                            times.Length > 1 ? ParseFloat(times[1]) : 0,
+                            int.Parse(values[1])
+                        );
+                    else
+                        n = new Note(
+                            ParseFloat(times[0]),
+                            int.Parse(values[1])
+                        );
+                    Settings.Notes.Add(n);
                     break;
                 default:
                     throw new Exception($"Unknown key found while parsing song: {key}");
@@ -187,7 +200,12 @@ public class SongLoaderModel : ISongLoaderModel
         text += $"[{NOTES_KEY}]\n";
 
         foreach (Note note in settings.Notes)
-            text += $"{note.Timestamp.ToString(CultureInfo.InvariantCulture)},{note.Position}\n";
+        {
+            string times = note.Time.ToString(CultureInfo.InvariantCulture);
+            if (note.IsLong)
+                times += $":{note.EndTime.ToString(CultureInfo.InvariantCulture)}";
+            text += $"{times},{note.Position}\n";
+        }
 
         File.WriteAllText(textPath, text);
     }

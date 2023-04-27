@@ -86,7 +86,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\Menu\SettingsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorNewSongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\SongView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ComboModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ScoreModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SettingsController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\MenuModelFactory.cs" />
@@ -115,7 +115,7 @@
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleSprite.cs" />
      <Compile Include="Assets\Scripts\Managers\GameContext.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\IComboModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\IScoreModel.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\Scripts\Managers\MenuManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\ISongMenuModel.cs" />

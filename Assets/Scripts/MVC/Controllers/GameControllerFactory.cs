@@ -15,7 +15,7 @@
 
         ComboController comboController = new(
             view.ComboView,
-            model.ComboModel
+            model.ScoreModel
         );
 
         SongController songController = new(

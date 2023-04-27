@@ -1,6 +1,6 @@
 ﻿using System;
 
-public interface IComboModel : IDisposable
+public interface IScoreModel : IDisposable
 {
     event Action<int> OnComboChanged;
 

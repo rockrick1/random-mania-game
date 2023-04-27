@@ -150,14 +150,14 @@ public class EditorSongModel : IEditorSongModel
                 return false;
             
             Note note = currentSongSettings.Notes[i];
-            if (Mathf.Approximately(note.Timestamp, time))
+            if (Mathf.Approximately(note.Time, time))
             {
                 if (note.Position == pos)
                     return true;
                 substituted = true;
                 return false;
             }
-            if (note.Timestamp > time)
+            if (note.Time > time)
                 break;
         }
         return false;

@@ -78,7 +78,7 @@ public class EditorSongView : MonoBehaviour
     public void CreateNote (Note note, int index = -1)
     {
         NoteView instance = Instantiate(noteViewPrefab, notesParent);
-        instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Timestamp));
+        instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Time));
         instance.Note = note;
         if (index == -1)
             noteInstances.Add(instance);

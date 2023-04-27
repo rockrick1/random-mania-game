@@ -3,9 +3,9 @@
 public class ComboController : IDisposable
 {
     readonly ComboView view;
-    readonly IComboModel model;
+    readonly IScoreModel model;
 
-    public ComboController (ComboView view, IComboModel model)
+    public ComboController (ComboView view, IScoreModel model)
     {
         this.view = view;
         this.model = model;

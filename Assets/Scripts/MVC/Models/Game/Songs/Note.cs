@@ -1,11 +1,22 @@
 ﻿public class Note
 {
-    public float Timestamp { get; set; }
-    public int Position { get; set; }
+    public float Time { get; }
+    public float EndTime { get; }
+    public int Position { get; }
+    public bool IsLong { get; }
     
-    public Note (float timestamp, int position)
+    public Note (float time, int position)
     {
-        Timestamp = timestamp;
+        Time = time;
         Position = position;
+        IsLong = false;
+    }
+    
+    public Note (float time, float endTime, int position)
+    {
+        Time = time;
+        EndTime = endTime;
+        Position = position;
+        IsLong = true;
     }
 }

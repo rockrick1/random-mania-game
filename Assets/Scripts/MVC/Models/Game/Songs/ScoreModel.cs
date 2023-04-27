@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class ComboModel : IComboModel
+public class ScoreModel : IScoreModel
 {
     public event Action<int> OnComboChanged;
     
@@ -19,7 +19,7 @@ public class ComboModel : IComboModel
     
     int combo;
 
-    public ComboModel (ISongModel songModel)
+    public ScoreModel (ISongModel songModel)
     {
         this.songModel = songModel;
     }
@@ -41,7 +41,11 @@ public class ComboModel : IComboModel
         songModel.OnNoteMissed -= HandleNoteMissed;
     }
 
-    void HandleNoteHit (Note _, HitScore __) => Combo++;
+    void HandleNoteHit (Note _, HitScore __)
+    {
+        //TODO calculate score here
+        Combo++;
+    }
 
     void HandleNoteMissed (Note _) => Combo = 0;
 

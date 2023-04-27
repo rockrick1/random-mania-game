@@ -3,8 +3,8 @@
     public static GameModel Create (IGameInputManager inputManager, IAudioManager audioManager)
     {
         ISongModel songModel = SongModelFactory.Create(inputManager);
-        IComboModel comboModel = new ComboModel(songModel);
-        var model = new GameModel(songModel, comboModel, inputManager, audioManager);
+        IScoreModel scoreModel = new ScoreModel(songModel);
+        var model = new GameModel(songModel, scoreModel, inputManager, audioManager);
         return model;
     }
 }

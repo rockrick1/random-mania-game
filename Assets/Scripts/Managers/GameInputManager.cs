@@ -10,6 +10,12 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
 
     public bool GetPositionPressed (int pos) =>
         (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X)) && selectedPosition == pos;
+    
+    public bool GetPositionReleased (int pos) =>
+        (Input.GetKeyUp(KeyCode.Z) || Input.GetKeyUp(KeyCode.X)) && selectedPosition == pos;
+    
+    public bool GetPositionHeld (int pos) =>
+        (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.X)) && selectedPosition == pos;
 
     public int GetCursorPosition () => selectedPosition;
 
