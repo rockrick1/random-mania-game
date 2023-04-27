@@ -29,6 +29,7 @@ public class UpperSongController : IDisposable
         songModel.OnNoteSpawned += HandleNoteSpawned;
         songModel.OnNoteMissed += HandleNoteMissed;
         songModel.OnNoteHit += HandleNoteHit;
+        songModel.OnLongNoteReleased += HandleLongNoteReleased;
     }
 
     void RemoveListeners ()
@@ -36,6 +37,7 @@ public class UpperSongController : IDisposable
         songModel.OnNoteSpawned -= HandleNoteSpawned;
         songModel.OnNoteMissed -= HandleNoteMissed;
         songModel.OnNoteHit -= HandleNoteHit;
+        songModel.OnLongNoteReleased -= HandleLongNoteReleased;
     }
 
     void HandleNoteSpawned (Note note) => liveNotes.Add(view.SpawnNote(note, noteSpeed));
@@ -53,6 +55,8 @@ public class UpperSongController : IDisposable
             return;
         }
     }
+
+    void HandleLongNoteReleased (Note note, HitScore score) => HandleNoteHit(note, score);
 
     void HandleNoteMissed (Note note)
     {

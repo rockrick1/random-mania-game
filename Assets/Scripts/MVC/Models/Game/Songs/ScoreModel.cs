@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class ScoreModel : IScoreModel
 {
@@ -18,6 +20,7 @@ public class ScoreModel : IScoreModel
     }
     
     int combo;
+    bool holdingLongNote;
 
     public ScoreModel (ISongModel songModel)
     {
@@ -27,24 +30,53 @@ public class ScoreModel : IScoreModel
     public void Initialize ()
     {
         AddListeners();
+        CoroutineRunner.Instance.StartCoroutine(nameof(LongNoteHoldRoutine), LongNoteHoldRoutine());
     }
 
     void AddListeners ()
     {
         songModel.OnNoteHit += HandleNoteHit;
+        songModel.OnLongNoteHit += HandleLongNoteHit;
+        songModel.OnLongNoteReleased += HandleLongNoteReleased;
         songModel.OnNoteMissed += HandleNoteMissed;
     }
 
     void RemoveListeners ()
     {
         songModel.OnNoteHit -= HandleNoteHit;
+        songModel.OnLongNoteHit -= HandleLongNoteHit;
+        songModel.OnLongNoteReleased -= HandleLongNoteReleased;
         songModel.OnNoteMissed -= HandleNoteMissed;
+    }
+
+    IEnumerator LongNoteHoldRoutine ()
+    {
+        while (true)
+        {
+            if (!holdingLongNote)
+            {
+                yield return null;
+                continue;
+            }
+            Combo++;
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     void HandleNoteHit (Note _, HitScore __)
     {
         //TODO calculate score here
         Combo++;
+    }
+
+    void HandleLongNoteHit (Note note, HitScore score)
+    {
+        holdingLongNote = true;
+    }
+
+    void HandleLongNoteReleased (Note note, HitScore score)
+    {
+        holdingLongNote = false;
     }
 
     void HandleNoteMissed (Note _) => Combo = 0;

@@ -121,12 +121,13 @@ public class SongModel : ISongModel
                         hittingCurrentLongNote = false;
                         OnLongNoteReleased?.Invoke(currentNote, GetHitScore(timeToNoteEnd));
                         noteIndex++;
-                        continue;
                     }
+                    continue;
                 }
                 
-                else if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
+                if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
                 {
+                    // Debug.Log($"{DateTime.Now}");
                     OnLongNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
                     hittingCurrentLongNote = true;
                     continue;

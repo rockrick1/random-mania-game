@@ -49,12 +49,16 @@ public class SongController
     {
         model.OnAudioStartTimeReached += HandleAudioStartTimeReached;
         model.OnNoteHit += HandleNoteHit;
+        model.OnLongNoteHit += HandleNoteHit;
+        model.OnLongNoteReleased += HandleNoteHit;
     }
 
     void RemoveListeners ()
     {
         model.OnAudioStartTimeReached -= HandleAudioStartTimeReached;
         model.OnNoteHit -= HandleNoteHit;
+        model.OnLongNoteHit -= HandleNoteHit;
+        model.OnLongNoteReleased -= HandleNoteHit;
     }
 
     void HandleAudioStartTimeReached ()
