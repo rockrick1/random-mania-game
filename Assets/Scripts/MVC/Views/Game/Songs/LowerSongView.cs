@@ -6,7 +6,7 @@ public class LowerSongView : MonoBehaviour
 {
     [SerializeField] List<Image> hitters;
 
-    public float HitterYPos => hitters[0].transform.position.y;
+    public float HitterYPos => transform.localPosition.y + ((RectTransform)transform).sizeDelta.y / 2;
 
     public void SetActiveHitter (int index)
     {

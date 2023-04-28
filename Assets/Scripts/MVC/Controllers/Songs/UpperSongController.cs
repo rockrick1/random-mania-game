@@ -5,9 +5,11 @@ public class UpperSongController : IDisposable
 {
     readonly ISongModel songModel;
     readonly UpperSongView view;
+    readonly SongController songController;
     readonly LowerSongController lowerSongController;
     
-    List<NoteView> liveNotes = new();
+    readonly List<BaseNoteView> liveNotes = new();
+    
     float noteSpeed;
 
     public UpperSongController (UpperSongView view, LowerSongController lowerSongController, ISongModel songModel)
@@ -20,8 +22,7 @@ public class UpperSongController : IDisposable
     public void Initialize ()
     {
         Addlisteners();
-        noteSpeed = (view.SpawnPoints[0].transform.position.y - lowerSongController.HitterYPos) /
-                    songModel.CurrentSongSettings.ApproachRate;
+        noteSpeed = (view.SpawnerYPos - lowerSongController.HitterYPos) / songModel.CurrentSongSettings.ApproachRate;
     }
 
     void Addlisteners ()
@@ -40,7 +41,16 @@ public class UpperSongController : IDisposable
         songModel.OnLongNoteReleased -= HandleLongNoteReleased;
     }
 
-    void HandleNoteSpawned (Note note) => liveNotes.Add(view.SpawnNote(note, noteSpeed));
+    void HandleNoteSpawned (Note note)
+    {
+        if (note.IsLong)
+        {
+            float height = (note.EndTime - note.Time) * noteSpeed;
+            liveNotes.Add(view.SpawnLongNote(note, noteSpeed, height));
+        }
+        else
+            liveNotes.Add(view.SpawnNote(note, noteSpeed));
+    }
 
     void HandleNoteHit (Note note, HitScore score)
     {

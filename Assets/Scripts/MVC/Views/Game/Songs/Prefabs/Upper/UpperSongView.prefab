@@ -298,14 +298,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e3b63414a848339ab4eb7e4391416c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lowerSongView: {fileID: 0}
   spawnPoints:
   - {fileID: 5670483155362052640}
   - {fileID: 5670483154575175775}
   - {fileID: 5670483155198240002}
   noteViewPrefab: {fileID: 2418535560515944795, guid: 8a1c6984115392a4b9f1d549fbcd08dd, type: 3}
-  notesContainer: {fileID: 0}
-  hitFeedbackText: {fileID: 5670483153948007815}
+  longNoteViewPrefab: {fileID: 8238803825823235708, guid: 2340ce6fffea1a947808fe43463ec9df, type: 3}
   hitFeedbackAnimator: {fileID: 5670483153714798107}
   perfectText: {fileID: 5670483153948007865}
   greatText: {fileID: 5670483154041401567}
