@@ -98,6 +98,11 @@ public class EditorSongModel : IEditorSongModel
         return index;
     }
 
+    public void RemoveNoteAt (int index)
+    {
+        currentSongSettings.Notes.RemoveAt(index);
+    }
+
     public int GetSeparatorColorByIndex (int i)
     {
         return SelectedSignature switch

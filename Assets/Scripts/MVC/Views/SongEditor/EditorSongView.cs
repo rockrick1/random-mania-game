@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EditorSongView : MonoBehaviour
 {
     public event Action<int> OnFieldButtonLeftClicked;
-    public event Action<int> OnFieldButtonRightClicked;
+    public event Action<int> OnNoteRemoved;
     
     [SerializeField] AudioSource songPlayer;
     
@@ -17,7 +17,8 @@ public class EditorSongView : MonoBehaviour
     [SerializeField] RectTransform songObjects;
 
     [Header("Notes")]
-    [SerializeField] NoteView noteViewPrefab;
+    [SerializeField] EditorNoteView editorNoteViewPrefab;
+    [SerializeField] EditorLongNoteView editorLongNoteViewPrefab;
     [SerializeField] Transform notesParent;
     [SerializeField] Transform leftNotesPosition;
     [SerializeField] Transform centerNotesPosition;
@@ -35,7 +36,7 @@ public class EditorSongView : MonoBehaviour
 
     public float Height { get; private set; }
 
-    readonly List<NoteView> noteInstances = new();
+    readonly List<BaseNoteView> noteInstances = new();
     readonly List<GameObject> separatorInstances = new();
 
     float progress;
@@ -52,9 +53,6 @@ public class EditorSongView : MonoBehaviour
         fieldButtonLeft.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(0));
         fieldButtonCenter.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(1));
         fieldButtonRight.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(2));
-        fieldButtonLeft.OnRightClick.AddListener(() => OnFieldButtonRightClicked?.Invoke(0));
-        fieldButtonCenter.OnRightClick.AddListener(() => OnFieldButtonRightClicked?.Invoke(1));
-        fieldButtonRight.OnRightClick.AddListener(() => OnFieldButtonRightClicked?.Invoke(2));
         
         Height = ((RectTransform) transform).rect.height;
     }
@@ -77,7 +75,19 @@ public class EditorSongView : MonoBehaviour
 
     public void CreateNote (Note note, int index = -1)
     {
-        NoteView instance = Instantiate(noteViewPrefab, notesParent);
+        EditorNoteView instance = Instantiate(editorNoteViewPrefab, notesParent);
+        instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Time));
+        instance.Note = note;
+        instance.OnRightClick += HandleNoteRightClick;
+        if (index == -1)
+            noteInstances.Add(instance);
+        else
+            noteInstances.Insert(index, instance);
+    }
+
+    public void CreateLongNote (Note note, int index = -1)
+    {
+        EditorLongNoteView instance = Instantiate(editorLongNoteViewPrefab, notesParent);
         instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Time));
         instance.Note = note;
         if (index == -1)
@@ -86,7 +96,7 @@ public class EditorSongView : MonoBehaviour
             noteInstances.Insert(index, instance);
     }
 
-    public void RemoveNote (int index)
+    public void RemoveNoteAt (int index)
     {
         Destroy(noteInstances[index].gameObject);
         noteInstances.RemoveAt(index);
@@ -140,6 +150,29 @@ public class EditorSongView : MonoBehaviour
     float GetNoteYPosition (float time)
     {
         return (totalHeight * time) / songLength;
+    }
+    
+    void RemoveNote (BaseNoteView note)
+    {
+        int index = noteInstances.IndexOf(note);
+        OnNoteRemoved?.Invoke(index);
+        noteInstances.RemoveAt(index);
+        note.Destroy();
+    }
+
+    void HandleNoteRightClick (EditorNoteView note)
+    {
+        RemoveNote(note);
+    }
+    
+    void HandleLongNoteLowerRightClick (EditorLongNoteView note)
+    {
+        RemoveNote(note);
+    }
+    
+    void HandleLongNoteUpperRightClick (EditorLongNoteView note)
+    {
+        // TODO transform note into single note
     }
     
     void Update ()

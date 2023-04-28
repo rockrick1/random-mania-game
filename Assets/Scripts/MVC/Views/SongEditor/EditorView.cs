@@ -5,11 +5,13 @@ public class EditorView : MonoBehaviour
 {
     [SerializeField] AudioSource songPlayer;
     [SerializeField] WaveForm2D waveForm2D;
+    
     [SerializeField] EditorSongPickerView editorSongPickerView;
     [SerializeField] EditorNewSongView editorNewSongView;
     [SerializeField] EditorSongDetailsView editorSongDetailsView;
     [SerializeField] EditorTopBarView editorTopBarView;
     [SerializeField] EditorSongView editorSongView;
+    
     [SerializeField] Transform horizontalSeparatorsParent;
     [SerializeField] RectTransform horizontalSeparatorPrefab;
     [SerializeField] UIClickHandler backButton;

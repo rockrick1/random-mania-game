@@ -8554,7 +8554,8 @@ MonoBehaviour:
   fieldButtonCenter: {fileID: 1252400404}
   fieldButtonRight: {fileID: 1807989654}
   songObjects: {fileID: 8819645452575156861}
-  noteViewPrefab: {fileID: 2418535560515944795, guid: 8a1c6984115392a4b9f1d549fbcd08dd, type: 3}
+  editorNoteViewPrefab: {fileID: 4477444755215761692, guid: e31e1a92bf4579d4394010f43c0fd4fc, type: 3}
+  editorLongNoteViewPrefab: {fileID: 1952521599050092305, guid: 1f97934bce8094d42b2348c379917493, type: 3}
   notesParent: {fileID: 941235739}
   leftNotesPosition: {fileID: 434277457}
   centerNotesPosition: {fileID: 985337312}

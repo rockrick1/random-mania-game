@@ -28,7 +28,7 @@ public class EditorSongController : IDisposable
     void AddListeners ()
     {
         view.OnFieldButtonLeftClicked += HandleFieldButtonLeftClicked;
-        view.OnFieldButtonRightClicked += HandleFieldButtonRightClicked;
+        view.OnNoteRemoved += HandleNoteRemoved;
         songDetailsController.OnSetStartingTimeClicked += HandleSetStartingTime;
         songDetailsController.OnApplyClicked += HandleApplySongDetails;
         songDetailsController.OnSignatureChanged += HandleSignatureChanged;
@@ -38,7 +38,9 @@ public class EditorSongController : IDisposable
     void RemoveListeners ()
     {
         view.OnFieldButtonLeftClicked -= HandleFieldButtonLeftClicked;
-        view.OnFieldButtonRightClicked -= HandleFieldButtonRightClicked;
+        view.OnNoteRemoved -= HandleNoteRemoved;
+        songDetailsController.OnSetStartingTimeClicked -= HandleSetStartingTime;
+        songDetailsController.OnApplyClicked -= HandleApplySongDetails;
         songDetailsController.OnSignatureChanged -= HandleSignatureChanged;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
     }
@@ -49,16 +51,13 @@ public class EditorSongController : IDisposable
         if (result == null)
             return;
         if (result.Value.Substituted)
-            view.RemoveNote(result.Value.Index);
+            view.RemoveNoteAt(result.Value.Index);
         view.CreateNote(result.Value.Note, result.Value.Index);
     }
 
-    void HandleFieldButtonRightClicked (int pos)
+    void HandleNoteRemoved (int index)
     {
-        int result = model.ButtonRightClicked(pos, view.SongPlayer.time, view.Height);
-        if (result == -1)
-            return;
-        view.RemoveNote(result);
+        model.RemoveNoteAt(index);
     }
 
     void HandleSetStartingTime ()
