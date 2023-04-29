@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\LowerSongView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\EditorLongNoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongPickerController.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\INoteSpawnerModel.cs" />
@@ -77,6 +78,7 @@
      <Compile Include="Assets\Scripts\Managers\IMenuInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\NoteSpawnerModel.cs" />
      <Compile Include="Assets\Scripts\Managers\GameInputManager.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\LongNoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ISongSettings.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\SongMenuModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModelFactory.cs" />
@@ -96,6 +98,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\GameModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\EditorNoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\SongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\SongMenuView.cs" />
@@ -111,6 +114,7 @@
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\SongModelFactory.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\BaseNoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\GameModelFactory.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleEPOOutline.cs" />
@@ -136,10 +140,6 @@
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\LongNoteView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\BaseNoteView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\EditorNoteView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\EditorLongNoteView.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

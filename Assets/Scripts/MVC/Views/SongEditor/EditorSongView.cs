@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class EditorSongView : MonoBehaviour
 {
     public event Action<int> OnFieldButtonLeftClicked;
-    public event Action<int> OnNoteRemoved;
     
     [SerializeField] AudioSource songPlayer;
     
@@ -36,7 +35,6 @@ public class EditorSongView : MonoBehaviour
 
     public float Height { get; private set; }
 
-    readonly List<BaseNoteView> noteInstances = new();
     readonly List<GameObject> separatorInstances = new();
 
     float progress;
@@ -73,40 +71,20 @@ public class EditorSongView : MonoBehaviour
         ((RectTransform) notesParent.transform).localPosition = new Vector3(0, startingPosition, 0);
     }
 
-    public void CreateNote (Note note, int index = -1)
+    public EditorNoteView CreateNote (Note note)
     {
         EditorNoteView instance = Instantiate(editorNoteViewPrefab, notesParent);
         instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Time));
         instance.Note = note;
-        instance.OnRightClick += HandleNoteRightClick;
-        if (index == -1)
-            noteInstances.Add(instance);
-        else
-            noteInstances.Insert(index, instance);
+        return instance;
     }
 
-    public void CreateLongNote (Note note, int index = -1)
+    public EditorLongNoteView CreateLongNote (Note note, int index = -1)
     {
         EditorLongNoteView instance = Instantiate(editorLongNoteViewPrefab, notesParent);
         instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Time));
         instance.Note = note;
-        if (index == -1)
-            noteInstances.Add(instance);
-        else
-            noteInstances.Insert(index, instance);
-    }
-
-    public void RemoveNoteAt (int index)
-    {
-        Destroy(noteInstances[index].gameObject);
-        noteInstances.RemoveAt(index);
-    }
-
-    public void ClearNotes ()
-    {
-        foreach (NoteView noteView in noteInstances)
-            Destroy(noteView.gameObject);
-        noteInstances.Clear();
+        return instance;
     }
 
     public void ClearSeparators ()
@@ -150,29 +128,6 @@ public class EditorSongView : MonoBehaviour
     float GetNoteYPosition (float time)
     {
         return (totalHeight * time) / songLength;
-    }
-    
-    void RemoveNote (BaseNoteView note)
-    {
-        int index = noteInstances.IndexOf(note);
-        OnNoteRemoved?.Invoke(index);
-        noteInstances.RemoveAt(index);
-        note.Destroy();
-    }
-
-    void HandleNoteRightClick (EditorNoteView note)
-    {
-        RemoveNote(note);
-    }
-    
-    void HandleLongNoteLowerRightClick (EditorLongNoteView note)
-    {
-        RemoveNote(note);
-    }
-    
-    void HandleLongNoteUpperRightClick (EditorLongNoteView note)
-    {
-        // TODO transform note into single note
     }
     
     void Update ()

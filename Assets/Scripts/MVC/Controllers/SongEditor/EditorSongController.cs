@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class EditorSongController : IDisposable
 {
@@ -6,6 +7,8 @@ public class EditorSongController : IDisposable
     readonly EditorSongDetailsController songDetailsController;
     readonly IEditorSongModel model;
     readonly ISongLoaderModel songLoaderModel;
+    
+    List<BaseNoteView> activeNoteViews = new();
 
     public EditorSongController (
         EditorSongView view,
@@ -28,8 +31,6 @@ public class EditorSongController : IDisposable
     void AddListeners ()
     {
         view.OnFieldButtonLeftClicked += HandleFieldButtonLeftClicked;
-        view.OnNoteRemoved += HandleNoteRemoved;
-        songDetailsController.OnSetStartingTimeClicked += HandleSetStartingTime;
         songDetailsController.OnApplyClicked += HandleApplySongDetails;
         songDetailsController.OnSignatureChanged += HandleSignatureChanged;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
@@ -38,8 +39,6 @@ public class EditorSongController : IDisposable
     void RemoveListeners ()
     {
         view.OnFieldButtonLeftClicked -= HandleFieldButtonLeftClicked;
-        view.OnNoteRemoved -= HandleNoteRemoved;
-        songDetailsController.OnSetStartingTimeClicked -= HandleSetStartingTime;
         songDetailsController.OnApplyClicked -= HandleApplySongDetails;
         songDetailsController.OnSignatureChanged -= HandleSignatureChanged;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
@@ -47,21 +46,16 @@ public class EditorSongController : IDisposable
 
     void HandleFieldButtonLeftClicked (int pos)
     {
-        NoteCreationResult? result = model.ButtonLeftClicked(pos, view.SongPlayer.time, view.Height);
-        if (result == null)
+        NoteCreationResult? result = model.CreateNote(pos, view.SongPlayer.time, view.Height);
+        if (!result.HasValue)
             return;
         if (result.Value.Substituted)
-            view.RemoveNoteAt(result.Value.Index);
-        view.CreateNote(result.Value.Note, result.Value.Index);
-    }
-
-    void HandleNoteRemoved (int index)
-    {
-        model.RemoveNoteAt(index);
-    }
-
-    void HandleSetStartingTime ()
-    {
+        {
+            RemoveNoteViewAt(result.Value.Index);
+        }
+        //TODO separate long notes here
+        EditorNoteView noteView = view.CreateNote(result.Value.Note);
+        AddNoteViewAt(noteView, result.Value.Index);
     }
 
     void HandleApplySongDetails (float bpm, float ar, float diff, float startingTime)
@@ -84,7 +78,7 @@ public class EditorSongController : IDisposable
 
     void HandleSongLoaded ()
     {
-        view.ClearNotes();
+        ClearNotes();
         view.ClearSeparators();
         view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
         CreateNotes();
@@ -93,8 +87,49 @@ public class EditorSongController : IDisposable
 
     void CreateNotes ()
     {
-        foreach (Note note in songLoaderModel.Settings.Notes)
-            view.CreateNote(note);
+        for (int i = 0; i < songLoaderModel.Settings.Notes.Count; i++)
+        {
+            Note note = songLoaderModel.Settings.Notes[i];
+            AddNoteViewAt(view.CreateNote(note), i);
+        }
+    }
+
+    void ClearNotes ()
+    {
+        foreach (BaseNoteView noteView in activeNoteViews)
+            noteView.Destroy();
+        activeNoteViews.Clear();
+    }
+
+    void AddNoteViewAt (EditorNoteView noteView, int index)
+    {
+        noteView.OnRightClick += HandleNoteRightClick;
+        activeNoteViews.Insert(index, noteView);
+    }
+
+    void AddLongNoteViewAt (EditorLongNoteView noteView, int index)
+    {
+        noteView.OnLowerRightClick += HandleNoteRightClick;
+        noteView.OnUpperRightClick += HandleNoteUpperRightClick;
+        activeNoteViews.Insert(index, noteView);
+    }
+
+    void HandleNoteRightClick (BaseNoteView note)
+    {
+        int index = activeNoteViews.FindIndex(x => x == note);
+        model.RemoveNoteAt(index);
+        RemoveNoteViewAt(index);
+    }
+
+    void HandleNoteUpperRightClick (EditorLongNoteView note)
+    {
+        //TODO transform long note to single note
+    }
+
+    void RemoveNoteViewAt (int index)
+    {
+        activeNoteViews[index].Destroy();
+        activeNoteViews.RemoveAt(index);
     }
 
     void CreateHorizontalSeparators ()
