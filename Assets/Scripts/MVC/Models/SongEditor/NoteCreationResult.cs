@@ -1,6 +1,8 @@
-﻿public struct NoteCreationResult
+﻿using System.Collections.Generic;
+
+public struct NoteCreationResult
 {
-    public bool Substituted;
+    public List<int> Substituted;
     public int Index;
     public Note Note;
 }

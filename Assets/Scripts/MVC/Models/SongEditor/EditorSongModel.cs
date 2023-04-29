@@ -19,6 +19,9 @@ public class EditorSongModel : IEditorSongModel
 
     SongSettings currentSongSettings;
 
+    float currentNoteCreationTime;
+    float currentNoteCreationTimeEnd;
+
     float beatInterval;
     
     public EditorSongModel (IEditorInputManager inputManager, ISongLoaderModel songLoaderModel)
@@ -55,7 +58,17 @@ public class EditorSongModel : IEditorSongModel
     {
         songLoaderModel.SaveSong(currentSongSettings);
     }
-    
+
+    public void StartCreatingNote (int pos, float songProgress, float height)
+    {
+        float time = GetTimeClicked(songProgress, height);
+        
+        if (time < 0)
+            return;
+        
+        currentNoteCreationTime = SnapToBeat(time);
+    }
+
     public NoteCreationResult? CreateNote (int pos, float songProgress, float height)
     {
         float time = GetTimeClicked(songProgress, height);
@@ -63,20 +76,40 @@ public class EditorSongModel : IEditorSongModel
         if (time < 0)
             return null;
         
-        time = SnapToBeat(time);
-        
-        if (TryFindNote(pos, time, out int index, out bool substituted))
+        currentNoteCreationTimeEnd = SnapToBeat(time);
+
+        if (TryFindNote(pos, currentNoteCreationTime, currentNoteCreationTimeEnd,
+                out List<int> substituted))
             return null;
 
-        Note note = new Note(time, pos);
-        if (substituted)
-            currentSongSettings.Notes.RemoveAt(index);
-        currentSongSettings.Notes.Insert(index, note);
+        Note note = Mathf.Approximately(currentNoteCreationTime, currentNoteCreationTimeEnd)
+            ? new Note(currentNoteCreationTime, pos)
+            : new Note(currentNoteCreationTime, currentNoteCreationTimeEnd, pos);
+        
+        substituted.Reverse();
+        foreach (int i in substituted)
+            currentSongSettings.Notes.RemoveAt(i);
+        
+        int insertAtIndex = 0;
+        for (int i = 0; i < currentSongSettings.Notes.Count; i++)
+        {
+            Note n = currentSongSettings.Notes[i];
+            if (n.Time > currentNoteCreationTimeEnd)
+            {
+                insertAtIndex = i;
+                break;
+            }
+
+            if (i == currentSongSettings.Notes.Count - 1)
+                insertAtIndex = currentSongSettings.Notes.Count;
+        }
+        currentSongSettings.Notes.Insert(insertAtIndex, note);
+
         
         return new NoteCreationResult
         {
             Substituted = substituted,
-            Index = index,
+            Index = insertAtIndex,
             Note = note
         };
     }
@@ -127,28 +160,33 @@ public class EditorSongModel : IEditorSongModel
 
     float SnapToBeat (float time) => Mathf.RoundToInt(time / SignedBeatInterval) * SignedBeatInterval;
 
-    bool TryFindNote (int pos, float time, out int noteIndex, out bool substituted)
+    bool TryFindNote (int pos, float time, float endTime, out List<int> substituted)
     {
-        substituted = false;
-        noteIndex = -1;
+        substituted = new List<int>();
         for (int i = 0; i <= currentSongSettings.Notes.Count; i++)
         {
-            noteIndex = i;
             if (i == currentSongSettings.Notes.Count)
                 return false;
             
             Note note = currentSongSettings.Notes[i];
-            if (Mathf.Approximately(note.Time, time))
+            if (Intersects(time, endTime, note))
             {
                 if (note.Position == pos)
                     return true;
-                substituted = true;
-                return false;
+                substituted.Add(i);
             }
-            if (note.Time > time)
+            if (note.Time > endTime)
                 break;
         }
         return false;
+    }
+
+    bool Intersects (float time, float endTime, Note note)
+    {
+        float noteEndTime = note.IsLong ? note.EndTime : note.Time;
+        float iStart = time >= note.Time ? time : note.Time;
+        float iEnd = endTime < noteEndTime ? endTime : noteEndTime;
+        return iStart < iEnd || Mathf.Approximately(iStart, iEnd);
     }
 
     void SetBeatInterval (float bpm)

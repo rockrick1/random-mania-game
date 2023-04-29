@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EditorSongView : MonoBehaviour
 {
     public event Action<int> OnFieldButtonLeftClicked;
+    public event Action<int> OnFieldButtonLeftReleased;
     
     [SerializeField] AudioSource songPlayer;
     
@@ -34,6 +35,7 @@ public class EditorSongView : MonoBehaviour
     public AudioSource SongPlayer => songPlayer;
 
     public float Height { get; private set; }
+    public float ObjectsSpeed { get; private set; }
 
     readonly List<GameObject> separatorInstances = new();
 
@@ -41,7 +43,6 @@ public class EditorSongView : MonoBehaviour
     float zoomScale;
     float songLength;
     float totalHeight;
-    float objectsSpeed;
     float approachRate;
 
     float beatInterval;
@@ -51,6 +52,10 @@ public class EditorSongView : MonoBehaviour
         fieldButtonLeft.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(0));
         fieldButtonCenter.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(1));
         fieldButtonRight.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(2));
+        
+        fieldButtonLeft.OnLeftRelease.AddListener(() => OnFieldButtonLeftReleased?.Invoke(0));
+        fieldButtonCenter.OnLeftRelease.AddListener(() => OnFieldButtonLeftReleased?.Invoke(1));
+        fieldButtonRight.OnLeftRelease.AddListener(() => OnFieldButtonLeftReleased?.Invoke(2));
         
         Height = ((RectTransform) transform).rect.height;
     }
@@ -62,11 +67,11 @@ public class EditorSongView : MonoBehaviour
         this.songLength = songLength;
         
         beatInterval = 60f / settings.Bpm;
-        objectsSpeed = Height / approachRate;
+        ObjectsSpeed = Height / approachRate;
         totalHeight = (Height * songLength) / approachRate;
         songObjects.sizeDelta = new Vector2(songObjects.sizeDelta.x, totalHeight);
         
-        float startingPosition = settings.StartingTime * objectsSpeed;
+        float startingPosition = settings.StartingTime * ObjectsSpeed;
         ((RectTransform) separatorsParent.transform).localPosition = new Vector3(0, startingPosition, 0);
         ((RectTransform) notesParent.transform).localPosition = new Vector3(0, startingPosition, 0);
     }
@@ -79,11 +84,13 @@ public class EditorSongView : MonoBehaviour
         return instance;
     }
 
-    public EditorLongNoteView CreateLongNote (Note note, int index = -1)
+    public EditorLongNoteView CreateLongNote (Note note)
     {
         EditorLongNoteView instance = Instantiate(editorLongNoteViewPrefab, notesParent);
+        
         instance.transform.localPosition = new Vector3(GetNoteXPosition(note.Position), GetNoteYPosition(note.Time));
         instance.Note = note;
+        instance.SetHeight(ObjectsSpeed * (note.EndTime - note.Time));
         return instance;
     }
 
@@ -132,7 +139,7 @@ public class EditorSongView : MonoBehaviour
     
     void Update ()
     {
-        progress = objectsSpeed * songPlayer.time;
+        progress = ObjectsSpeed * songPlayer.time;
         songObjects.anchoredPosition = new Vector2(0, -progress);
     }
 }

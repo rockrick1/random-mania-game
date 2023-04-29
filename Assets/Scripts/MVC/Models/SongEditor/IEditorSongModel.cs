@@ -6,6 +6,7 @@ public interface IEditorSongModel : IDisposable
     float SignedBeatInterval { get; }
 
     void Initialize ();
+    void StartCreatingNote (int pos, float songPlayerTime, float viewHeight);
     NoteCreationResult? CreateNote (int pos, float songProgress, float height);
     void RemoveNoteAt (int index);
     int GetSeparatorColorByIndex (int i);

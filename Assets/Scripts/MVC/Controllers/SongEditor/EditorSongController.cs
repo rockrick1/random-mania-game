@@ -31,6 +31,7 @@ public class EditorSongController : IDisposable
     void AddListeners ()
     {
         view.OnFieldButtonLeftClicked += HandleFieldButtonLeftClicked;
+        view.OnFieldButtonLeftReleased += HandleFieldButtonLeftReleased;
         songDetailsController.OnApplyClicked += HandleApplySongDetails;
         songDetailsController.OnSignatureChanged += HandleSignatureChanged;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
@@ -39,6 +40,7 @@ public class EditorSongController : IDisposable
     void RemoveListeners ()
     {
         view.OnFieldButtonLeftClicked -= HandleFieldButtonLeftClicked;
+        view.OnFieldButtonLeftReleased -= HandleFieldButtonLeftReleased;
         songDetailsController.OnApplyClicked -= HandleApplySongDetails;
         songDetailsController.OnSignatureChanged -= HandleSignatureChanged;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
@@ -46,16 +48,27 @@ public class EditorSongController : IDisposable
 
     void HandleFieldButtonLeftClicked (int pos)
     {
+        model.StartCreatingNote(pos, view.SongPlayer.time, view.Height);
+    }
+
+    void HandleFieldButtonLeftReleased (int pos)
+    {
         NoteCreationResult? result = model.CreateNote(pos, view.SongPlayer.time, view.Height);
         if (!result.HasValue)
             return;
-        if (result.Value.Substituted)
+        foreach (int i in result.Value.Substituted)
+            RemoveNoteViewAt(i);
+
+        if (result.Value.Note.IsLong)
         {
-            RemoveNoteViewAt(result.Value.Index);
+            EditorLongNoteView noteView = view.CreateLongNote(result.Value.Note);
+            AddLongNoteViewAt(noteView, result.Value.Index);
         }
-        //TODO separate long notes here
-        EditorNoteView noteView = view.CreateNote(result.Value.Note);
-        AddNoteViewAt(noteView, result.Value.Index);
+        else
+        {
+            EditorNoteView noteView = view.CreateNote(result.Value.Note);
+            AddNoteViewAt(noteView, result.Value.Index);
+        }
     }
 
     void HandleApplySongDetails (float bpm, float ar, float diff, float startingTime)
@@ -90,7 +103,10 @@ public class EditorSongController : IDisposable
         for (int i = 0; i < songLoaderModel.Settings.Notes.Count; i++)
         {
             Note note = songLoaderModel.Settings.Notes[i];
-            AddNoteViewAt(view.CreateNote(note), i);
+            if (note.IsLong)
+                AddLongNoteViewAt(view.CreateLongNote(note), i);
+            else
+                AddNoteViewAt(view.CreateNote(note), i);
         }
     }
 
