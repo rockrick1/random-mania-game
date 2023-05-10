@@ -30,7 +30,7 @@ public class ScoreModel : IScoreModel
     public void Initialize ()
     {
         AddListeners();
-        CoroutineRunner.Instance.StartCoroutine(nameof(LongNoteHoldRoutine), LongNoteHoldRoutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(LongNoteHoldRoutine), LongNoteHoldRoutine());
     }
 
     void AddListeners ()

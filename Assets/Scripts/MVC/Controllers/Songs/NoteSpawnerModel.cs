@@ -20,7 +20,7 @@ public class NoteSpawnerModel : INoteSpawnerModel
 
     public void Play ()
     {
-        CoroutineRunner.Instance.StartCoroutine(nameof(noteSpawnRoutine), NoteSpawnRoutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(noteSpawnRoutine), NoteSpawnRoutine());
     }
 
     IEnumerator NoteSpawnRoutine ()

@@ -1,9 +1,12 @@
 ﻿using System;
+using UnityEngine.SceneManagement;
 
 public class PauseController : IDisposable
 {
     public event Action OnPause;
     public event Action OnResume;
+    public event Action OnRetry;
+    public event Action OnQuit;
 
     readonly PauseView view;
     readonly IGameInputManager inputManager;
@@ -57,13 +60,18 @@ public class PauseController : IDisposable
     void HandleRetry ()
     {
         model.RaiseRetry();
-        view.Close();
+        view.Close(() =>
+        {
+            OnRetry?.Invoke();
+            SceneManager.LoadScene("Game");
+        });
     }
 
     void HandleQuit ()
     {
         model.RaiseQuit();
-        view.Close();
+        OnQuit?.Invoke();
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Dispose ()

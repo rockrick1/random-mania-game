@@ -57,6 +57,8 @@ public class SongController
         model.OnLongNoteReleased += HandleNoteHit;
         PauseController.OnPause += HandlePause;
         PauseController.OnResume += HandleResume;
+        PauseController.OnRetry += HandleRetry;
+        PauseController.OnQuit += HandleQuit;
     }
 
     void RemoveListeners ()
@@ -67,7 +69,10 @@ public class SongController
         model.OnLongNoteReleased -= HandleNoteHit;
         PauseController.OnPause -= HandlePause;
         PauseController.OnResume -= HandleResume;
+        PauseController.OnRetry -= HandleRetry;
+        PauseController.OnQuit -= HandleQuit;
     }
+
 
     void HandleAudioStartTimeReached () => view.Play();
 
@@ -87,6 +92,15 @@ public class SongController
     {
         GameManager.IsPaused = false;
         view.Play();
+    }
+    void HandleRetry ()
+    {
+        GameManager.IsPaused = false;
+    }
+
+    void HandleQuit ()
+    {
+        GameManager.IsPaused = false;
     }
 
     public void Dispose ()

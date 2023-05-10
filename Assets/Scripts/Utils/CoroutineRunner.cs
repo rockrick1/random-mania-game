@@ -9,17 +9,18 @@ public class CoroutineRunner : MonoBehaviour
 
     void Awake ()
     {
-        Instance = this;
+        Instance ??= this;
+        DontDestroyOnLoad(Instance);
     }
 
-    public void StartCoroutine (string id, IEnumerator routine)
+    public void StartRoutine (string id, IEnumerator routine)
     {
         if (routines.TryGetValue(id, out var existing) && existing != null)
             StopCoroutine(existing);
         routines[id] = StartCoroutine(routine);
     }
 
-    public new void StopCoroutine (string id)
+    public new void StopRoutine (string id)
     {
         if (routines.TryGetValue(id, out var existing) && existing != null)
             StopCoroutine(existing);

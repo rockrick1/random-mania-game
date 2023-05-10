@@ -76,10 +76,10 @@ public class SongModel : ISongModel
     {
         dspSongStart = AudioSettings.dspTime + GetStartingElapsed();
         
-        CoroutineRunner.Instance.StartCoroutine(nameof(AudioStartRoutine), AudioStartRoutine());
-        CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
-        CoroutineRunner.Instance.StartCoroutine(nameof(NotesHitRoutine), NotesHitRoutine());
-        CoroutineRunner.Instance.StartCoroutine(nameof(PauseOffsetRoutine), PauseOffsetRoutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(AudioStartRoutine), AudioStartRoutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(NotesHitRoutine), NotesHitRoutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(PauseOffsetRoutine), PauseOffsetRoutine());
     }
 
     double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
@@ -200,9 +200,9 @@ public class SongModel : ISongModel
     public void Dispose ()
     {
         RemoveListeners();
-        CoroutineRunner.Instance.StopCoroutine(nameof(AudioStartRoutine));
-        CoroutineRunner.Instance.StopCoroutine(nameof(NoteSpawnRotutine));
-        CoroutineRunner.Instance.StopCoroutine(nameof(NotesHitRoutine));
-        CoroutineRunner.Instance.StopCoroutine(nameof(PauseOffsetRoutine));
+        CoroutineRunner.Instance.StopRoutine(nameof(AudioStartRoutine));
+        CoroutineRunner.Instance.StopRoutine(nameof(NoteSpawnRotutine));
+        CoroutineRunner.Instance.StopRoutine(nameof(NotesHitRoutine));
+        CoroutineRunner.Instance.StopRoutine(nameof(PauseOffsetRoutine));
     }
 }

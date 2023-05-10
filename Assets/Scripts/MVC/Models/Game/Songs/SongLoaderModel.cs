@@ -73,7 +73,7 @@ public class SongLoaderModel : ISongLoaderModel
             isDefault = true;
             Audio = clip;
         }
-        CoroutineRunner.Instance.StartCoroutine(nameof(LoadSong), LoadSong(isDefault));
+        CoroutineRunner.Instance.StartRoutine(nameof(LoadSong), LoadSong(isDefault));
     }
 
     IEnumerator LoadSong (bool isDefaultSong)
