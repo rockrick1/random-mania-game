@@ -18,6 +18,7 @@
         );
         EditorTopBarController topBarController = new(
             view.EditorTopBarView,
+            songDetailsController,
             model.InputManager
         );
         EditorSongController songController = new(

@@ -3,14 +3,17 @@
 public class EditorTopBarController : IDisposable
 {
     readonly EditorTopBarView view;
+    readonly EditorSongDetailsController songDetailsController;
     readonly IEditorInputManager inputManager;
 
     public EditorTopBarController (
         EditorTopBarView view,
+        EditorSongDetailsController songDetailsController,
         IEditorInputManager inputManager
     )
     {
         this.view = view;
+        this.songDetailsController = songDetailsController;
         this.inputManager = inputManager;
     }
 
@@ -24,6 +27,7 @@ public class EditorTopBarController : IDisposable
         inputManager.OnSongPlayPause += HandlePlayPause;
         inputManager.OnSongScroll += HandleSongScroll;
         inputManager.OnZoomScroll += HandleZoomScroll;
+        songDetailsController.OnShowWaveClicked += HandleShowWaveClicked;
     }
 
     void RemoveListeners ()
@@ -31,6 +35,7 @@ public class EditorTopBarController : IDisposable
         inputManager.OnSongPlayPause -= HandlePlayPause;
         inputManager.OnSongScroll -= HandleSongScroll;
         inputManager.OnZoomScroll -= HandleZoomScroll;
+        songDetailsController.OnShowWaveClicked -= HandleShowWaveClicked;
     }
 
     void HandlePlayPause ()
@@ -44,6 +49,11 @@ public class EditorTopBarController : IDisposable
     void HandleZoomScroll (float amount)
     {
         view.ChangeZoom(amount);
+    }
+
+    void HandleShowWaveClicked (bool active)
+    {
+        view.SetWaveActive(active);
     }
 
     public void Dispose ()

@@ -9,6 +9,7 @@ public class EditorSongDetailsView : MonoBehaviour
     public event Action OnSetStartingTimeClicked;
     public event Action OnApplyClicked;
     public event Action<string> OnSignatureChanged;
+    public event Action<bool> OnShowWaveClicked;
 
     [SerializeField] AudioSource songPlayer;
     [SerializeField] TMP_InputField bpmInput;
@@ -18,6 +19,7 @@ public class EditorSongDetailsView : MonoBehaviour
     [SerializeField] Button setStartingTimeButton;
     [SerializeField] Button applyButton;
     [SerializeField] TMP_Dropdown signatureDropdown;
+    [SerializeField] Toggle showWaveToggle;
 
     public string BpmValue => bpmInput.text;
     public string ArValue => arInput.text;
@@ -28,6 +30,7 @@ public class EditorSongDetailsView : MonoBehaviour
     {
         setStartingTimeButton.onClick.AddListener(HandleSetStartingTime);
         applyButton.onClick.AddListener(() => OnApplyClicked?.Invoke());
+        showWaveToggle.onValueChanged.AddListener((value) => OnShowWaveClicked?.Invoke(value));
     }
 
     public void SetBPM (float val) => bpmInput.text = val.ToString(CultureInfo.CurrentCulture);

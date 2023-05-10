@@ -6,7 +6,8 @@ public class EditorSongDetailsController : IDisposable
     public event Action OnSetStartingTimeClicked;
     public event Action<float, float, float, float> OnApplyClicked;
     public event Action<int> OnSignatureChanged;
-    
+    public event Action<bool> OnShowWaveClicked;
+
     readonly EditorSongDetailsView view;
     readonly ISongLoaderModel songLoaderModel;
     
@@ -26,6 +27,7 @@ public class EditorSongDetailsController : IDisposable
         view.OnSetStartingTimeClicked += HandleSetStartingTimeClicked;
         view.OnApplyClicked += HandleApplyClicked;
         view.OnSignatureChanged += HandleSignatureChanged;
+        view.OnShowWaveClicked += HandleShowWaveClicked;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
     }
 
@@ -34,6 +36,7 @@ public class EditorSongDetailsController : IDisposable
         view.OnSetStartingTimeClicked -= HandleSetStartingTimeClicked;
         view.OnApplyClicked -= HandleApplyClicked;
         view.OnSignatureChanged -= HandleSignatureChanged;
+        view.OnShowWaveClicked -= HandleShowWaveClicked;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
     }
 
@@ -51,6 +54,11 @@ public class EditorSongDetailsController : IDisposable
     void HandleSignatureChanged (string signature)
     {
         OnSignatureChanged?.Invoke(int.Parse(signature.Substring(signature.IndexOf('/') + 1)));
+    }
+
+    void HandleShowWaveClicked (bool active)
+    {
+        OnShowWaveClicked?.Invoke(active);
     }
     
     void HandleSongLoaded ()

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class EditorTopBarView : MonoBehaviour
 {
@@ -30,6 +28,8 @@ public class EditorTopBarView : MonoBehaviour
         lineParent.localScale = localScale;
         waveLineWidth = lineParent.rect.width;
     }
+
+    public void SetWaveActive (bool active) => waveLine.gameObject.SetActive(active);
 
     void Update ()
     {
