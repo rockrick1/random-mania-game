@@ -18,22 +18,50 @@ public class SongModel : ISongModel
 
     readonly IGameInputManager inputManager;
     readonly ISongLoaderModel songLoaderModel;
+    readonly IPauseModel pauseModel;
     
     float perfectHitWindow;
     float greatHitWindow;
     float okayHitWindow;
 
     double dspSongStart;
+    double pauseOffset;
 
-    public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel)
+    public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel, IPauseModel pauseModel)
     {
         this.inputManager = inputManager;
         this.songLoaderModel = songLoaderModel;
+        this.pauseModel = pauseModel;
     }
 
     public void Initialize ()
     {
         songLoaderModel.Initialize();
+        AddListeners();
+    }
+
+    void AddListeners ()
+    {
+        pauseModel.OnPause += HandlePause;
+        pauseModel.OnResume += HandleResume;
+        pauseModel.OnRetry += HandlePause;
+    }
+
+    void RemoveListeners ()
+    {
+        pauseModel.OnPause -= HandlePause;
+        pauseModel.OnResume -= HandleResume;
+        pauseModel.OnRetry -= HandlePause;
+    }
+    
+    void HandlePause ()
+    {
+        // throw new NotImplementedException();
+    }
+
+    void HandleResume ()
+    {
+        // throw new NotImplementedException();
     }
 
     public void LoadSong (string songId)
@@ -51,6 +79,7 @@ public class SongModel : ISongModel
         CoroutineRunner.Instance.StartCoroutine(nameof(AudioStartRoutine), AudioStartRoutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
         CoroutineRunner.Instance.StartCoroutine(nameof(NotesHitRoutine), NotesHitRoutine());
+        CoroutineRunner.Instance.StartCoroutine(nameof(PauseOffsetRoutine), PauseOffsetRoutine());
     }
 
     double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
@@ -72,7 +101,7 @@ public class SongModel : ISongModel
         {
             yield return null;
             
-            double elapsed = AudioSettings.dspTime - dspSongStart;
+            double elapsed = AudioSettings.dspTime - dspSongStart - pauseOffset;
             double noteSpawnTime = notes[noteIndex].Time - CurrentSongSettings.ApproachRate;
             
             if (elapsed > noteSpawnTime)
@@ -99,7 +128,7 @@ public class SongModel : ISongModel
 
             Note currentNote = notes[noteIndex];
 
-            double elapsed = AudioSettings.dspTime - dspSongStart;
+            double elapsed = AudioSettings.dspTime - dspSongStart - pauseOffset;
             double timeToNote = currentNote.Time - elapsed;
             double timeToNoteEnd = currentNote.EndTime - elapsed;
 
@@ -144,61 +173,17 @@ public class SongModel : ISongModel
         yield return new WaitForSeconds(okayHitWindow * 3);
         OnSongFinished?.Invoke();
     }
-    
-    // IEnumerator LongNotesHitRoutine ()
-    // {
-    //     IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
-    //     int noteIndex = 0;
-    //
-    //     while (true)
-    //     {
-    //         if (noteIndex >= notes.Count)
-    //             break;
-    //         yield return null;
-    //
-    //         Note currentNote = notes[noteIndex];
-    //
-    //         if (!currentNote.IsLong)
-    //         {
-    //             noteIndex++;
-    //             continue;
-    //         }
-    //
-    //         double elapsed = AudioSettings.dspTime - dspSongStart;
-    //         double timeToNote = currentNote.Time - elapsed;
-    //         double timeToNoteEnd = currentNote.EndTime - elapsed;
-    //
-    //         if (!currentLongNoteHit && timeToNote < okayHitWindow)
-    //         {
-    //             if (inputManager.GetPositionPressed(currentNote.Position))
-    //             {
-    //                 OnLongNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
-    //                 currentLongNoteHit = true;
-    //                 continue;
-    //             }
-    //         }
-    //
-    //         if (currentLongNoteHit)
-    //         {
-    //             if (timeToNoteEnd < 0 || !inputManager.GetPositionHeld(currentNote.Position))
-    //             {
-    //                 currentLongNoteHit = false;
-    //                 OnLongNoteReleased?.Invoke(currentNote, GetHitScore(timeToNoteEnd));
-    //                 noteIndex++;
-    //                 continue;
-    //             }
-    //         }
-    //
-    //         if (timeToNote < -okayHitWindow)
-    //         {
-    //             OnNoteMissed?.Invoke(currentNote);
-    //             noteIndex++;
-    //         }
-    //     }
-    //
-    //     yield return new WaitForSeconds(okayHitWindow * 3);
-    //     OnSongFinished?.Invoke();
-    // }
+
+    IEnumerator PauseOffsetRoutine ()
+    {
+        while (true)
+        {
+            double lastDspTime = AudioSettings.dspTime;
+            yield return null;
+            if (GameManager.IsPaused)
+                pauseOffset += AudioSettings.dspTime - lastDspTime;
+        }
+    }
     
     HitScore GetHitScore (double timeToNoteHit)
     {
@@ -214,5 +199,10 @@ public class SongModel : ISongModel
 
     public void Dispose ()
     {
+        RemoveListeners();
+        CoroutineRunner.Instance.StopCoroutine(nameof(AudioStartRoutine));
+        CoroutineRunner.Instance.StopCoroutine(nameof(NoteSpawnRotutine));
+        CoroutineRunner.Instance.StopCoroutine(nameof(NotesHitRoutine));
+        CoroutineRunner.Instance.StopCoroutine(nameof(PauseOffsetRoutine));
     }
 }

@@ -7,6 +7,7 @@ public class SongController
     public UpperSongController UpperSongController { get; }
     public ComboController ComboController { get; }
     public LowerSongController LowerSongController { get; }
+    public PauseController PauseController { get; }
     
     readonly ISongModel model;
     readonly IAudioManager audioManager;
@@ -18,7 +19,8 @@ public class SongController
         IAudioManager audioManager,
         UpperSongController upperSongController,
         ComboController comboController,
-        LowerSongController lowerSongController
+        LowerSongController lowerSongController,
+        PauseController pauseController
     )
     {
         this.view = view;
@@ -27,6 +29,7 @@ public class SongController
         UpperSongController = upperSongController;
         ComboController = comboController;
         LowerSongController = lowerSongController;
+        PauseController = pauseController;
     }
 
     public void Initialize ()
@@ -35,6 +38,7 @@ public class SongController
         UpperSongController.Initialize();
         ComboController.Initialize();
         LowerSongController.Initialize();
+        PauseController.Initialize();
         StartSong().Start();
     }
 
@@ -51,6 +55,8 @@ public class SongController
         model.OnNoteHit += HandleNoteHit;
         model.OnLongNoteHit += HandleNoteHit;
         model.OnLongNoteReleased += HandleNoteHit;
+        PauseController.OnPause += HandlePause;
+        PauseController.OnResume += HandleResume;
     }
 
     void RemoveListeners ()
@@ -59,24 +65,36 @@ public class SongController
         model.OnNoteHit -= HandleNoteHit;
         model.OnLongNoteHit -= HandleNoteHit;
         model.OnLongNoteReleased -= HandleNoteHit;
+        PauseController.OnPause -= HandlePause;
+        PauseController.OnResume -= HandleResume;
     }
 
-    void HandleAudioStartTimeReached ()
-    {
-        view.Play();
-    }
+    void HandleAudioStartTimeReached () => view.Play();
 
     void HandleNoteHit (Note _, HitScore __)
     {
         //TODO add dynamic hit sound check based on note settings
         audioManager.PlaySfx(HIT_SOUND);
     }
-    
+
+    void HandlePause ()
+    {
+        GameManager.IsPaused = true;
+        view.Pause();
+    }
+
+    void HandleResume ()
+    {
+        GameManager.IsPaused = false;
+        view.Play();
+    }
+
     public void Dispose ()
     {
         RemoveListeners();
         UpperSongController.Dispose();
         ComboController.Dispose();
         LowerSongController.Dispose();
+        PauseController.Initialize();
     }
 }

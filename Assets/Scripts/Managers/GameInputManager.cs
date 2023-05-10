@@ -5,6 +5,7 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
 {
     public event Action<int> OnHitterSelect;
     public event Action OnHitPress;
+    public event Action OnEscPressed;
 
     int selectedPosition = 1;
 
@@ -29,6 +30,7 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
     void Update ()
     {
         CheckHitterChange();
+        CheckEscape();
     }
 
     void CheckHitterChange ()
@@ -50,6 +52,14 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
             selectedPosition = 1;
             OnHitterSelect?.Invoke(1);
             return;
+        }
+    }
+
+    void CheckEscape ()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnEscPressed?.Invoke();
         }
     }
 }

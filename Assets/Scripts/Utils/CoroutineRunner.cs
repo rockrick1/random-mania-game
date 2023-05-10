@@ -18,4 +18,10 @@ public class CoroutineRunner : MonoBehaviour
             StopCoroutine(existing);
         routines[id] = StartCoroutine(routine);
     }
+
+    public new void StopCoroutine (string id)
+    {
+        if (routines.TryGetValue(id, out var existing) && existing != null)
+            StopCoroutine(existing);
+    }
 }

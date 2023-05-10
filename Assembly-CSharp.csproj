@@ -140,6 +140,10 @@
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\PauseView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\IPauseModel.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

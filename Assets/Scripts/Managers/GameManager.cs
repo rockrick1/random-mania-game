@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameInputManager inputManager;
     [SerializeField] AudioManager audioManager;
 
+    public static bool IsPaused = false;
+
     public GameModel Model { get; private set; }
     public GameController Controller { get; private set; }
     public GameView View => view;

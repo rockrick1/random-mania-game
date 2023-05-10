@@ -30,7 +30,7 @@ public class BaseNoteView : MonoBehaviour
 
     void Update ()
     {
-        if (!hit)
+        if (!hit && !GameManager.IsPaused)
             transform.localPosition += Vector3.down * (Speed * Time.deltaTime);
     }
 }

@@ -18,13 +18,20 @@
             model.ScoreModel
         );
 
+        PauseController pauseController = new(
+            view.PauseView,
+            model.PauseModel,
+            model.InputManager
+        );
+
         SongController songController = new(
             view.SongView,
             model.SongModel,
             model.AudioManager,
             upperSongController,
             comboController,
-            lowerSongController
+            lowerSongController,
+            pauseController
         );
         GameController controller = new(songController);
         return controller;
