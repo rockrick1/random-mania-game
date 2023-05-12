@@ -8,6 +8,7 @@ public class SongController
     public ComboController ComboController { get; }
     public LowerSongController LowerSongController { get; }
     public PauseController PauseController { get; }
+    public ScoreController ScoreController { get; }
     
     readonly ISongModel model;
     readonly IAudioManager audioManager;
@@ -20,7 +21,8 @@ public class SongController
         UpperSongController upperSongController,
         ComboController comboController,
         LowerSongController lowerSongController,
-        PauseController pauseController
+        PauseController pauseController,
+        ScoreController scoreController
     )
     {
         this.view = view;
@@ -30,6 +32,7 @@ public class SongController
         ComboController = comboController;
         LowerSongController = lowerSongController;
         PauseController = pauseController;
+        ScoreController = scoreController;
     }
 
     public void Initialize ()
@@ -39,6 +42,7 @@ public class SongController
         ComboController.Initialize();
         LowerSongController.Initialize();
         PauseController.Initialize();
+        ScoreController.Initialize();
         StartSong().Start();
     }
 
@@ -110,5 +114,6 @@ public class SongController
         ComboController.Dispose();
         LowerSongController.Dispose();
         PauseController.Initialize();
+        ScoreController.Dispose();
     }
 }

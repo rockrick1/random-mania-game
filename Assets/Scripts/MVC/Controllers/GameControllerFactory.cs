@@ -13,6 +13,11 @@
             model.SongModel
         );
 
+        ScoreController scoreController = new(
+            view.ScoreView,
+            model.ScoreModel
+        );
+
         ComboController comboController = new(
             view.ComboView,
             model.ScoreModel
@@ -31,7 +36,8 @@
             upperSongController,
             comboController,
             lowerSongController,
-            pauseController
+            pauseController,
+            scoreController
         );
         GameController controller = new(songController);
         return controller;

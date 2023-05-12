@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongDetailsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameController.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarDragHandler.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\PauseView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\GameControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\LowerSongView.cs" />
@@ -80,6 +81,7 @@
      <Compile Include="Assets\Scripts\Managers\GameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\LongNoteView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ISongSettings.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\IPauseModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\SongMenuModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModelFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\MainMenuView.cs" />
@@ -132,6 +134,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Menu\SettingsModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\SongEntryView.cs" />
      <Compile Include="Assets\Scripts\Utils\CoroutineRunner.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\ISettingsModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ComboController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\NoteCreationResult.cs" />
@@ -139,11 +142,10 @@
      <Compile Include="Assets\Scripts\Managers\MenuInputManager.cs" />
      <Compile Include="Assets\Scripts\Managers\IGameInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\PauseView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\IPauseModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ScoreController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\ScoreView.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

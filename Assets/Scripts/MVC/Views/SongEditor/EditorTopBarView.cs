@@ -9,7 +9,6 @@ public class EditorTopBarView : MonoBehaviour
 
     public float CurrentZoom => lineParent.localScale.x;
 
-    float waveLineWidth;
     float progress;
 
     float startAnchor = .5f;
@@ -17,7 +16,6 @@ public class EditorTopBarView : MonoBehaviour
 
     void Start ()
     {
-        waveLineWidth = lineParent.rect.width;
     }
 
     public void ChangeZoom (float amount)
@@ -26,7 +24,6 @@ public class EditorTopBarView : MonoBehaviour
         float newScale = amount > 0 ? localScale.x * 1.1f : localScale.x * 0.9f;
         localScale = new Vector3(newScale, localScale.y);
         lineParent.localScale = localScale;
-        waveLineWidth = lineParent.rect.width;
     }
 
     public void SetWaveActive (bool active) => waveLine.gameObject.SetActive(active);
