@@ -49,7 +49,6 @@ public class ScoreModel : IScoreModel
         set
         {
             OnAccuracyChanged?.Invoke(value);
-            // if (!Mathf.Approximately(accuracy, value))
             accuracy = value;
         }
     }
