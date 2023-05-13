@@ -4,14 +4,16 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] MenuView view;
     [SerializeField] MenuInputManager inputManager;
-    [SerializeField] AudioManager audioManager;
 
     public MenuModel Model { get; private set; }
     public MenuController Controller { get; private set; }
     public MenuView View => view;
 
+    AudioManager audioManager;
+    
     void Start ()
     {
+        audioManager = AudioManager.GetOrCreate();
         Model = MenuModelFactory.Create(inputManager, audioManager);
         Controller = MenuControllerFactory.Create(View, Model);
         Initialize();
@@ -19,7 +21,6 @@ public class MenuManager : MonoBehaviour
 
     void Initialize ()
     {
-        audioManager.Initialize();
         Model.Initialize();
         Controller.Initialize();
     }

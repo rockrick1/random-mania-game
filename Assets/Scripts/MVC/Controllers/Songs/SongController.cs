@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 public class SongController
 {
@@ -43,13 +44,20 @@ public class SongController
         LowerSongController.Initialize();
         PauseController.Initialize();
         ScoreController.Initialize();
-        StartSong().Start();
+        try
+        {
+            StartSong().Start();
+        }
+        catch
+        {
+            //TODO find a way to do this better
+        }
     }
 
     async Task StartSong ()
     {
         await Task.Delay(500);
-        view.SetClip(model.CurrentSongAudio);
+        audioManager.SetMusicClip(model.CurrentSongAudio);
         model.Play();
     }
 
@@ -78,7 +86,7 @@ public class SongController
     }
 
 
-    void HandleAudioStartTimeReached () => view.Play();
+    void HandleAudioStartTimeReached () => audioManager.PlayMusic();
 
     void HandleNoteHit (Note _, HitScore __)
     {
@@ -89,13 +97,13 @@ public class SongController
     void HandlePause ()
     {
         GameManager.IsPaused = true;
-        view.Pause();
+        audioManager.PauseMusic();
     }
 
     void HandleResume ()
     {
         GameManager.IsPaused = false;
-        view.Play();
+        audioManager.PlayMusic();
     }
     void HandleRetry ()
     {

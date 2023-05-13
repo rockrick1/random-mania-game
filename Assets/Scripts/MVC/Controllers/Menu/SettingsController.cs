@@ -18,14 +18,37 @@ public class SettingsController : IDisposable
 
     void AddListeners ()
     {
+        view.OnMainVolumeChanged += HandleMainVolumeChanged;
+        view.OnMusicVolumeChanged += HandleMusicVolumeChanged;
+        view.OnSFXVolumeChanged += HandleSFXVolumeChanged;
     }
 
     void RemoveListeners ()
     {
+        view.OnMainVolumeChanged -= HandleMainVolumeChanged;
+        view.OnMusicVolumeChanged -= HandleMusicVolumeChanged;
+        view.OnSFXVolumeChanged -= HandleSFXVolumeChanged;
     }
-    
-    public void Open () => view.Open();
-    
+
+    void HandleMainVolumeChanged (float value) => model.SetMainVolume(value);
+
+    void HandleMusicVolumeChanged (float value) => model.SetMusicVolume(value);
+
+    void HandleSFXVolumeChanged (float value) => model.SetSFXVolume(value);
+
+    void SyncView ()
+    {
+        view.MainVolumeSlider.value = model.MainVolume;
+        view.MusicVolumeSlider.value = model.MusicVolume;
+        view.SFXVolumeSlider.value = model.SFXVolume;
+    }
+
+    public void Open ()
+    {
+        SyncView();
+        view.Open();
+    }
+
     public void Close () => view.Close();
 
     public void Dispose ()

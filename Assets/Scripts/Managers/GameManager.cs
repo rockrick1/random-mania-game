@@ -4,7 +4,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameView view;
     [SerializeField] GameInputManager inputManager;
-    [SerializeField] AudioManager audioManager;
 
     public static bool IsPaused = false;
 
@@ -12,10 +11,12 @@ public class GameManager : MonoBehaviour
     public GameController Controller { get; private set; }
     public GameView View => view;
 
+    AudioManager audioManager;
+    
     void Start ()
     {
         Application.targetFrameRate = 60;
-        AudioListener.volume = 0.2f;
+        audioManager = AudioManager.GetOrCreate();
         Model = GameModelFactory.Create(inputManager, audioManager);
         Controller = GameControllerFactory.Create(View, Model);
         Initialize();
@@ -23,7 +24,6 @@ public class GameManager : MonoBehaviour
 
     void Initialize ()
     {
-        audioManager.Initialize();
         Model.Initialize();
         Controller.Initialize();
     }

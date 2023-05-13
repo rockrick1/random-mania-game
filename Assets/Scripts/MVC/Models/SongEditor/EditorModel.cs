@@ -29,8 +29,6 @@ public class EditorModel : IEditorModel
     public void Initialize ()
     {
         AddListeners();
-        
-        AudioManager.Initialize();
         SongLoaderModel.Initialize();
         SongModel.Initialize();
     }
