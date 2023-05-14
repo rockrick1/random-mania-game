@@ -31,15 +31,25 @@
 
         SongController songController = new(
             view.SongView,
+            pauseController,
             model.SongModel,
-            model.AudioManager,
+            model.AudioManager
+        );
+
+        ResultsController resultsController = new(
+            view.ResultsView,
+            songController,
+            model.ScoreModel
+        );
+        
+        return new GameController(
+            songController,
             upperSongController,
             comboController,
             lowerSongController,
             pauseController,
-            scoreController
+            scoreController,
+            resultsController
         );
-        GameController controller = new(songController);
-        return controller;
     }
 }

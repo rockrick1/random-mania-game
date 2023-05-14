@@ -97,6 +97,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Menu\MenuModelFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SongMenuController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\ScoreView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorTopBarView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorControllerFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\GameModel.cs" />
@@ -129,6 +130,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Menu\ISongMenuModel.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleUI.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\LowerSongController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ScoreController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuController.cs" />
      <Compile Include="Assets\Scripts\Managers\EditorInputManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\SettingsModel.cs" />
@@ -144,8 +146,9 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ScoreController.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\ScoreView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\ResultsView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ResultsController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Utils\StringExtentions.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -153,6 +156,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <Folder Include="Assets\Art\Game" />
      <Folder Include="Assets\TextMesh Pro\Sprites" />
+     <Folder Include="Assets\Scripts\Managers\Resources" />
      <Folder Include="Assets\Resources" />
      <Folder Include="Assets\Scripts\MVC\Views\Menu\Prefabs" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />

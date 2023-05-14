@@ -34,7 +34,7 @@ public class ScoreController : IDisposable
     void HandleScoreChanged (int combo) => view.SetScore(combo.ToString());
 
     void HandleAccuracyChanged (float accuracy) =>
-        view.SetAccuracy(string.Format(ACCURACY_FORMAT, (accuracy * 100).ToString("F2", CultureInfo.InvariantCulture)));
+        view.SetAccuracy(accuracy.FormatAccuracy());
 
     public void Dispose ()
     {

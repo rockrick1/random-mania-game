@@ -9,33 +9,23 @@ public class ScoreModel : IScoreModel
     public event Action<int> OnScoreChanged;
     public event Action<float> OnAccuracyChanged;
     
-    readonly ISongModel songModel;
-
-    readonly Dictionary<HitScore, int> noteScores = new()
-    {
-        {HitScore.Perfect, 0},
-        {HitScore.Great, 0},
-        {HitScore.Okay, 0},
-        {HitScore.Miss, 0},
-    };
+    public Dictionary<HitScore, int> NoteScores => noteScores;
     
-    readonly float accuracyFactor = 1f / (float) HitScore.Perfect;
-
-    int Combo
+    public int Combo
     {
         get => combo;
-        set
+        private set
         {
             if (combo != value)
                 OnComboChanged?.Invoke(value);
             combo = value;
         }
     }
-    
-    int Score
+
+    public int Score
     {
         get => score;
-        set
+        private set
         {
             if (score != value)
                 OnScoreChanged?.Invoke(value);
@@ -43,15 +33,25 @@ public class ScoreModel : IScoreModel
         }
     }
     
-    float Accuracy
+    public float Accuracy
     {
         get => accuracy;
-        set
+        private set
         {
             OnAccuracyChanged?.Invoke(value);
             accuracy = value;
         }
     }
+    
+    readonly ISongModel songModel;
+    readonly Dictionary<HitScore, int> noteScores = new()
+    {
+        {HitScore.Perfect, 0},
+        {HitScore.Great, 0},
+        {HitScore.Okay, 0},
+        {HitScore.Miss, 0},
+    };
+
     
     int combo;
     int score;

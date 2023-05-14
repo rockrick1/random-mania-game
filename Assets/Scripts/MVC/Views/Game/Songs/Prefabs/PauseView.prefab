@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 902728861822602443}
   - component: {fileID: 4167636628133889222}
   m_Layer: 0
-  m_Name: PausedText
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,19 +6,19 @@ public class AudioManager : MonoBehaviour, IAudioManager
     [SerializeField] AudioSource musicPlayer;
     [SerializeField] AudioSource sfxPlayer;
 
-    public static AudioManager Instance;
+    static AudioManager _instance;
 
     readonly Dictionary<string, AudioClip> sfxDict = new();
     
     public static AudioManager GetOrCreate ()
     {
-        if (Instance != null)
-            return Instance;
+        if (_instance != null)
+            return _instance;
         AudioManager instance = Instantiate(Resources.Load<AudioManager>("AudioManager"));
-        Instance = instance;
-        DontDestroyOnLoad(Instance);
-        Instance.Initialize();
-        return Instance;
+        _instance = instance;
+        DontDestroyOnLoad(_instance);
+        _instance.Initialize();
+        return _instance;
     }
 
     void Initialize ()

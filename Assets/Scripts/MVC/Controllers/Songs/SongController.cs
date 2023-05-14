@@ -4,46 +4,29 @@ using System.Threading.Tasks;
 public class SongController
 {
     const string HIT_SOUND = "soft-hitnormal";
-    
-    public UpperSongController UpperSongController { get; }
-    public ComboController ComboController { get; }
-    public LowerSongController LowerSongController { get; }
-    public PauseController PauseController { get; }
-    public ScoreController ScoreController { get; }
-    
+
+    public event Action OnSongFinished;
+
+    readonly SongView view;
+    readonly PauseController pauseController;
     readonly ISongModel model;
     readonly IAudioManager audioManager;
-    readonly SongView view;
-
-    public SongController (
-        SongView view,
-        ISongModel model,
-        IAudioManager audioManager,
-        UpperSongController upperSongController,
-        ComboController comboController,
-        LowerSongController lowerSongController,
+    
+    public SongController (SongView view,
         PauseController pauseController,
-        ScoreController scoreController
+        ISongModel model,
+        IAudioManager audioManager
     )
     {
         this.view = view;
+        this.pauseController = pauseController;
         this.model = model;
         this.audioManager = audioManager;
-        UpperSongController = upperSongController;
-        ComboController = comboController;
-        LowerSongController = lowerSongController;
-        PauseController = pauseController;
-        ScoreController = scoreController;
     }
 
     public void Initialize ()
     {
         AddListeners();
-        UpperSongController.Initialize();
-        ComboController.Initialize();
-        LowerSongController.Initialize();
-        PauseController.Initialize();
-        ScoreController.Initialize();
         try
         {
             StartSong().Start();
@@ -56,6 +39,7 @@ public class SongController
 
     async Task StartSong ()
     {
+        //TODO find a way to do this better
         await Task.Delay(500);
         audioManager.SetMusicClip(model.CurrentSongAudio);
         model.Play();
@@ -67,10 +51,11 @@ public class SongController
         model.OnNoteHit += HandleNoteHit;
         model.OnLongNoteHit += HandleNoteHit;
         model.OnLongNoteReleased += HandleNoteHit;
-        PauseController.OnPause += HandlePause;
-        PauseController.OnResume += HandleResume;
-        PauseController.OnRetry += HandleRetry;
-        PauseController.OnQuit += HandleQuit;
+        model.OnSongFinished += HandleSongFinished;
+        pauseController.OnPause += HandlePause;
+        pauseController.OnResume += HandleResume;
+        pauseController.OnRetry += HandleRetry;
+        pauseController.OnQuit += HandleQuit;
     }
 
     void RemoveListeners ()
@@ -79,10 +64,11 @@ public class SongController
         model.OnNoteHit -= HandleNoteHit;
         model.OnLongNoteHit -= HandleNoteHit;
         model.OnLongNoteReleased -= HandleNoteHit;
-        PauseController.OnPause -= HandlePause;
-        PauseController.OnResume -= HandleResume;
-        PauseController.OnRetry -= HandleRetry;
-        PauseController.OnQuit -= HandleQuit;
+        model.OnSongFinished -= HandleSongFinished;
+        pauseController.OnPause -= HandlePause;
+        pauseController.OnResume -= HandleResume;
+        pauseController.OnRetry -= HandleRetry;
+        pauseController.OnQuit -= HandleQuit;
     }
 
 
@@ -93,6 +79,8 @@ public class SongController
         //TODO add dynamic hit sound check based on note settings
         audioManager.PlaySfx(HIT_SOUND);
     }
+
+    void HandleSongFinished () => OnSongFinished?.Invoke();
 
     void HandlePause ()
     {
@@ -118,10 +106,5 @@ public class SongController
     public void Dispose ()
     {
         RemoveListeners();
-        UpperSongController.Dispose();
-        ComboController.Dispose();
-        LowerSongController.Dispose();
-        PauseController.Initialize();
-        ScoreController.Dispose();
     }
 }
