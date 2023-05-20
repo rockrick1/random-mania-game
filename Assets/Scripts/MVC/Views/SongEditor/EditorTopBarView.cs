@@ -2,20 +2,16 @@
 
 public class EditorTopBarView : MonoBehaviour
 {
-    [SerializeField] AudioSource songPlayer;
     [SerializeField] RectTransform waveLine;
     [SerializeField] RectTransform lineParent;
     [SerializeField] EditorTopBarDragHandler dragHandler;
 
-    public float CurrentZoom => lineParent.localScale.x;
-
+    IAudioManager audioManager;
     float progress;
-
-    float startAnchor = .5f;
-    float endAnchor = -.5f;
 
     void Start ()
     {
+        audioManager = AudioManager.GetOrCreate();
     }
 
     public void ChangeZoom (float amount)
@@ -30,17 +26,15 @@ public class EditorTopBarView : MonoBehaviour
 
     void Update ()
     {
-        if (songPlayer.clip == null)
+        if (!audioManager.HasMusicClip)
             return;
-        if (dragHandler.IsDragging)
+        float musicLength = audioManager.MusicLength;
+        if (!dragHandler.IsDragging)
         {
-            AudioClip clip = songPlayer.clip;
-            songPlayer.time = Mathf.Clamp(dragHandler.Progress * clip.length, 0, clip.length - .1f);
-        }
-        else
-        {
-            progress = songPlayer.time / songPlayer.clip.length;
+            progress = audioManager.MusicTime / musicLength;
             dragHandler.SetProgress(progress);
         }
+        else
+            audioManager.SetMusicTime(Mathf.Clamp(dragHandler.Progress * musicLength, 0, musicLength - .1f));
     }
 }

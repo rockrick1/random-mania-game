@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EditorSongController : IDisposable
 {
@@ -7,6 +8,8 @@ public class EditorSongController : IDisposable
     readonly EditorSongDetailsController songDetailsController;
     readonly IEditorSongModel model;
     readonly ISongLoaderModel songLoaderModel;
+    readonly IAudioManager audioManager;
+    readonly IEditorInputManager inputManager;
     
     List<BaseNoteView> activeNoteViews = new();
 
@@ -14,13 +17,17 @@ public class EditorSongController : IDisposable
         EditorSongView view,
         EditorSongDetailsController songDetailsController,
         IEditorSongModel model,
-        ISongLoaderModel songLoaderModel
+        ISongLoaderModel songLoaderModel,
+        IAudioManager audioManager,
+        IEditorInputManager inputManager
     )
     {
         this.view = view;
         this.songDetailsController = songDetailsController;
         this.model = model;
         this.songLoaderModel = songLoaderModel;
+        this.audioManager = audioManager;
+        this.inputManager = inputManager;
     }
 
     public void Initialize ()
@@ -34,7 +41,10 @@ public class EditorSongController : IDisposable
         view.OnFieldButtonLeftReleased += HandleFieldButtonLeftReleased;
         songDetailsController.OnApplyClicked += HandleApplySongDetails;
         songDetailsController.OnSignatureChanged += HandleSignatureChanged;
+        songDetailsController.OnPlaybackSpeedChanged += HandlePlaybackSpeedChanged;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
+        inputManager.OnSongPlayPause += HandlePlayPause;
+        inputManager.OnSongScroll += HandleSongScroll;
     }
 
     void RemoveListeners ()
@@ -43,17 +53,17 @@ public class EditorSongController : IDisposable
         view.OnFieldButtonLeftReleased -= HandleFieldButtonLeftReleased;
         songDetailsController.OnApplyClicked -= HandleApplySongDetails;
         songDetailsController.OnSignatureChanged -= HandleSignatureChanged;
+        songDetailsController.OnPlaybackSpeedChanged -= HandlePlaybackSpeedChanged;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
+        inputManager.OnSongPlayPause -= HandlePlayPause;
+        inputManager.OnSongScroll -= HandleSongScroll;
     }
 
-    void HandleFieldButtonLeftClicked (int pos)
-    {
-        model.StartCreatingNote(pos, view.SongPlayer.time, view.Height);
-    }
+    void HandleFieldButtonLeftClicked (int pos) => model.StartCreatingNote(pos, audioManager.MusicTime, view.Height);
 
     void HandleFieldButtonLeftReleased (int pos)
     {
-        NoteCreationResult? result = model.CreateNote(pos, view.SongPlayer.time, view.Height);
+        NoteCreationResult? result = model.CreateNote(pos, audioManager.MusicTime, view.Height);
         if (!result.HasValue)
             return;
         foreach (int i in result.Value.Substituted)
@@ -87,6 +97,11 @@ public class EditorSongController : IDisposable
         model.ChangeSignature(signature);
         view.ClearSeparators();
         CreateHorizontalSeparators();
+    }
+
+    void HandlePlaybackSpeedChanged (float speed)
+    {
+        audioManager.SetMusicPlaybackSpeed(speed);
     }
 
     void HandleSongLoaded ()
@@ -141,6 +156,11 @@ public class EditorSongController : IDisposable
     {
         //TODO transform long note to single note
     }
+
+    void HandlePlayPause () => audioManager.PlayPauseMusic();
+
+    void HandleSongScroll (float amount) =>
+        audioManager.SetMusicTime(model.GetNextBeat(audioManager.MusicTime, Mathf.RoundToInt(-amount)));
 
     void RemoveNoteViewAt (int index)
     {

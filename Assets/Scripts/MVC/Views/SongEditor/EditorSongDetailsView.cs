@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class EditorSongDetailsView : MonoBehaviour
 {
-    public event Action OnSetStartingTimeClicked;
     public event Action OnApplyClicked;
     public event Action<string> OnSignatureChanged;
+    public event Action<string> OnPlaybackSpeedChanged;
     public event Action<bool> OnShowWaveClicked;
 
     [SerializeField] AudioSource songPlayer;
@@ -19,6 +19,7 @@ public class EditorSongDetailsView : MonoBehaviour
     [SerializeField] Button setStartingTimeButton;
     [SerializeField] Button applyButton;
     [SerializeField] TMP_Dropdown signatureDropdown;
+    [SerializeField] TMP_Dropdown playbackSpeedDropdown;
     [SerializeField] Toggle showWaveToggle;
 
     public string BpmValue => bpmInput.text;
@@ -41,6 +42,11 @@ public class EditorSongDetailsView : MonoBehaviour
     public void HandleSignatureChanged ()
     {
         OnSignatureChanged?.Invoke(signatureDropdown.options[signatureDropdown.value].text);
+    }
+
+    public void HandlePlaybackSpeedChanged ()
+    {
+        OnPlaybackSpeedChanged?.Invoke(playbackSpeedDropdown.options[playbackSpeedDropdown.value].text);
     }
 
     void HandleSetStartingTime ()

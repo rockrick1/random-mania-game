@@ -33,10 +33,6 @@ public class EditorModel : IEditorModel
         SongModel.Initialize();
     }
 
-    public void ProcessSong (AudioClip clip)
-    {
-    }
-
     void AddListeners ()
     {
         SongPickerModel.OnSongPicked += HandleSongPicked;
@@ -52,7 +48,6 @@ public class EditorModel : IEditorModel
     public void Dispose ()
     {
         RemoveListeners();
-        
         SongModel.Dispose();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EditorController : IDisposable
@@ -14,6 +13,7 @@ public class EditorController : IDisposable
     readonly IEditorSongModel songModel;
     readonly ISongLoaderModel songLoaderModel;
     readonly IEditorInputManager inputManager;
+    readonly IAudioManager audioManager;
 
     public EditorController (
         EditorSongPickerController songPickerController,
@@ -25,7 +25,8 @@ public class EditorController : IDisposable
         IEditorModel model,
         IEditorSongModel songModel,
         ISongLoaderModel songLoaderModel,
-        IEditorInputManager inputManager
+        IEditorInputManager inputManager,
+        IAudioManager audioManager
     )
     {
         this.songPickerController = songPickerController;
@@ -38,6 +39,7 @@ public class EditorController : IDisposable
         this.songModel = songModel;
         this.songLoaderModel = songLoaderModel;
         this.inputManager = inputManager;
+        this.audioManager = audioManager;
     }
 
     public void Initialize ()
@@ -54,37 +56,21 @@ public class EditorController : IDisposable
     {
         view.BackButton.OnLeftClick.AddListener(HandleBack);
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
-        inputManager.OnSongPlayPause += HandlePlayPause;
-        inputManager.OnSongScroll += HandleSongScroll;
     }
 
     void RemoveListeners ()
     {
         view.BackButton.OnLeftClick.RemoveListener(HandleBack);
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
-        inputManager.OnSongPlayPause -= HandlePlayPause;
-        inputManager.OnSongScroll -= HandleSongScroll;
     }
 
-    void HandleBack ()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
+    void HandleBack () => SceneManager.LoadScene("MainMenu");
 
     void HandleSongLoaded ()
     {
-        view.SetSong(songLoaderModel.Audio);
+        audioManager.SetMusicClip(songLoaderModel.Audio);
         view.WaveForm2D.SetAudio(songLoaderModel.Audio);
         view.WaveForm2D.ShowWave();
-        model.ProcessSong(songLoaderModel.Audio);
-        view.ClearSeparators();
-    }
-
-    void HandlePlayPause () => view.PlayPauseSong();
-
-    void HandleSongScroll (float amount)
-    {
-        view.SetSongTime(songModel.GetNextBeat(view.SongPlayer.time, Mathf.RoundToInt(-amount)));
     }
 
     public void Dispose ()

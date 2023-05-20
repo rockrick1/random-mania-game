@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\Managers\EditorManager.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\MenuView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\Note.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ResultsController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorNewSongController.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\IMainMenuModel.cs" />
@@ -90,6 +91,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\SettingsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorNewSongView.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Game\ResultsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\Songs\SongView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ScoreModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongPickerModel.cs" />
@@ -139,6 +141,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Menu\ISettingsModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ComboController.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Utils\StringExtentions.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\NoteCreationResult.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\UpperSongController.cs" />
      <Compile Include="Assets\Scripts\Managers\MenuInputManager.cs" />
@@ -146,9 +149,6 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Game\ResultsView.cs" />
-     <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ResultsController.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Utils\StringExtentions.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

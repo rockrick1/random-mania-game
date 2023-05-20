@@ -25,7 +25,9 @@
             view.EditorSongView,
             songDetailsController,
             model.SongModel,
-            model.SongLoaderModel
+            model.SongLoaderModel,
+            model.AudioManager,
+            model.InputManager
         );
         EditorController controller = new(
             songPickerController,
@@ -37,7 +39,8 @@
             model,
             model.SongModel,
             model.SongLoaderModel,
-            model.InputManager
+            model.InputManager,
+            model.AudioManager
         );
         return controller;
     }

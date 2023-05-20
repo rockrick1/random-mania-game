@@ -8,12 +8,9 @@ public class EditorSongView : MonoBehaviour
     public event Action<int> OnFieldButtonLeftClicked;
     public event Action<int> OnFieldButtonLeftReleased;
     
-    [SerializeField] AudioSource songPlayer;
-    
     [SerializeField] UIClickHandler fieldButtonLeft;
     [SerializeField] UIClickHandler fieldButtonCenter;
     [SerializeField] UIClickHandler fieldButtonRight;
-
     [SerializeField] RectTransform songObjects;
 
     [Header("Notes")]
@@ -32,23 +29,22 @@ public class EditorSongView : MonoBehaviour
     [SerializeField] Color thirdBeatColor;
     [SerializeField] Color quarterBeatColor;
 
-    public AudioSource SongPlayer => songPlayer;
-
     public float Height { get; private set; }
     public float ObjectsSpeed { get; private set; }
 
     readonly List<GameObject> separatorInstances = new();
 
+    IAudioManager audioManager;
     float progress;
     float zoomScale;
     float songLength;
     float totalHeight;
     float approachRate;
-
     float beatInterval;
     
     void Start ()
     {
+        audioManager = AudioManager.GetOrCreate();
         fieldButtonLeft.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(0));
         fieldButtonCenter.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(1));
         fieldButtonRight.OnLeftClick.AddListener(() => OnFieldButtonLeftClicked?.Invoke(2));
@@ -139,7 +135,7 @@ public class EditorSongView : MonoBehaviour
     
     void Update ()
     {
-        progress = ObjectsSpeed * songPlayer.time;
+        progress = ObjectsSpeed * audioManager.MusicTime;
         songObjects.anchoredPosition = new Vector2(0, -progress);
     }
 }

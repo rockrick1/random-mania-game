@@ -3,9 +3,9 @@ using System.Globalization;
 
 public class EditorSongDetailsController : IDisposable
 {
-    public event Action OnSetStartingTimeClicked;
     public event Action<float, float, float, float> OnApplyClicked;
     public event Action<int> OnSignatureChanged;
+    public event Action<float> OnPlaybackSpeedChanged;
     public event Action<bool> OnShowWaveClicked;
 
     readonly EditorSongDetailsView view;
@@ -24,23 +24,21 @@ public class EditorSongDetailsController : IDisposable
 
     void AddListeners ()
     {
-        view.OnSetStartingTimeClicked += HandleSetStartingTimeClicked;
         view.OnApplyClicked += HandleApplyClicked;
         view.OnSignatureChanged += HandleSignatureChanged;
+        view.OnPlaybackSpeedChanged += HandlePlaybackSpeedChanged;
         view.OnShowWaveClicked += HandleShowWaveClicked;
         songLoaderModel.OnSongLoaded += HandleSongLoaded;
     }
 
     void RemoveListeners ()
     {
-        view.OnSetStartingTimeClicked -= HandleSetStartingTimeClicked;
         view.OnApplyClicked -= HandleApplyClicked;
         view.OnSignatureChanged -= HandleSignatureChanged;
+        view.OnPlaybackSpeedChanged -= HandlePlaybackSpeedChanged;
         view.OnShowWaveClicked -= HandleShowWaveClicked;
         songLoaderModel.OnSongLoaded -= HandleSongLoaded;
     }
-
-    void HandleSetStartingTimeClicked () => OnSetStartingTimeClicked?.Invoke();
 
     void HandleApplyClicked ()
     {
@@ -54,6 +52,11 @@ public class EditorSongDetailsController : IDisposable
     void HandleSignatureChanged (string signature)
     {
         OnSignatureChanged?.Invoke(int.Parse(signature.Substring(signature.IndexOf('/') + 1)));
+    }
+
+    void HandlePlaybackSpeedChanged (string speed)
+    {
+        OnPlaybackSpeedChanged?.Invoke(float.Parse(speed.Replace("x", ""), CultureInfo.InvariantCulture));
     }
 
     void HandleShowWaveClicked (bool active)
