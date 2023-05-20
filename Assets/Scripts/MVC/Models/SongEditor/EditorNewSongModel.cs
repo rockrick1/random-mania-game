@@ -25,10 +25,10 @@ public class EditorNewSongModel : IEditorNewSongModel
     {
     }
 
-    public void CreateSongFolder (string songId)
+    public void CreateSong (string songName, string artistName)
     {
-        songLoaderModel.CreateSongFolder(songId);
-        LastCreatedSongId = songId;
+        songLoaderModel.CreateSong(songName, artistName);
+        LastCreatedSongId = SongLoaderModel.GetSongId(songName, artistName);
     }
 
     public void OpenSongFolder ()
@@ -40,7 +40,7 @@ public class EditorNewSongModel : IEditorNewSongModel
         Application.OpenURL($"file://{path}");
     }
 
-    public bool SongExists (string songId) => songLoaderModel.SongExists(songId);
+    public bool SongExists (string songName, string artistName) => songLoaderModel.SongExists(songName, artistName);
 
     public void Dispose ()
     {

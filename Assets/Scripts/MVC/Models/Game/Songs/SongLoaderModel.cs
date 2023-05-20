@@ -11,6 +11,9 @@ using UnityEngine.Networking;
 public class SongLoaderModel : ISongLoaderModel
 {
     const string AUDIO_EXTENSION = ".mp3";
+    const string TITLE_KEY = "title";
+    const string ARTIST_KEY = "artist";
+    const string DIFFICULTY_NAME_KEY = "difficultyName";
     const string BPM_KEY = "bpm";
     const string APPROACH_RATE_KEY = "approachRate";
     const string DIFFICULTY_KEY = "difficulty";
@@ -35,6 +38,72 @@ public class SongLoaderModel : ISongLoaderModel
         TryCreateDefaultFiles();
     }
 
+    public static string GetSongId (string songName, string artistName) => $"{artistName} - {songName}";
+
+    public void CreateSong (string songName, string artistName)
+    {
+        if (!Directory.Exists(SongsPath))
+            throw new Exception("Songs path doest not exist! something went wrong on initialization, it seems.");
+        string dirPath = Path.Combine(SongsPath, GetSongId(songName, artistName));
+        Directory.CreateDirectory(dirPath);
+        SongSettings newSongSettings = new()
+        {
+            Id = GetSongId(songName, artistName),
+            Title = songName,
+            Artist = artistName
+        };
+        textPath = GetTextPath(newSongSettings.Id);
+        SaveSongSettings(newSongSettings);
+        OnSongCreated?.Invoke();
+    }
+
+    public void LoadSong (string songId)
+    {
+        bool isDefault = false;
+        Settings = new SongSettings { Id = songId };
+        AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
+        if (clip != null)
+        {
+            isDefault = true;
+            Audio = clip;
+        }
+        CoroutineRunner.Instance.StartRoutine(nameof(LoadSong), LoadSong(isDefault));
+    }
+
+    public void SaveSong (ISongSettings settings)
+    {
+        SaveSongSettings(settings);
+        OnSongSaved?.Invoke();
+    }
+
+    public IReadOnlyList<string> GetAllSongDirs ()
+    {
+        string[] dirs = Directory.GetDirectories(SongsPath);
+        return dirs.Select(dir => dir.Split('\\').Last()).ToList();
+    }
+
+    public IReadOnlyList<ISongSettings> GetAllSongSettings ()
+    {
+        List<ISongSettings> ret = new();
+        foreach (string dir in GetAllSongDirs())
+        {
+            textPath = GetTextPath(dir);
+            if (!File.Exists(textPath))
+                continue;
+            
+            Settings = new SongSettings {Id = dir};
+
+            string songText = File.ReadAllText(textPath);
+            LoadSongSettings(songText);
+            ret.Add(Settings.Clone());
+        }
+
+        return ret;
+    }
+
+    public bool SongExists (string songName, string artistName) =>
+        Directory.Exists(Path.Combine(SongsPath, GetSongId(songName, artistName)));
+
     void TryCreateDefaultFiles ()
     {
         if (!Directory.Exists(SongsPath))
@@ -52,28 +121,6 @@ public class SongLoaderModel : ISongLoaderModel
                 continue;
             File.WriteAllBytes(filePath, songAsset.bytes);
         }
-    }
-
-    public void CreateSongFolder (string songId)
-    {
-        if (!Directory.Exists(SongsPath))
-            throw new Exception("Songs path doest not exist! something went wrong on initialization, it seems.");
-        string dirPath = Path.Combine(SongsPath, songId);
-        Directory.CreateDirectory(dirPath);
-        OnSongCreated?.Invoke();
-    }
-
-    public void LoadSong (string songId)
-    {
-        bool isDefault = false;
-        Settings = new SongSettings { Id = songId };
-        AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
-        if (clip != null)
-        {
-            isDefault = true;
-            Audio = clip;
-        }
-        CoroutineRunner.Instance.StartRoutine(nameof(LoadSong), LoadSong(isDefault));
     }
 
     IEnumerator LoadSong (bool isDefaultSong)
@@ -99,42 +146,6 @@ public class SongLoaderModel : ISongLoaderModel
         OnSongLoaded?.Invoke();
     }
 
-    public void SaveSong (ISongSettings settings)
-    {
-        SaveSongSettings(settings);
-        OnSongSaved?.Invoke();
-    }
-
-    public IReadOnlyList<string> GetAllSongDirs ()
-    {
-        List<string> ret = new();
-        string[] dirs = Directory.GetDirectories(SongsPath);
-        foreach (string dir in dirs)
-            ret.Add(dir.Split('\\').Last());
-        return ret;
-    }
-
-    public IReadOnlyList<ISongSettings> GetAllSongSettings ()
-    {
-        List<ISongSettings> ret = new();
-        foreach (string dir in GetAllSongDirs())
-        {
-            textPath = GetTextPath(dir);
-            if (!File.Exists(textPath))
-                continue;
-            
-            Settings = new SongSettings {Id = dir};
-
-            string songText = File.ReadAllText(textPath);
-            LoadSongSettings(songText);
-            ret.Add(Settings.Clone());
-        }
-
-        return ret;
-    }
-
-    public bool SongExists (string songId) => Directory.Exists(Path.Combine(SongsPath, songId));
-
     void LoadSongSettings (string file)
     {
         string[] lines = file.Split('\n');
@@ -154,6 +165,15 @@ public class SongLoaderModel : ISongLoaderModel
 
             switch (key)
             {
+                case TITLE_KEY:
+                    Settings.Title = line;
+                    break;
+                case ARTIST_KEY:
+                    Settings.Artist = line;
+                    break;
+                case DIFFICULTY_NAME_KEY:
+                    Settings.DifficultyName = line;
+                    break;
                 case BPM_KEY:
                     Settings.Bpm = ParseFloat(line);
                     break;
@@ -193,6 +213,9 @@ public class SongLoaderModel : ISongLoaderModel
     {
         string text = string.Empty;
 
+        text += $"[{TITLE_KEY}]\n{settings.Title}\n\n";
+        text += $"[{ARTIST_KEY}]\n{settings.Artist}\n\n";
+        text += $"[{DIFFICULTY_NAME_KEY}]\n{settings.DifficultyName}\n\n";
         text += $"[{BPM_KEY}]\n{settings.Bpm.ToString(CultureInfo.InvariantCulture)}\n\n";
         text += $"[{DIFFICULTY_KEY}]\n{settings.Difficulty.ToString(CultureInfo.InvariantCulture)}\n\n";
         text += $"[{STARTING_TIME_EY}]\n{settings.StartingTime.ToString(CultureInfo.InvariantCulture)}\n\n";

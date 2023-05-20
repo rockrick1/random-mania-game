@@ -41,19 +41,24 @@ public class EditorNewSongController : IDisposable
         view.Open();
     }
 
-    void HandleCreateSong (string songId)
+    void HandleCreateSong (string songName, string artistName)
     {
-        if (string.IsNullOrWhiteSpace(songId))
+        if (string.IsNullOrWhiteSpace(songName))
         {
             view.ShowError("Please enter a song name.");
             return;
         }
-        if (model.SongExists(songId))
+        if (string.IsNullOrWhiteSpace(artistName))
+        {
+            view.ShowError("Please enter an artist name.");
+            return;
+        }
+        if (model.SongExists(songName, artistName))
         {
             view.ShowError("A song with that name already exists! Pick another name or edit this song's existing file.");
             return;
         }
-        model.CreateSongFolder(songId);
+        model.CreateSong(songName, artistName);
         view.SetCreationState(true);
     }
 

@@ -5,7 +5,7 @@ public interface IEditorNewSongModel : IDisposable
     string LastCreatedSongId { get; }
     
     void Initialize ();
-    void CreateSongFolder (string songId);
+    void CreateSong (string songName, string artistName);
     void OpenSongFolder ();
-    bool SongExists (string songId);
+    bool SongExists (string songName, string artistName);
 }

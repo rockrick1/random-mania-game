@@ -13,10 +13,10 @@ public interface ISongLoaderModel
     string SongsPath { get; }
 
     void Initialize ();
-    void CreateSongFolder (string songId);
+    void CreateSong (string songName, string artistName);
     void LoadSong (string songId);
     void SaveSong (ISongSettings settings);
     IReadOnlyList<string> GetAllSongDirs ();
     IReadOnlyList<ISongSettings> GetAllSongSettings();
-    bool SongExists (string songId);
+    bool SongExists (string songName, string artistName);
 }
