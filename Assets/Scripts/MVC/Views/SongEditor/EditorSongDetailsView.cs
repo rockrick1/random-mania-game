@@ -11,7 +11,6 @@ public class EditorSongDetailsView : MonoBehaviour
     public event Action<string> OnPlaybackSpeedChanged;
     public event Action<bool> OnShowWaveClicked;
 
-    [SerializeField] AudioSource songPlayer;
     [SerializeField] TMP_InputField bpmInput;
     [SerializeField] TMP_InputField arInput;
     [SerializeField] TMP_InputField diffInput;
@@ -27,8 +26,11 @@ public class EditorSongDetailsView : MonoBehaviour
     public string DiffValue => diffInput.text;
     public string StartingTimeValue => startingTimeInput.text;
 
+    AudioManager audioManager;
+
     void Awake ()
     {
+        audioManager = AudioManager.GetOrCreate();
         setStartingTimeButton.onClick.AddListener(HandleSetStartingTime);
         applyButton.onClick.AddListener(() => OnApplyClicked?.Invoke());
         showWaveToggle.onValueChanged.AddListener((value) => OnShowWaveClicked?.Invoke(value));
@@ -51,6 +53,6 @@ public class EditorSongDetailsView : MonoBehaviour
 
     void HandleSetStartingTime ()
     {
-        startingTimeInput.text = songPlayer.time.ToString(CultureInfo.CurrentCulture);
+        startingTimeInput.text = audioManager.MusicTime.ToString(CultureInfo.CurrentCulture);
     }
 }
