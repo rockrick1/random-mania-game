@@ -8,7 +8,7 @@ public interface IPauseModel : IDisposable
     event Action OnQuit;
     
     void Initialize ();
-    bool HandleEscPressed ();
+    PauseRequestResult HandleEscPressed ();
     void RaiseResume ();
     void RaiseRetry ();
     void RaiseQuit ();

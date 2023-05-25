@@ -53,7 +53,7 @@ public class SongLoaderModel : ISongLoaderModel
             Artist = artistName
         };
         textPath = GetTextPath(newSongSettings.Id);
-        SaveSongSettings(newSongSettings);
+        SaveSongTextFile(newSongSettings);
         OnSongCreated?.Invoke();
     }
 
@@ -67,12 +67,12 @@ public class SongLoaderModel : ISongLoaderModel
             isDefault = true;
             Audio = clip;
         }
-        CoroutineRunner.Instance.StartRoutine(nameof(LoadSong), LoadSong(isDefault));
+        CoroutineRunner.Instance.StartRoutine(nameof(LoadSongSettings), LoadSongSettings(isDefault));
     }
 
     public void SaveSong (ISongSettings settings)
     {
-        SaveSongSettings(settings);
+        SaveSongTextFile(settings);
         OnSongSaved?.Invoke();
     }
 
@@ -91,11 +91,8 @@ public class SongLoaderModel : ISongLoaderModel
             if (!File.Exists(textPath))
                 continue;
             
-            Settings = new SongSettings {Id = dir};
-
             string songText = File.ReadAllText(textPath);
-            LoadSongSettings(songText);
-            ret.Add(Settings.Clone());
+            ret.Add(ReadSongTextFile(songText));
         }
 
         return ret;
@@ -112,7 +109,8 @@ public class SongLoaderModel : ISongLoaderModel
     
         foreach (TextAsset songAsset in songAssets)
         {
-            string dirPath = Path.Combine(SongsPath, songAsset.name);
+            SongSettings settings = ReadSongTextFile(songAsset.text);
+            string dirPath = Path.Combine(SongsPath, settings.Id);
             string filePath = Path.Combine(dirPath, "song.txt");
             
             if (!Directory.Exists(dirPath))
@@ -123,7 +121,7 @@ public class SongLoaderModel : ISongLoaderModel
         }
     }
 
-    IEnumerator LoadSong (bool isDefaultSong)
+    IEnumerator LoadSongSettings (bool isDefaultSong)
     {
         textPath = GetTextPath(Settings.Id);
         audioPath = GetAudioPath(Settings.Id);
@@ -142,12 +140,13 @@ public class SongLoaderModel : ISongLoaderModel
             yield break;
         }
         
-        LoadSongSettings(songText);
+        Settings = ReadSongTextFile(songText);
         OnSongLoaded?.Invoke();
     }
 
-    void LoadSongSettings (string file)
+    SongSettings ReadSongTextFile (string file)
     {
+        SongSettings result = new();
         string[] lines = file.Split('\n');
 
         string key = "";
@@ -166,25 +165,25 @@ public class SongLoaderModel : ISongLoaderModel
             switch (key)
             {
                 case TITLE_KEY:
-                    Settings.Title = line;
+                    result.Title = line;
                     break;
                 case ARTIST_KEY:
-                    Settings.Artist = line;
+                    result.Artist = line;
                     break;
                 case DIFFICULTY_NAME_KEY:
-                    Settings.DifficultyName = line;
+                    result.DifficultyName = line;
                     break;
                 case BPM_KEY:
-                    Settings.Bpm = ParseFloat(line);
+                    result.Bpm = ParseFloat(line);
                     break;
                 case APPROACH_RATE_KEY:
-                    Settings.ApproachRate = ParseFloat(line);
+                    result.ApproachRate = ParseFloat(line);
                     break;
                 case DIFFICULTY_KEY:
-                    Settings.Difficulty = ParseFloat(line);
+                    result.Difficulty = ParseFloat(line);
                     break;
                 case STARTING_TIME_EY:
-                    Settings.StartingTime = ParseFloat(line);
+                    result.StartingTime = ParseFloat(line);
                     break;
                 case NOTES_KEY:
                     string[] values = line.Split(',');
@@ -201,15 +200,18 @@ public class SongLoaderModel : ISongLoaderModel
                             ParseFloat(times[0]),
                             int.Parse(values[1])
                         );
-                    Settings.Notes.Add(n);
+                    result.Notes.Add(n);
                     break;
                 default:
                     throw new Exception($"Unknown key found while parsing song: {key}");
             }
         }
+
+        result.Id = GetSongId(result.Title, result.Artist);
+        return result;
     }
     
-    void SaveSongSettings (ISongSettings settings)
+    void SaveSongTextFile (ISongSettings settings)
     {
         string text = string.Empty;
 

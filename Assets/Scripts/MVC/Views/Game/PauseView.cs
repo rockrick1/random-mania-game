@@ -18,7 +18,6 @@ public class PauseView : MonoBehaviour
     void Start ()
     {
         canvasGroup.alpha = 0f;
-        gameObject.SetActive(false);
     }
 
     public void Open ()

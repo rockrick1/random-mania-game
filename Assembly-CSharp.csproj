@@ -149,6 +149,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseRequestResult.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -175,7 +176,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources" />
      <Folder Include="Assets\Scripts\MVC\Views\SongEditor" />
      <Folder Include="Assets\Scripts" />
-     <None Include="Assets\Settings\Resources\Songs\TearRain.txt" />
+     <None Include="Assets\Settings\Resources\Songs\cYsmixfeat.Emmy - TearRain.txt" />
      <None Include="Assets\Art\UI\Fonts\maldini\misc\!!! READ THIS FIRST !!!.txt" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\Prefabs" />
      <Folder Include="Assets\Settings\Resources" />
@@ -991,6 +992,9 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
+     </Reference>
+     <Reference Include="ToolbarExtender.Editor">
+     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\ToolbarExtender.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

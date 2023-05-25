@@ -42,13 +42,20 @@ public class PauseController : IDisposable
 
     void HandleEscPressed ()
     {
-        if (model.HandleEscPressed())
+        switch (model.HandleEscPressed())
         {
-            OnPause?.Invoke();
-            view.Open();
+            case PauseRequestResult.Paused:
+                OnPause?.Invoke();
+                view.Open();
+                break;
+            case PauseRequestResult.Unpaused:
+                view.Close(() => OnResume?.Invoke());
+                break;
+            case PauseRequestResult.Ignored:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-        else
-            view.Close(() => OnResume?.Invoke());
     }
 
     void HandleResume ()

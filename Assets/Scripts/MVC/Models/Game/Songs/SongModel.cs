@@ -15,10 +15,10 @@ public class SongModel : ISongModel
 
     public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
     public AudioClip CurrentSongAudio => songLoaderModel.Audio;
+    public bool AllNotesRead { get; private set; }
 
     readonly IGameInputManager inputManager;
     readonly ISongLoaderModel songLoaderModel;
-    readonly IPauseModel pauseModel;
     
     float perfectHitWindow;
     float greatHitWindow;
@@ -27,11 +27,10 @@ public class SongModel : ISongModel
     double dspSongStart;
     double pauseOffset;
 
-    public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel, IPauseModel pauseModel)
+    public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
         this.inputManager = inputManager;
         this.songLoaderModel = songLoaderModel;
-        this.pauseModel = pauseModel;
     }
 
     public void Initialize ()
@@ -42,16 +41,10 @@ public class SongModel : ISongModel
 
     void AddListeners ()
     {
-        pauseModel.OnPause += HandlePause;
-        pauseModel.OnResume += HandleResume;
-        pauseModel.OnRetry += HandlePause;
     }
 
     void RemoveListeners ()
     {
-        pauseModel.OnPause -= HandlePause;
-        pauseModel.OnResume -= HandleResume;
-        pauseModel.OnRetry -= HandlePause;
     }
     
     void HandlePause ()
@@ -170,6 +163,7 @@ public class SongModel : ISongModel
             }
         }
 
+        AllNotesRead = true;
         yield return new WaitForSeconds(okayHitWindow * 3);
         OnSongFinished?.Invoke();
     }

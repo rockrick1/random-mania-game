@@ -13,6 +13,7 @@ public interface ISongModel : IDisposable
     
     ISongSettings CurrentSongSettings { get; }
     AudioClip CurrentSongAudio { get; }
+    bool AllNotesRead { get; }
 
     void Initialize ();
     void LoadSong (string songId);
