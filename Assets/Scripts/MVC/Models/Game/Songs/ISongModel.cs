@@ -9,6 +9,7 @@ public interface ISongModel : IDisposable
     event Action<Note, HitScore> OnLongNoteReleased;
     event Action<Note> OnNoteMissed;
     event Action OnAudioStartTimeReached;
+    event Action<float> OnSongStartSkipped;
     event Action OnSongFinished;
     
     ISongSettings CurrentSongSettings { get; }

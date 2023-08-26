@@ -744,6 +744,9 @@
      <Reference Include="Unity.InternalAPIEngineBridge.001">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
      </Reference>
+     <Reference Include="ToolbarExtender.Editor">
+     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\ToolbarExtender.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VSCode.Editor">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
      </Reference>
@@ -854,9 +857,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="ToolbarExtender.Editor">
-     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\ToolbarExtender.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

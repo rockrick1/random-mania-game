@@ -74,6 +74,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\Game\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongPickerModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\SongLoaderModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseRequestResult.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Utils\UIClickHandler.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\SongEditor\EditorSongController.cs" />
@@ -149,7 +150,6 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseRequestResult.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -882,6 +882,9 @@
      <Reference Include="Unity.InternalAPIEngineBridge.001">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.001.dll</HintPath>
      </Reference>
+     <Reference Include="ToolbarExtender.Editor">
+     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\ToolbarExtender.Editor.dll</HintPath>
+     </Reference>
      <Reference Include="Unity.VSCode.Editor">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
      </Reference>
@@ -992,9 +995,6 @@
      </Reference>
      <Reference Include="Unity.VisualScripting.State">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-     </Reference>
-     <Reference Include="ToolbarExtender.Editor">
-     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\ToolbarExtender.Editor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <ItemGroup>

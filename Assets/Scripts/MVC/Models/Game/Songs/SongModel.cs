@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class SongModel : ISongModel
 {
+    const float SKIP_TO_SECONDS_BEFORE = 1.5f;
     public event Action<Note> OnNoteSpawned;
     public event Action<Note, HitScore> OnNoteHit;
     public event Action<Note, HitScore> OnLongNoteHit;
     public event Action<Note, HitScore> OnLongNoteReleased;
     public event Action<Note> OnNoteMissed;
     public event Action OnAudioStartTimeReached;
+    public event Action<float> OnSongStartSkipped;
     public event Action OnSongFinished;
 
     public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
@@ -26,6 +28,7 @@ public class SongModel : ISongModel
 
     double dspSongStart;
     double pauseOffset;
+    float skippedTime;
 
     public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
@@ -41,21 +44,15 @@ public class SongModel : ISongModel
 
     void AddListeners ()
     {
+        inputManager.OnSpacePressed += HandleSpacePressed;
     }
 
     void RemoveListeners ()
     {
-    }
-    
-    void HandlePause ()
-    {
-        // throw new NotImplementedException();
+        inputManager.OnSpacePressed -= HandleSpacePressed;
     }
 
-    void HandleResume ()
-    {
-        // throw new NotImplementedException();
-    }
+    void HandleSpacePressed () => SkipSongStart();
 
     public void LoadSong (string songId)
     {
@@ -94,7 +91,7 @@ public class SongModel : ISongModel
         {
             yield return null;
             
-            double elapsed = AudioSettings.dspTime - dspSongStart - pauseOffset;
+            double elapsed = AudioSettings.dspTime - dspSongStart - pauseOffset + skippedTime;
             double noteSpawnTime = notes[noteIndex].Time - CurrentSongSettings.ApproachRate;
             
             if (elapsed > noteSpawnTime)
@@ -121,7 +118,7 @@ public class SongModel : ISongModel
 
             Note currentNote = notes[noteIndex];
 
-            double elapsed = AudioSettings.dspTime - dspSongStart - pauseOffset;
+            double elapsed = AudioSettings.dspTime - dspSongStart - pauseOffset + skippedTime;
             double timeToNote = currentNote.Time - elapsed;
             double timeToNoteEnd = currentNote.EndTime - elapsed;
 
@@ -189,6 +186,13 @@ public class SongModel : ISongModel
         if (absValue <= okayHitWindow)
             return HitScore.Okay;
         return HitScore.Miss;
+    }
+
+    void SkipSongStart ()
+    {
+        float threshold = Mathf.Max(CurrentSongSettings.ApproachRate, SKIP_TO_SECONDS_BEFORE);
+        skippedTime = CurrentSongSettings.Notes[0].Time - threshold;
+        OnSongStartSkipped?.Invoke(skippedTime);
     }
 
     public void Dispose ()

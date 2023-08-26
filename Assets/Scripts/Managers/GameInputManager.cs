@@ -6,6 +6,7 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
     public event Action<int> OnHitterSelect;
     public event Action OnHitPress;
     public event Action OnEscPressed;
+    public event Action OnSpacePressed;
 
     int selectedPosition = 1;
 
@@ -31,6 +32,7 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
     {
         CheckHitterChange();
         CheckEscape();
+        CheckSpacebar();
     }
 
     void CheckHitterChange ()
@@ -60,6 +62,14 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnEscPressed?.Invoke();
+        }
+    }
+
+    void CheckSpacebar ()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            OnSpacePressed?.Invoke();
         }
     }
 }

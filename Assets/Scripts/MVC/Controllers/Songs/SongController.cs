@@ -51,6 +51,7 @@ public class SongController
         model.OnNoteHit += HandleNoteHit;
         model.OnLongNoteHit += HandleNoteHit;
         model.OnLongNoteReleased += HandleNoteHit;
+        model.OnSongStartSkipped += HandleStartSkipped;
         model.OnSongFinished += HandleSongFinished;
         pauseController.OnPause += HandlePause;
         pauseController.OnResume += HandleResume;
@@ -64,6 +65,7 @@ public class SongController
         model.OnNoteHit -= HandleNoteHit;
         model.OnLongNoteHit -= HandleNoteHit;
         model.OnLongNoteReleased -= HandleNoteHit;
+        model.OnSongStartSkipped -= HandleStartSkipped;
         model.OnSongFinished -= HandleSongFinished;
         pauseController.OnPause -= HandlePause;
         pauseController.OnResume -= HandleResume;
@@ -79,6 +81,8 @@ public class SongController
         //TODO add dynamic hit sound check based on note settings
         audioManager.PlaySfx(HIT_SOUND);
     }
+
+    void HandleStartSkipped (float startingTime) => audioManager.SetMusicTime(startingTime);
 
     void HandleSongFinished () => OnSongFinished?.Invoke();
 

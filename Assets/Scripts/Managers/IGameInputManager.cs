@@ -6,6 +6,7 @@ public interface IGameInputManager
     event Action<int> OnHitterSelect;
     event Action OnHitPress;
     event Action OnEscPressed;
+    event Action OnSpacePressed;
 
     bool GetPositionPressed (int pos);
     bool GetPositionReleased (int pos);
