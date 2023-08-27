@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SongMenuView : MonoBehaviour
 {
-    public event Action<string> OnSongClicked;
+    public event Action<string, string> OnSongClicked;
     public event Action OnBackPressed;
 
     [SerializeField] ScrollRect scrollRect;
@@ -28,7 +28,7 @@ public class SongMenuView : MonoBehaviour
             SongEntryView entry = Instantiate(songEntryPrefab, songsList.transform);
             entry.transform.localRotation = Quaternion.Euler(0f, 0f, 20f);
             entry.Setup(song);
-            entry.Button.OnClick.AddListener(() => OnSongClicked?.Invoke(song.Id));
+            entry.Button.OnClick.AddListener(() => OnSongClicked?.Invoke(song.Id, song.DifficultyName));
         }
     }
     

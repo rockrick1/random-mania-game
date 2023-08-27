@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class EditorSongController : IDisposable
@@ -106,18 +107,22 @@ public class EditorSongController : IDisposable
 
     void HandleSongLoaded ()
     {
-        ClearNotes();
-        view.ClearSeparators();
-        view.SetupSong(songLoaderModel.Settings, songLoaderModel.Audio.length);
-        CreateNotes();
-        CreateHorizontalSeparators();
+        Task.Run(() => songLoaderModel.GetSelectedSongAudio(clip =>
+        {
+            ClearNotes();
+            view.ClearSeparators();
+            view.SetupSong(songLoaderModel.GetSelectedSongSettings(), clip.length);
+            CreateNotes();
+            CreateHorizontalSeparators();
+        }));
     }
 
     void CreateNotes ()
     {
-        for (int i = 0; i < songLoaderModel.Settings.Notes.Count; i++)
+        ISongSettings settings = songLoaderModel.GetSelectedSongSettings();
+        for (int i = 0; i < settings.Notes.Count; i++)
         {
-            Note note = songLoaderModel.Settings.Notes[i];
+            Note note = settings.Notes[i];
             if (note.IsLong)
                 AddLongNoteViewAt(view.CreateLongNote(note), i);
             else
@@ -170,14 +175,17 @@ public class EditorSongController : IDisposable
 
     void CreateHorizontalSeparators ()
     {
-        int i = 0;
-        for (float t = songLoaderModel.Settings.StartingTime;
-             t < songLoaderModel.Audio.length;
-             t += model.SignedBeatInterval, i++)
+        Task.Run(() => songLoaderModel.GetSelectedSongAudio(clip =>
         {
-            view.CreateSeparator(model.GetSeparatorColorByIndex(i));
-        }
-        view.ChangeSeparatorsDistance(model.SelectedSignature);
+            int i = 0;
+            for (float t = songLoaderModel.GetSelectedSongSettings().StartingTime;
+                 t < clip.length;
+                 t += model.SignedBeatInterval, i++)
+            {
+                view.CreateSeparator(model.GetSeparatorColorByIndex(i));
+            }
+            view.ChangeSeparatorsDistance(model.SelectedSignature);
+        }));
     }
 
     public void Dispose ()

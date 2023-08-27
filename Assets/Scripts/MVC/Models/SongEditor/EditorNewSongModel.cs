@@ -6,7 +6,8 @@ public class EditorNewSongModel : IEditorNewSongModel
 {
     readonly ISongLoaderModel songLoaderModel;
     public string LastCreatedSongId { get; private set; }
-    
+    public string LastCreatedSongDifficultyName { get; private set; }
+
     public EditorNewSongModel (ISongLoaderModel songLoaderModel)
     {
         this.songLoaderModel = songLoaderModel;
@@ -25,9 +26,9 @@ public class EditorNewSongModel : IEditorNewSongModel
     {
     }
 
-    public void CreateSong (string songName, string artistName)
+    public void CreateSong (string songName, string artistName, string songDifficultyName)
     {
-        songLoaderModel.CreateSong(songName, artistName);
+        songLoaderModel.CreateSong(songName, artistName, songDifficultyName);
         LastCreatedSongId = SongLoaderModel.GetSongId(songName, artistName);
     }
 

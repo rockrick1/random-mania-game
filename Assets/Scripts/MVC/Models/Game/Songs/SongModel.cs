@@ -15,12 +15,11 @@ public class SongModel : ISongModel
     public event Action<float> OnSongStartSkipped;
     public event Action OnSongFinished;
 
-    public ISongSettings CurrentSongSettings => songLoaderModel.Settings;
-    public AudioClip CurrentSongAudio => songLoaderModel.Audio;
+    public ISongLoaderModel SongLoaderModel { get; }
+    public ISongSettings CurrentSongSettings => SongLoaderModel.GetSelectedSongSettings();
     public bool AllNotesRead { get; private set; }
 
     readonly IGameInputManager inputManager;
-    readonly ISongLoaderModel songLoaderModel;
     
     float perfectHitWindow;
     float greatHitWindow;
@@ -33,12 +32,12 @@ public class SongModel : ISongModel
     public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel)
     {
         this.inputManager = inputManager;
-        this.songLoaderModel = songLoaderModel;
+        SongLoaderModel = songLoaderModel;
     }
 
     public void Initialize ()
     {
-        songLoaderModel.Initialize();
+        SongLoaderModel.Initialize();
         AddListeners();
     }
 
@@ -54,9 +53,10 @@ public class SongModel : ISongModel
 
     void HandleSpacePressed () => SkipSongStart();
 
-    public void LoadSong (string songId)
+    public void LoadSong (string songId, string songDifficultyName)
     {
-        songLoaderModel.LoadSong(songId);
+        SongLoaderModel.SelectedSongId = songId;
+        SongLoaderModel.SelectedSongDifficulty = songDifficultyName;
         perfectHitWindow = (80 - 6 * CurrentSongSettings.Difficulty) / 1000f;
         greatHitWindow = (140 - 8 * CurrentSongSettings.Difficulty) / 1000f;
         okayHitWindow = (200 - 10 * CurrentSongSettings.Difficulty) / 1000f;

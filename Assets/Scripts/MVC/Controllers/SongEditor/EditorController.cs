@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class EditorController : IDisposable
@@ -68,9 +70,12 @@ public class EditorController : IDisposable
 
     void HandleSongLoaded ()
     {
-        audioManager.SetMusicClip(songLoaderModel.Audio);
-        view.WaveForm2D.SetAudio(songLoaderModel.Audio);
-        view.WaveForm2D.ShowWave();
+        Task.Run(() => songLoaderModel.GetSelectedSongAudio(clip =>
+        {
+            audioManager.SetMusicClip(clip);
+            view.WaveForm2D.SetAudio(clip);
+            view.WaveForm2D.ShowWave();
+        }));
     }
 
     public void Dispose ()

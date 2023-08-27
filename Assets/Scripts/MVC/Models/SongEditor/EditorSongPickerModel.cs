@@ -2,10 +2,10 @@
 
 public class EditorSongPickerModel : IEditorSongPickerModel
 {
-    public event Action<string> OnSongPicked;
+    public event Action<string, string> OnSongPicked;
     
-    public void PickSong (string songId)
+    public void PickSong (string songId, string songDifficultyName)
     {
-        OnSongPicked?.Invoke(songId);
+        OnSongPicked?.Invoke(songId, songDifficultyName);
     }
 }

@@ -33,7 +33,8 @@
             view.SongView,
             pauseController,
             model.SongModel,
-            model.AudioManager
+            model.AudioManager,
+            model.SongModel.SongLoaderModel
         );
 
         ResultsController resultsController = new(

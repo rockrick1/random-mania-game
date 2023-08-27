@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public interface ISongLoaderModel
@@ -8,15 +9,19 @@ public interface ISongLoaderModel
     event Action OnSongSaved;
     event Action OnSongCreated;
     
-    SongSettings Settings { get; }
-    AudioClip Audio { get; }
+    Dictionary<string, Dictionary<string, ISongSettings>> SongsCache { get; }
+    Dictionary<string, AudioClip> SongsAudioCache { get; }
     string SongsPath { get; }
+    string SelectedSongId { get; set; }
+    string SelectedSongDifficulty { get; set; }
 
     void Initialize ();
-    void CreateSong (string songName, string artistName);
-    void LoadSong (string songId);
+    ISongSettings GetSongSettings (string songId, string difficultyName);
+    ISongSettings GetSelectedSongSettings ();
+    Task<AudioClip> GetSongAudio (string songId);
+    Task<AudioClip> GetSelectedSongAudio (Action<AudioClip> onFinish);
+    void CreateSong (string songName, string artistName, string songDifficultyName);
     void SaveSong (ISongSettings settings);
-    IReadOnlyList<string> GetAllSongDirs ();
-    IReadOnlyList<ISongSettings> GetAllSongSettings();
     bool SongExists (string songName, string artistName);
+    IReadOnlyList<ISongSettings> GetAllSongSettings ();
 }

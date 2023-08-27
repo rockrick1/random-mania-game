@@ -25,7 +25,7 @@
     {
         SongModel.Initialize();
         PauseModel.Initialize();
-        SongModel.LoadSong(GameContext.Current.SelectedSongId);
+        SongModel.LoadSong(GameContext.Current.SelectedSongId, GameContext.Current.SelectedSongDifficulty);
         ScoreModel.Initialize();
     }
 

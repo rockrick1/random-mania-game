@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class SongController
 {
@@ -11,17 +12,20 @@ public class SongController
     readonly PauseController pauseController;
     readonly ISongModel model;
     readonly IAudioManager audioManager;
+    readonly ISongLoaderModel songLoaderModel;
     
     public SongController (SongView view,
         PauseController pauseController,
         ISongModel model,
-        IAudioManager audioManager
+        IAudioManager audioManager,
+        ISongLoaderModel songLoaderModel
     )
     {
         this.view = view;
         this.pauseController = pauseController;
         this.model = model;
         this.audioManager = audioManager;
+        this.songLoaderModel = songLoaderModel;
     }
 
     public void Initialize ()
@@ -41,7 +45,8 @@ public class SongController
     {
         //TODO find a way to do this better
         await Task.Delay(500);
-        audioManager.SetMusicClip(model.CurrentSongAudio);
+        AudioClip clip = await songLoaderModel.GetSelectedSongAudio(null);
+        audioManager.SetMusicClip(clip);
         model.Play();
     }
 

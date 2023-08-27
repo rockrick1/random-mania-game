@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class EditorNewSongView : MonoBehaviour
 {
-    public event Action<string, string> OnCreateSong;
+    public event Action<string, string, string> OnCreateSong;
     public event Action OnOpenFolder;
     public event Action OnEdit;
     
     [SerializeField] TMP_InputField songNameInput;
     [SerializeField] TMP_InputField artistNameInput;
+    [SerializeField] TMP_InputField difficultyNameInputText;
     [SerializeField] TextMeshProUGUI errorText;
     [SerializeField] CanvasGroup errorBox;
     [SerializeField] UIClickHandler create;
@@ -39,12 +40,13 @@ public class EditorNewSongView : MonoBehaviour
         Close();
     }
 
-    void HandleCreate () => OnCreateSong?.Invoke(songNameInput.text, artistNameInput.text);
+    void HandleCreate () => OnCreateSong?.Invoke(songNameInput.text, artistNameInput.text, difficultyNameInputText.text);
 
     void HandleCancel ()
     {
         songNameInput.text = string.Empty;
         artistNameInput.text = string.Empty;
+        difficultyNameInputText.text = string.Empty;
         Close();
     }
 

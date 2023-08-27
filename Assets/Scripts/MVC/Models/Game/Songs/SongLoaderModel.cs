@@ -5,12 +5,15 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class SongLoaderModel : ISongLoaderModel
 {
     const string AUDIO_EXTENSION = ".mp3";
+    const string SONG_RESOURCES_PATH = "Songs";
+    
     const string TITLE_KEY = "title";
     const string ARTIST_KEY = "artist";
     const string DIFFICULTY_NAME_KEY = "difficultyName";
@@ -19,28 +22,66 @@ public class SongLoaderModel : ISongLoaderModel
     const string DIFFICULTY_KEY = "difficulty";
     const string STARTING_TIME_EY = "startingTime";
     const string NOTES_KEY = "notes";
-    
-    static readonly string songResourcesPath = "Songs";
 
     public event Action OnSongLoaded;
     public event Action OnSongSaved;
     public event Action OnSongCreated;
 
-    public SongSettings Settings { get; private set; }
-    public AudioClip Audio { get; private set; }
+    public Dictionary<string, Dictionary<string, ISongSettings>> SongsCache { get; } = new();
+    public Dictionary<string, AudioClip> SongsAudioCache { get; } = new();
     public string SongsPath => Path.Combine(Application.persistentDataPath, "SongsDatabase");
-
-    string textPath;
-    string audioPath;
+    public string SelectedSongId { get; set; }
+    public string SelectedSongDifficulty { get; set; }
+    
+    AudioClip tempAudio;
+    bool cancellationToken;
 
     public void Initialize ()
     {
         TryCreateDefaultFiles();
+        LoadAllSongSettings();
     }
 
     public static string GetSongId (string songName, string artistName) => $"{artistName} - {songName}";
 
-    public void CreateSong (string songName, string artistName)
+    public ISongSettings GetSongSettings (string songId, string difficultyName)
+    {
+        if (!SongsCache.TryGetValue(songId, out Dictionary<string, ISongSettings> difficultiesDict))
+            throw new IndexOutOfRangeException($"No song with id '{songId}' found");
+        if (!difficultiesDict.TryGetValue(difficultyName, out ISongSettings settings))
+            throw new IndexOutOfRangeException($"Song '{songId}' doesnt't have a difficulty called '{difficultyName}'");
+        return settings;
+    }
+
+    public ISongSettings GetSelectedSongSettings () => GetSongSettings(SelectedSongId, SelectedSongDifficulty);
+
+    public async Task<AudioClip> GetSongAudio (string songId)
+    {
+        if (SongsAudioCache.ContainsKey(songId))
+            return SongsAudioCache[songId];
+        tempAudio = null;
+        cancellationToken = false;
+        CoroutineRunner.Instance.StartRoutine(nameof(LoadSongAudio), LoadSongAudio(songId));
+        while (tempAudio == null && !cancellationToken)
+            await Task.Yield();
+        SongsAudioCache[songId] = tempAudio;
+        return SongsAudioCache[songId];
+    }
+
+    public async Task<AudioClip> GetSelectedSongAudio (Action<AudioClip> onFinish)
+    {
+        if (SongsAudioCache.ContainsKey(SelectedSongId))
+        {
+            onFinish?.Invoke(SongsAudioCache[SelectedSongId]);
+            return SongsAudioCache[SelectedSongId];
+        }
+        AudioClip clip = await GetSongAudio(SelectedSongId);
+        SongsAudioCache[SelectedSongId] = clip;
+        onFinish?.Invoke(clip);
+        return clip;
+    }
+
+    public void CreateSong (string songName, string artistName, string songDifficultyName)
     {
         if (!Directory.Exists(SongsPath))
             throw new Exception("Songs path doest not exist! something went wrong on initialization, it seems.");
@@ -50,24 +91,11 @@ public class SongLoaderModel : ISongLoaderModel
         {
             Id = GetSongId(songName, artistName),
             Title = songName,
-            Artist = artistName
+            Artist = artistName,
+            DifficultyName = songDifficultyName
         };
-        textPath = GetTextPath(newSongSettings.Id);
         SaveSongTextFile(newSongSettings);
         OnSongCreated?.Invoke();
-    }
-
-    public void LoadSong (string songId)
-    {
-        bool isDefault = false;
-        Settings = new SongSettings { Id = songId };
-        AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
-        if (clip != null)
-        {
-            isDefault = true;
-            Audio = clip;
-        }
-        CoroutineRunner.Instance.StartRoutine(nameof(LoadSongSettings), LoadSongSettings(isDefault));
     }
 
     public void SaveSong (ISongSettings settings)
@@ -76,36 +104,22 @@ public class SongLoaderModel : ISongLoaderModel
         OnSongSaved?.Invoke();
     }
 
-    public IReadOnlyList<string> GetAllSongDirs ()
-    {
-        string[] dirs = Directory.GetDirectories(SongsPath);
-        return dirs.Select(dir => dir.Split('\\').Last()).ToList();
-    }
+    public bool SongExists (string songName, string artistName) =>
+        Directory.Exists(Path.Combine(SongsPath, GetSongId(songName, artistName)));
 
     public IReadOnlyList<ISongSettings> GetAllSongSettings ()
     {
         List<ISongSettings> ret = new();
-        foreach (string dir in GetAllSongDirs())
-        {
-            textPath = GetTextPath(dir);
-            if (!File.Exists(textPath))
-                continue;
-            
-            string songText = File.ReadAllText(textPath);
-            ret.Add(ReadSongTextFile(songText));
-        }
-
+        foreach (Dictionary<string, ISongSettings> songGroup in SongsCache.Values)
+            ret.AddRange(songGroup.Values);
         return ret;
     }
-
-    public bool SongExists (string songName, string artistName) =>
-        Directory.Exists(Path.Combine(SongsPath, GetSongId(songName, artistName)));
 
     void TryCreateDefaultFiles ()
     {
         if (!Directory.Exists(SongsPath))
             Directory.CreateDirectory(SongsPath);
-        TextAsset[] songAssets = Resources.LoadAll<TextAsset>(songResourcesPath);
+        TextAsset[] songAssets = Resources.LoadAll<TextAsset>(SONG_RESOURCES_PATH);
     
         foreach (TextAsset songAsset in songAssets)
         {
@@ -121,27 +135,45 @@ public class SongLoaderModel : ISongLoaderModel
         }
     }
 
-    IEnumerator LoadSongSettings (bool isDefaultSong)
+    void LoadAllSongSettings ()
     {
-        textPath = GetTextPath(Settings.Id);
-        audioPath = GetAudioPath(Settings.Id);
-
-        string songText = string.Empty;
-        if (File.Exists(textPath))
-            songText = File.ReadAllText(textPath);
-        else
-            File.WriteAllText(textPath, songText);
-
-        if (!isDefaultSong)
-            yield return ReadAudioFile(audioPath);
-        if (Audio == null)
+        string[] temp = Directory.GetDirectories(SongsPath);
+        List<string> dirs = temp.Select(dir => dir.Split('\\').Last()).ToList();
+        
+        foreach (string dir in dirs)
         {
-            Debug.LogException(new ArgumentException($"Could not load song {Settings.Id}!"));
+            string textPath = GetTextPath(dir);
+            if (!File.Exists(textPath))
+                continue;
+            
+            string songText = File.ReadAllText(textPath);
+            ISongSettings settings = ReadSongTextFile(songText);
+            if (!SongsCache.TryGetValue(settings.Id, out Dictionary<string, ISongSettings> _))
+                SongsCache[settings.Id] = new Dictionary<string, ISongSettings>();
+            SongsCache[settings.Id][settings.DifficultyName] = settings;
+        }
+    }
+
+    IEnumerator LoadSongAudio (string songId)
+    {
+        AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
+        if (clip != null)
+        {
+            tempAudio = clip;
             yield break;
         }
+
+        string path = GetAudioPath(songId);
+        if (string.IsNullOrEmpty(path))
+            throw new Exception($"audio file was not found on driectory {path}. Make sure there is a {AUDIO_EXTENSION} file in the song directory.");
+        UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG);
+        yield return req.SendWebRequest();
+        tempAudio = DownloadHandlerAudioClip.GetContent(req);
+        if (tempAudio != null)
+            yield break;
         
-        Settings = ReadSongTextFile(songText);
-        OnSongLoaded?.Invoke();
+        Debug.LogException(new ArgumentException($"Could not load song {songId}!"));
+        cancellationToken = true;
     }
 
     SongSettings ReadSongTextFile (string file)
@@ -232,17 +264,10 @@ public class SongLoaderModel : ISongLoaderModel
             text += $"{times},{note.Position}\n";
         }
 
-        File.WriteAllText(textPath, text);
-    }
-    
-    IEnumerator ReadAudioFile (string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            throw new Exception(
-                $"audio file was not found on driectory {path}. Make sure there is a {AUDIO_EXTENSION} file in the song directory.");
-        UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG);
-        yield return req.SendWebRequest();
-        Audio = DownloadHandlerAudioClip.GetContent(req);
+        File.WriteAllText(GetTextPath(settings.Id), text);
+        if (!SongsCache.ContainsKey(settings.Id))
+            SongsCache[settings.Id] = new Dictionary<string, ISongSettings>();
+        SongsCache[settings.Id][settings.DifficultyName] = settings;
     }
     
     string GetTextPath(string songId) => Path.Combine(SongsPath, songId, "song.txt");
@@ -258,8 +283,7 @@ public class SongLoaderModel : ISongLoaderModel
         return string.Empty;
     }
 
-    string GetResourcePath(string songId) => Path.Combine(songResourcesPath, songId);
+    string GetResourcePath(string songId) => Path.Combine(SONG_RESOURCES_PATH, songId);
 
-    double ParseDouble (string s) => double.Parse(s, CultureInfo.InvariantCulture);
     float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);
 }

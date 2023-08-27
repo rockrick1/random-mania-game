@@ -43,7 +43,7 @@ public class EditorModel : IEditorModel
         SongPickerModel.OnSongPicked -= HandleSongPicked;
     }
 
-    void HandleSongPicked (string songId) => SongLoaderModel.LoadSong(songId);
+    void HandleSongPicked (string songId, string songDifficultyName) => SongModel.Refresh(songId, songDifficultyName);
 
     public void Dispose ()
     {

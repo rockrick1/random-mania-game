@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EditorSongModel : IEditorSongModel
@@ -34,30 +35,19 @@ public class EditorSongModel : IEditorSongModel
     {
         AddListeners();
     }
-    
-    void AddListeners ()
-    {
-        songLoaderModel.OnSongLoaded += HandleSongLoaded;
-        inputManager.OnSavePressed += HandleSavePressed;
-    }
 
-    void RemoveListeners ()
+    public void Refresh (string songId, string songDifficultyName)
     {
-        songLoaderModel.OnSongLoaded -= HandleSongLoaded;
-        inputManager.OnSavePressed -= HandleSavePressed;
-    }
-
-    void HandleSongLoaded ()
-    {
-        currentSongSettings = songLoaderModel.Settings;
+        songLoaderModel.SelectedSongId = songId;
+        songLoaderModel.SelectedSongDifficulty = songDifficultyName;
+        if (songLoaderModel.GetSongSettings(songId, songDifficultyName) is not SongSettings songSettings)
+            throw new Exception("Cant't convert loaded song settings");
         SelectedSignature = DEFAULT_SIGNATURE;
-        SetBeatInterval(songLoaderModel.Settings.Bpm);
+        currentSongSettings = songSettings;
+        SetBeatInterval(currentSongSettings.Bpm);
     }
     
-    void HandleSavePressed ()
-    {
-        songLoaderModel.SaveSong(currentSongSettings);
-    }
+    void HandleSavePressed () => songLoaderModel.SaveSong(currentSongSettings);
 
     public void StartCreatingNote (int pos, float songProgress, float height)
     {
@@ -151,6 +141,16 @@ public class EditorSongModel : IEditorSongModel
     }
     
     public float GetNextBeat (float time, int direction) => SnapToBeat(time) + (direction * SignedBeatInterval);
+
+    void AddListeners ()
+    {
+        inputManager.OnSavePressed += HandleSavePressed;
+    }
+
+    void RemoveListeners ()
+    {
+        inputManager.OnSavePressed -= HandleSavePressed;
+    }
     
     float GetTimeClicked (float songProgress, float height)
     {

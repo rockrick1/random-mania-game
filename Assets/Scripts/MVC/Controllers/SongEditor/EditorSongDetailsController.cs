@@ -66,10 +66,11 @@ public class EditorSongDetailsController : IDisposable
     
     void HandleSongLoaded ()
     {
-        view.SetBPM(songLoaderModel.Settings.Bpm);
-        view.SetAR(songLoaderModel.Settings.ApproachRate);
-        view.SetDiff(songLoaderModel.Settings.Difficulty);
-        view.SetStartingTime(songLoaderModel.Settings.StartingTime);
+        ISongSettings settings = songLoaderModel.GetSelectedSongSettings();
+        view.SetBPM(settings.Bpm);
+        view.SetAR(settings.ApproachRate);
+        view.SetDiff(settings.Difficulty);
+        view.SetStartingTime(settings.StartingTime);
     }
 
     public void Dispose ()

@@ -47,18 +47,15 @@ public class EditorSongPickerController : IDisposable
         view.OnRefreshClicked -= HandleRefreshClicked;
     }
 
-    void HandleEditNewSong (string songId)
+    void HandleEditNewSong (string songId, string songDifficultyName)
     {
         view.PickSong(songId);
-        model.PickSong(songId);
+        model.PickSong(songId, songDifficultyName);
     }
 
     void HandleSongCreated () => RefreshOptions();
 
-    void HandleSongPicked (string songId)
-    {
-        model.PickSong(songId);
-    }
+    void HandleSongPicked (string songId, string songDifficultyName) => model.PickSong(songId, songDifficultyName);
 
     void HandleOpenFolderClicked () => Application.OpenURL($"file://{songLoaderModel.SongsPath}");
 
@@ -66,7 +63,7 @@ public class EditorSongPickerController : IDisposable
 
     void HandleRefreshClicked () => RefreshOptions();
 
-    void RefreshOptions () => view.LoadOptions(songLoaderModel.GetAllSongDirs());
+    void RefreshOptions () => view.LoadOptions(songLoaderModel.SongsCache.Keys);
 
     public void Dispose ()
     {

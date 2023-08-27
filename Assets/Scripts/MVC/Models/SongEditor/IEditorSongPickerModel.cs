@@ -2,6 +2,6 @@
 
 public interface IEditorSongPickerModel
 {
-    event Action<string> OnSongPicked;
-    void PickSong (string songId);
+    event Action<string, string> OnSongPicked;
+    void PickSong (string songId, string songDifficultyName);
 }

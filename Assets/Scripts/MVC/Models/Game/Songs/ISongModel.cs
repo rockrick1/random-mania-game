@@ -12,11 +12,11 @@ public interface ISongModel : IDisposable
     event Action<float> OnSongStartSkipped;
     event Action OnSongFinished;
     
+    ISongLoaderModel SongLoaderModel { get; }
     ISongSettings CurrentSongSettings { get; }
-    AudioClip CurrentSongAudio { get; }
     bool AllNotesRead { get; }
 
     void Initialize ();
-    void LoadSong (string songId);
+    void LoadSong (string songId, string songDifficultyName);
     void Play ();
 }

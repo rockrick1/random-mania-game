@@ -2,7 +2,7 @@
 
 public class EditorNewSongController : IDisposable
 {
-    public event Action<string> OnEditNewSong;
+    public event Action<string, string> OnEditNewSong;
     
     readonly EditorNewSongView view;
     readonly IEditorNewSongModel model;
@@ -41,7 +41,7 @@ public class EditorNewSongController : IDisposable
         view.Open();
     }
 
-    void HandleCreateSong (string songName, string artistName)
+    void HandleCreateSong (string songName, string artistName, string songDifficultyName)
     {
         if (string.IsNullOrWhiteSpace(songName))
         {
@@ -53,18 +53,23 @@ public class EditorNewSongController : IDisposable
             view.ShowError("Please enter an artist name.");
             return;
         }
+        if (string.IsNullOrWhiteSpace(songDifficultyName))
+        {
+            view.ShowError("Please enter a difficulty name.");
+            return;
+        }
         if (model.SongExists(songName, artistName))
         {
             view.ShowError("A song with that name already exists! Pick another name or edit this song's existing file.");
             return;
         }
-        model.CreateSong(songName, artistName);
+        model.CreateSong(songName, artistName, songDifficultyName);
         view.SetCreationState(true);
     }
 
     void HandleOpenNewSongFolder () => model.OpenSongFolder();
 
-    void HandleEditNewSong () => OnEditNewSong?.Invoke(model.LastCreatedSongId);
+    void HandleEditNewSong () => OnEditNewSong?.Invoke(model.LastCreatedSongId, model.LastCreatedSongDifficultyName);
 
     public void Dispose ()
     {

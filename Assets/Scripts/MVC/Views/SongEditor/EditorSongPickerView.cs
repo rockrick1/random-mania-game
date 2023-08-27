@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EditorSongPickerView : MonoBehaviour
 {
-    public event Action<string> OnSongPicked;
+    public event Action<string, string> OnSongPicked;
     public event Action OnOpenFolderClicked;
     public event Action OnNewSongClicked;
     public event Action OnRefreshClicked;
@@ -32,6 +32,6 @@ public class EditorSongPickerView : MonoBehaviour
 
     public void HandleInputChanged ()
     {
-        OnSongPicked?.Invoke(dropdown.options[dropdown.value].text);
+        OnSongPicked?.Invoke(dropdown.options[dropdown.value].text, "SOCORRO");
     }
 }

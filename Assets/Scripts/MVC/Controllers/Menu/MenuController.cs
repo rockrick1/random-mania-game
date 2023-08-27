@@ -56,9 +56,10 @@ public class MenuController : IDisposable
         songMenuController.OnSongSelected -= HandleSongSelected;
     }
 
-    void HandleSongSelected (string songId)
+    void HandleSongSelected (string songId, string songDifficultyName)
     {
         GameContext.Current.SelectedSongId = songId;
+        GameContext.Current.SelectedSongDifficulty = songDifficultyName;
         SceneManager.LoadScene("Game");
     }
 
