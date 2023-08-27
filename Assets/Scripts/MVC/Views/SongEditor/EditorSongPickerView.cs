@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EditorSongPickerView : MonoBehaviour
 {
-    public event Action<string, string> OnSongPicked;
+    public event Action<string> OnSongPicked;
     public event Action OnOpenFolderClicked;
     public event Action OnNewSongClicked;
     public event Action OnRefreshClicked;
@@ -15,11 +15,11 @@ public class EditorSongPickerView : MonoBehaviour
     [SerializeField] UIClickHandler newSongButton;
     [SerializeField] UIClickHandler refreshButton;
 
-    public void LoadOptions (IEnumerable<string> options)
+    public void LoadOptions (List<string> options)
     {
         dropdown.ClearOptions();
         dropdown.AddOptions(new List<string>(){""});
-        dropdown.AddOptions((List<string>) options);
+        dropdown.AddOptions(options);
         openFolderButton.OnLeftClick.AddListener(() => OnOpenFolderClicked?.Invoke());
         newSongButton.OnLeftClick.AddListener(() => OnNewSongClicked?.Invoke());
         refreshButton.OnLeftClick.AddListener(() => OnRefreshClicked?.Invoke());
@@ -32,6 +32,6 @@ public class EditorSongPickerView : MonoBehaviour
 
     public void HandleInputChanged ()
     {
-        OnSongPicked?.Invoke(dropdown.options[dropdown.value].text, "SOCORRO");
+        OnSongPicked?.Invoke(dropdown.options[dropdown.value].text);
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EditorSongPickerController : IDisposable
@@ -55,7 +57,7 @@ public class EditorSongPickerController : IDisposable
 
     void HandleSongCreated () => RefreshOptions();
 
-    void HandleSongPicked (string songId, string songDifficultyName) => model.PickSong(songId, songDifficultyName);
+    void HandleSongPicked (string songLabel) => model.PickSong(songLabel);
 
     void HandleOpenFolderClicked () => Application.OpenURL($"file://{songLoaderModel.SongsPath}");
 
@@ -63,7 +65,14 @@ public class EditorSongPickerController : IDisposable
 
     void HandleRefreshClicked () => RefreshOptions();
 
-    void RefreshOptions () => view.LoadOptions(songLoaderModel.SongsCache.Keys);
+    void RefreshOptions ()
+    {
+        List<string> options = new();
+        foreach (var songId in songLoaderModel.SongsCache.Keys)
+            foreach (var difficultyName in songLoaderModel.SongsCache[songId].Keys)
+                options.Add($"{songId} [{difficultyName}]");
+        view.LoadOptions(options);
+    }
 
     public void Dispose ()
     {
