@@ -41,8 +41,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <None Include="Assets\Plugins\UniTask\package.json" />
-     <Folder Include="Assets\Plugins\UniTask" />
      <Folder Include="Assets\Plugins" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programs\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>

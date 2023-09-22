@@ -41,9 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\UniTask\Runtime\External\DOTween\DOTweenAsyncExtensions.cs" />
-     <None Include="Assets\Plugins\UniTask\Runtime\External\DOTween\UniTask.DOTween.asmdef" />
-     <Folder Include="Assets\Plugins\UniTask\Runtime\External\DOTween" />
+     <Folder Include="Assets\Plugins" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programs\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

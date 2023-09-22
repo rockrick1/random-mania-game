@@ -41,11 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\UniTask\Editor\UniTaskTrackerWindow.cs" />
-     <Compile Include="Assets\Plugins\UniTask\Editor\SplitterGUILayout.cs" />
-     <Compile Include="Assets\Plugins\UniTask\Editor\UniTaskTrackerTreeView.cs" />
-     <None Include="Assets\Plugins\UniTask\Editor\UniTask.Editor.asmdef" />
-     <Folder Include="Assets\Plugins\UniTask\Editor" />
+     <Folder Include="Assets\Plugins" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programs\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

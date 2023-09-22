@@ -41,9 +41,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Plugins\UniTask\Runtime\External\Addressables\AddressablesAsyncExtensions.cs" />
-     <Folder Include="Assets\Plugins\UniTask\Runtime\External\Addressables" />
-     <None Include="Assets\Plugins\UniTask\Runtime\External\Addressables\UniTask.Addressables.asmdef" />
+     <Folder Include="Assets\Plugins" />
      <Reference Include="UnityEngine">
      <HintPath>D:\Programs\2021.3.21f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>
