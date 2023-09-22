@@ -73,7 +73,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Menu\IMenuModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Game\GameView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\IEditorSongPickerModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\SongLoaderModel.cs" />
+     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\SongLoader.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\PauseRequestResult.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Utils\UIClickHandler.cs" />
@@ -88,7 +88,6 @@
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorModelFactory.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\MainMenuView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorNewSongModel.cs" />
-     <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\ISongLoaderModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\SongEditor\EditorSongModel.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\SettingsView.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorNewSongView.cs" />
@@ -150,6 +149,7 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\Databases\DefaultSongsDatabase.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -224,6 +224,7 @@
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <Folder Include="Assets\TextMesh Pro\Documentation" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\Songs\Prefabs\Lower" />
+     <Folder Include="Assets\Scripts\Databases" />
      <Folder Include="Assets\Art\UI\Fonts\maldini\misc" />
      <Folder Include="Assets\Scripts\Utils" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
@@ -945,14 +946,14 @@
      <Reference Include="Unity.Rider.Editor">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.InternalAPIEditorBridge.001">
-     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
-     </Reference>
      <Reference Include="UnityEngine.UI">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
      </Reference>
      <Reference Include="Unity.2D.Tilemap.Extras.Editor">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.InternalAPIEditorBridge.001">
+     <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
      </Reference>
      <Reference Include="Unity.VisualScripting.Core">
      <HintPath>D:\Henrique\Documentos\Unity\Random mania game\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll</HintPath>
@@ -998,25 +999,25 @@
      </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="UniTask.Addressables.csproj">
-      <Project>{8d67ee78-9d0a-f927-4a3a-2d1844d36ec1}</Project>
-      <Name>UniTask.Addressables</Name>
-    </ProjectReference>
     <ProjectReference Include="UniTask.DOTween.csproj">
       <Project>{0f1267df-7805-8977-5b8d-ff2b38c2bef6}</Project>
       <Name>UniTask.DOTween</Name>
     </ProjectReference>
-    <ProjectReference Include="UniTask.csproj">
-      <Project>{d0bd2872-cfa6-388e-67b7-d1b908086ebc}</Project>
-      <Name>UniTask</Name>
+    <ProjectReference Include="UniTask.Linq.csproj">
+      <Project>{e6c37977-c179-db2c-bfb2-8561e3832f40}</Project>
+      <Name>UniTask.Linq</Name>
     </ProjectReference>
     <ProjectReference Include="UniTask.TextMeshPro.csproj">
       <Project>{433eea2f-3983-5eb7-725e-df8d8d484519}</Project>
       <Name>UniTask.TextMeshPro</Name>
     </ProjectReference>
-    <ProjectReference Include="UniTask.Linq.csproj">
-      <Project>{e6c37977-c179-db2c-bfb2-8561e3832f40}</Project>
-      <Name>UniTask.Linq</Name>
+    <ProjectReference Include="UniTask.csproj">
+      <Project>{d0bd2872-cfa6-388e-67b7-d1b908086ebc}</Project>
+      <Name>UniTask</Name>
+    </ProjectReference>
+    <ProjectReference Include="UniTask.Addressables.csproj">
+      <Project>{8d67ee78-9d0a-f927-4a3a-2d1844d36ec1}</Project>
+      <Name>UniTask.Addressables</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

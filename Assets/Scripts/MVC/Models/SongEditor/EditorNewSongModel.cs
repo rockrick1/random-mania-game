@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EditorNewSongModel : IEditorNewSongModel
 {
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
     public string LastCreatedSongId { get; private set; }
     public string LastCreatedSongDifficultyName { get; private set; }
 
-    public EditorNewSongModel (ISongLoaderModel songLoaderModel)
+    public EditorNewSongModel (SongLoader songLoader)
     {
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
     }
 
     public void Initialize ()
@@ -28,8 +28,8 @@ public class EditorNewSongModel : IEditorNewSongModel
 
     public void CreateSong (string songName, string artistName, string songDifficultyName)
     {
-        songLoaderModel.CreateSong(songName, artistName, songDifficultyName);
-        LastCreatedSongId = SongLoaderModel.GetSongId(songName, artistName);
+        songLoader.CreateSong(songName, artistName, songDifficultyName);
+        LastCreatedSongId = SongLoader.GetSongId(songName, artistName);
     }
 
     public void OpenSongFolder ()
@@ -37,11 +37,11 @@ public class EditorNewSongModel : IEditorNewSongModel
         if (string.IsNullOrEmpty(LastCreatedSongId))
             throw new Exception("LastCreatedSongId is null! Cannot open song folder!");
         
-        string path = Path.Combine(songLoaderModel.SongsPath, LastCreatedSongId);
+        string path = Path.Combine(songLoader.SongsPath, LastCreatedSongId);
         Application.OpenURL($"file://{path}");
     }
 
-    public bool SongExists (string songName, string artistName) => songLoaderModel.SongExists(songName, artistName);
+    public bool SongExists (string songName, string artistName) => songLoader.SongExists(songName, artistName);
 
     public void Dispose ()
     {

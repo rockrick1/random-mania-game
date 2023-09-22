@@ -7,28 +7,28 @@ public class MenuModel : IMenuModel
     public IMainMenuModel MainMenuModel { get; }
     public ISettingsModel SettingsModel { get; }
     public ISongMenuModel SongMenuModel { get; }
-    public ISongLoaderModel SongLoaderModel { get; }
+    public SongLoader SongLoaderModel { get; }
     public IMenuInputManager InputManager { get; }
     
     public MenuModel (
         IMainMenuModel mainMenuModel,
         ISettingsModel settingsModel,
         ISongMenuModel songMenuModel,
-        ISongLoaderModel songLoaderModel,
+        SongLoader songLoader,
         IMenuInputManager inputManager
     )
     {
         MainMenuModel = mainMenuModel;
         SettingsModel = settingsModel;
         SongMenuModel = songMenuModel;
-        SongLoaderModel = songLoaderModel;
+        SongLoaderModel = songLoader;
         InputManager = inputManager;
     }
 
     public void Initialize ()
     {
         AddListeners();
-        SongLoaderModel.Initialize();
+        // SongLoaderModel.Initialize();
         MainMenuModel.Initialize();
         SettingsModel.Initialize();
         SongMenuModel.Initialize();

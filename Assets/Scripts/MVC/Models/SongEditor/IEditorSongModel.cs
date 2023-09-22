@@ -2,6 +2,8 @@
 
 public interface IEditorSongModel : IDisposable
 {
+    event Action OnSongRefreshed;
+    
     int SelectedSignature { get; }
     float SignedBeatInterval { get; }
 

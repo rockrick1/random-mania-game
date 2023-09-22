@@ -2,7 +2,7 @@
 
 public class EditorModel : IEditorModel
 {
-    public ISongLoaderModel SongLoaderModel { get; }
+    public SongLoader SongLoaderModel { get; }
     public IEditorSongPickerModel SongPickerModel { get; }
     public IEditorInputManager InputManager { get; }
     public IAudioManager AudioManager { get; }
@@ -10,7 +10,7 @@ public class EditorModel : IEditorModel
     public IEditorNewSongModel NewSongModel { get; set; }
 
     public EditorModel (
-        ISongLoaderModel songLoaderModel,
+        SongLoader songLoaderModel,
         IEditorSongPickerModel songPickerModel,
         IEditorSongModel songModel,
         IEditorNewSongModel newSongModel,
@@ -29,7 +29,7 @@ public class EditorModel : IEditorModel
     public void Initialize ()
     {
         AddListeners();
-        SongLoaderModel.Initialize();
+        // SongLoaderModel.Initialize();
         SongModel.Initialize();
     }
 

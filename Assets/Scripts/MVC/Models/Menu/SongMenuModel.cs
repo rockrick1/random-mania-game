@@ -3,12 +3,12 @@
 public class SongMenuModel : ISongMenuModel
 {
     readonly SongMenuView view;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
     
     
-    public SongMenuModel (ISongLoaderModel songLoaderModel)
+    public SongMenuModel (SongLoader songLoader)
     {
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
     }
 
     public void Initialize ()
@@ -24,7 +24,7 @@ public class SongMenuModel : ISongMenuModel
     {
     }
 
-    public IReadOnlyList<ISongSettings> GetAllSongs () => songLoaderModel.GetAllSongSettings();
+    public IReadOnlyList<ISongSettings> GetAllSongs () => songLoader.GetAllSongSettings();
 
     public void Dispose ()
     {

@@ -2,8 +2,8 @@
 {
     public static SongModel Create (IGameInputManager inputManager)
     {
-        ISongLoaderModel songLoaderModel = new SongLoaderModel();
-        SongModel model = new SongModel(inputManager, songLoaderModel);
+        SongLoader songLoader = SongLoader.Instance;
+        SongModel model = new SongModel(inputManager, songLoader);
         return model;
     }
 }

@@ -8,19 +8,19 @@ public class EditorSongPickerController : IDisposable
     readonly EditorSongPickerView view;
     readonly EditorNewSongController newSongController;
     readonly IEditorSongPickerModel model;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
 
     public EditorSongPickerController (
         EditorSongPickerView view,
         EditorNewSongController newSongController,
         IEditorSongPickerModel model,
-        ISongLoaderModel songLoaderModel
+        SongLoader songLoader
     )
     {
         this.view = view;
         this.newSongController = newSongController;
         this.model = model;
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
     }
 
     public void Initialize ()
@@ -32,7 +32,7 @@ public class EditorSongPickerController : IDisposable
     void AddListeners ()
     {
         newSongController.OnEditNewSong += HandleEditNewSong;
-        songLoaderModel.OnSongCreated += HandleSongCreated;
+        songLoader.OnSongCreated += HandleSongCreated;
         view.OnSongPicked += HandleSongPicked;
         view.OnOpenFolderClicked += HandleOpenFolderClicked;
         view.OnNewSongClicked += HandleNewSongClicked;
@@ -42,7 +42,7 @@ public class EditorSongPickerController : IDisposable
     void RemoveListeners ()
     {
         newSongController.OnEditNewSong -= HandleEditNewSong;
-        songLoaderModel.OnSongCreated -= HandleSongCreated;
+        songLoader.OnSongCreated -= HandleSongCreated;
         view.OnSongPicked -= HandleSongPicked;
         view.OnOpenFolderClicked -= HandleOpenFolderClicked;
         view.OnNewSongClicked -= HandleNewSongClicked;
@@ -59,7 +59,7 @@ public class EditorSongPickerController : IDisposable
 
     void HandleSongPicked (string songLabel) => model.PickSong(songLabel);
 
-    void HandleOpenFolderClicked () => Application.OpenURL($"file://{songLoaderModel.SongsPath}");
+    void HandleOpenFolderClicked () => Application.OpenURL($"file://{songLoader.SongsPath}");
 
     void HandleNewSongClicked () => newSongController.Open();
 
@@ -68,8 +68,8 @@ public class EditorSongPickerController : IDisposable
     void RefreshOptions ()
     {
         List<string> options = new();
-        foreach (var songId in songLoaderModel.SongsCache.Keys)
-            foreach (var difficultyName in songLoaderModel.SongsCache[songId].Keys)
+        foreach (var songId in songLoader.SongsCache.Keys)
+            foreach (var difficultyName in songLoader.SongsCache[songId].Keys)
                 options.Add($"{songId} [{difficultyName}]");
         view.LoadOptions(options);
     }

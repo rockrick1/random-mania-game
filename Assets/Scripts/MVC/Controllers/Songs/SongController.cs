@@ -12,20 +12,20 @@ public class SongController
     readonly PauseController pauseController;
     readonly ISongModel model;
     readonly IAudioManager audioManager;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
     
     public SongController (SongView view,
         PauseController pauseController,
         ISongModel model,
         IAudioManager audioManager,
-        ISongLoaderModel songLoaderModel
+        SongLoader songLoader
     )
     {
         this.view = view;
         this.pauseController = pauseController;
         this.model = model;
         this.audioManager = audioManager;
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
     }
 
     public void Initialize ()
@@ -45,8 +45,7 @@ public class SongController
     {
         //TODO find a way to do this better
         await Task.Delay(500);
-        AudioClip clip = await songLoaderModel.GetSelectedSongAudio(null);
-        audioManager.SetMusicClip(clip);
+        audioManager.SetMusicClip(songLoader.GetSelectedSongAudio());
         model.Play();
     }
 

@@ -5,12 +5,14 @@ using UnityEngine;
 public class EditorSongModel : IEditorSongModel
 {
     const int DEFAULT_SIGNATURE = 4;
+
+    public event Action OnSongRefreshed;
     
     public int SelectedSignature { get; private set; }
     public float SignedBeatInterval { get; private set; }
     
     readonly IEditorInputManager inputManager;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
 
     readonly List<int> colors1_1 = new() {1};
     readonly List<int> colors1_2 = new() {1, 2};
@@ -25,10 +27,10 @@ public class EditorSongModel : IEditorSongModel
 
     float beatInterval;
     
-    public EditorSongModel (IEditorInputManager inputManager, ISongLoaderModel songLoaderModel)
+    public EditorSongModel (IEditorInputManager inputManager, SongLoader songLoader)
     {
         this.inputManager = inputManager;
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
     }
 
     public void Initialize ()
@@ -38,16 +40,17 @@ public class EditorSongModel : IEditorSongModel
 
     public void Refresh (string songId, string songDifficultyName)
     {
-        songLoaderModel.SelectedSongId = songId;
-        songLoaderModel.SelectedSongDifficulty = songDifficultyName;
-        if (songLoaderModel.GetSongSettings(songId, songDifficultyName) is not SongSettings songSettings)
+        songLoader.SelectedSongId = songId;
+        songLoader.SelectedSongDifficulty = songDifficultyName;
+        if (songLoader.GetSongSettings(songId, songDifficultyName) is not SongSettings songSettings)
             throw new Exception("Cant't convert loaded song settings");
         SelectedSignature = DEFAULT_SIGNATURE;
         currentSongSettings = songSettings;
         SetBeatInterval(currentSongSettings.Bpm);
+        OnSongRefreshed?.Invoke();
     }
     
-    void HandleSavePressed () => songLoaderModel.SaveSong(currentSongSettings);
+    void HandleSavePressed () => songLoader.SaveSong(currentSongSettings);
 
     public void StartCreatingNote (int pos, float songProgress, float height)
     {

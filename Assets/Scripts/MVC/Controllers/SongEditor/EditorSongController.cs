@@ -8,7 +8,7 @@ public class EditorSongController : IDisposable
     readonly EditorSongView view;
     readonly EditorSongDetailsController songDetailsController;
     readonly IEditorSongModel model;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
     readonly IAudioManager audioManager;
     readonly IEditorInputManager inputManager;
     
@@ -18,7 +18,7 @@ public class EditorSongController : IDisposable
         EditorSongView view,
         EditorSongDetailsController songDetailsController,
         IEditorSongModel model,
-        ISongLoaderModel songLoaderModel,
+        SongLoader songLoader,
         IAudioManager audioManager,
         IEditorInputManager inputManager
     )
@@ -26,7 +26,7 @@ public class EditorSongController : IDisposable
         this.view = view;
         this.songDetailsController = songDetailsController;
         this.model = model;
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
         this.audioManager = audioManager;
         this.inputManager = inputManager;
     }
@@ -43,7 +43,7 @@ public class EditorSongController : IDisposable
         songDetailsController.OnApplyClicked += HandleApplySongDetails;
         songDetailsController.OnSignatureChanged += HandleSignatureChanged;
         songDetailsController.OnPlaybackSpeedChanged += HandlePlaybackSpeedChanged;
-        songLoaderModel.OnSongLoaded += HandleSongLoaded;
+        model.OnSongRefreshed += HandleSongRefreshed;
         inputManager.OnSongPlayPause += HandlePlayPause;
         inputManager.OnSongScroll += HandleSongScroll;
     }
@@ -55,7 +55,7 @@ public class EditorSongController : IDisposable
         songDetailsController.OnApplyClicked -= HandleApplySongDetails;
         songDetailsController.OnSignatureChanged -= HandleSignatureChanged;
         songDetailsController.OnPlaybackSpeedChanged -= HandlePlaybackSpeedChanged;
-        songLoaderModel.OnSongLoaded -= HandleSongLoaded;
+        model.OnSongRefreshed -= HandleSongRefreshed;
         inputManager.OnSongPlayPause -= HandlePlayPause;
         inputManager.OnSongScroll -= HandleSongScroll;
     }
@@ -88,7 +88,7 @@ public class EditorSongController : IDisposable
         model.ChangeAr(ar);
         model.ChangeDiff(diff);
         model.ChangeStartingTime(startingTime);
-        HandleSongLoaded();
+        HandleSongRefreshed();
     }
 
     void HandleSignatureChanged (int signature)
@@ -105,21 +105,19 @@ public class EditorSongController : IDisposable
         audioManager.SetMusicPlaybackSpeed(speed);
     }
 
-    void HandleSongLoaded ()
+    void HandleSongRefreshed ()
     {
-        Task.Run(() => songLoaderModel.GetSelectedSongAudio(clip =>
-        {
-            ClearNotes();
-            view.ClearSeparators();
-            view.SetupSong(songLoaderModel.GetSelectedSongSettings(), clip.length);
-            CreateNotes();
-            CreateHorizontalSeparators();
-        }));
+        AudioClip clip = songLoader.GetSelectedSongAudio();
+        ClearNotes();
+        view.ClearSeparators();
+        view.SetupSong(songLoader.GetSelectedSongSettings(), clip.length);
+        CreateNotes();
+        CreateHorizontalSeparators();
     }
 
     void CreateNotes ()
     {
-        ISongSettings settings = songLoaderModel.GetSelectedSongSettings();
+        ISongSettings settings = songLoader.GetSelectedSongSettings();
         for (int i = 0; i < settings.Notes.Count; i++)
         {
             Note note = settings.Notes[i];
@@ -175,17 +173,15 @@ public class EditorSongController : IDisposable
 
     void CreateHorizontalSeparators ()
     {
-        Task.Run(() => songLoaderModel.GetSelectedSongAudio(clip =>
+        AudioClip clip = songLoader.GetSelectedSongAudio();
+        int i = 0;
+        for (float t = songLoader.GetSelectedSongSettings().StartingTime;
+             t < clip.length;
+             t += model.SignedBeatInterval, i++)
         {
-            int i = 0;
-            for (float t = songLoaderModel.GetSelectedSongSettings().StartingTime;
-                 t < clip.length;
-                 t += model.SignedBeatInterval, i++)
-            {
-                view.CreateSeparator(model.GetSeparatorColorByIndex(i));
-            }
-            view.ChangeSeparatorsDistance(model.SelectedSignature);
-        }));
+            view.CreateSeparator(model.GetSeparatorColorByIndex(i));
+        }
+        view.ChangeSeparatorsDistance(model.SelectedSignature);
     }
 
     public void Dispose ()

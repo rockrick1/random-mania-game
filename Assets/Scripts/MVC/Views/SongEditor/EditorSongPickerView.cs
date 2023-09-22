@@ -25,13 +25,7 @@ public class EditorSongPickerView : MonoBehaviour
         refreshButton.OnLeftClick.AddListener(() => OnRefreshClicked?.Invoke());
     }
 
-    public void PickSong (string songId)
-    {
-        dropdown.value = dropdown.options.FindIndex(x => x.text == songId);
-    }
+    public void PickSong (string songId) => dropdown.value = dropdown.options.FindIndex(x => x.text == songId);
 
-    public void HandleInputChanged ()
-    {
-        OnSongPicked?.Invoke(dropdown.options[dropdown.value].text);
-    }
+    public void HandleInputChanged () => OnSongPicked?.Invoke(dropdown.options[dropdown.value].text);
 }

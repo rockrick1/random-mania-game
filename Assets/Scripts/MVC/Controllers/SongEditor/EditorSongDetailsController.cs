@@ -9,12 +9,18 @@ public class EditorSongDetailsController : IDisposable
     public event Action<bool> OnShowWaveClicked;
 
     readonly EditorSongDetailsView view;
-    readonly ISongLoaderModel songLoaderModel;
-    
-    public EditorSongDetailsController (EditorSongDetailsView view, ISongLoaderModel songLoaderModel)
+    readonly SongLoader songLoader;
+    readonly IEditorSongModel editorSongModel;
+
+    public EditorSongDetailsController (
+        EditorSongDetailsView view,
+        SongLoader songLoader,
+        IEditorSongModel editorSongModel
+    )
     {
         this.view = view;
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
+        this.editorSongModel = editorSongModel;
     }
 
     public void Initialize ()
@@ -28,7 +34,7 @@ public class EditorSongDetailsController : IDisposable
         view.OnSignatureChanged += HandleSignatureChanged;
         view.OnPlaybackSpeedChanged += HandlePlaybackSpeedChanged;
         view.OnShowWaveClicked += HandleShowWaveClicked;
-        songLoaderModel.OnSongLoaded += HandleSongLoaded;
+        editorSongModel.OnSongRefreshed += HandleSongRefreshed;
     }
 
     void RemoveListeners ()
@@ -37,7 +43,7 @@ public class EditorSongDetailsController : IDisposable
         view.OnSignatureChanged -= HandleSignatureChanged;
         view.OnPlaybackSpeedChanged -= HandlePlaybackSpeedChanged;
         view.OnShowWaveClicked -= HandleShowWaveClicked;
-        songLoaderModel.OnSongLoaded -= HandleSongLoaded;
+        editorSongModel.OnSongRefreshed -= HandleSongRefreshed;
     }
 
     void HandleApplyClicked ()
@@ -49,24 +55,17 @@ public class EditorSongDetailsController : IDisposable
         OnApplyClicked?.Invoke(bpm, ar, diff, startingTime);
     }
 
-    void HandleSignatureChanged (string signature)
-    {
+    void HandleSignatureChanged (string signature) =>
         OnSignatureChanged?.Invoke(int.Parse(signature.Substring(signature.IndexOf('/') + 1)));
-    }
 
-    void HandlePlaybackSpeedChanged (string speed)
-    {
+    void HandlePlaybackSpeedChanged (string speed) =>
         OnPlaybackSpeedChanged?.Invoke(float.Parse(speed.Replace("x", ""), CultureInfo.InvariantCulture));
-    }
 
-    void HandleShowWaveClicked (bool active)
+    void HandleShowWaveClicked (bool active) => OnShowWaveClicked?.Invoke(active);
+
+    void HandleSongRefreshed ()
     {
-        OnShowWaveClicked?.Invoke(active);
-    }
-    
-    void HandleSongLoaded ()
-    {
-        ISongSettings settings = songLoaderModel.GetSelectedSongSettings();
+        ISongSettings settings = songLoader.GetSelectedSongSettings();
         view.SetBPM(settings.Bpm);
         view.SetAR(settings.ApproachRate);
         view.SetDiff(settings.Difficulty);

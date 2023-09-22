@@ -15,7 +15,7 @@ public class SongModel : ISongModel
     public event Action<float> OnSongStartSkipped;
     public event Action OnSongFinished;
 
-    public ISongLoaderModel SongLoaderModel { get; }
+    public SongLoader SongLoaderModel { get; }
     public ISongSettings CurrentSongSettings => SongLoaderModel.GetSelectedSongSettings();
     public bool AllNotesRead { get; private set; }
 
@@ -29,7 +29,7 @@ public class SongModel : ISongModel
     double pauseOffset;
     float skippedTime;
 
-    public SongModel (IGameInputManager inputManager, ISongLoaderModel songLoaderModel)
+    public SongModel (IGameInputManager inputManager, SongLoader songLoaderModel)
     {
         this.inputManager = inputManager;
         SongLoaderModel = songLoaderModel;
@@ -37,7 +37,7 @@ public class SongModel : ISongModel
 
     public void Initialize ()
     {
-        SongLoaderModel.Initialize();
+        // SongLoaderModel.Initialize();
         AddListeners();
     }
 

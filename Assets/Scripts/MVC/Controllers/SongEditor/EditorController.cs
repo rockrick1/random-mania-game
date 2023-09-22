@@ -13,7 +13,7 @@ public class EditorController : IDisposable
     readonly EditorView view;
     readonly IEditorModel model;
     readonly IEditorSongModel songModel;
-    readonly ISongLoaderModel songLoaderModel;
+    readonly SongLoader songLoader;
     readonly IEditorInputManager inputManager;
     readonly IAudioManager audioManager;
 
@@ -26,7 +26,7 @@ public class EditorController : IDisposable
         EditorView view,
         IEditorModel model,
         IEditorSongModel songModel,
-        ISongLoaderModel songLoaderModel,
+        SongLoader songLoader,
         IEditorInputManager inputManager,
         IAudioManager audioManager
     )
@@ -39,7 +39,7 @@ public class EditorController : IDisposable
         this.view = view;
         this.model = model;
         this.songModel = songModel;
-        this.songLoaderModel = songLoaderModel;
+        this.songLoader = songLoader;
         this.inputManager = inputManager;
         this.audioManager = audioManager;
     }
@@ -57,25 +57,23 @@ public class EditorController : IDisposable
     void AddListeners ()
     {
         view.BackButton.OnLeftClick.AddListener(HandleBack);
-        songLoaderModel.OnSongLoaded += HandleSongLoaded;
+        songModel.OnSongRefreshed += HandleSongRefreshed;
     }
 
     void RemoveListeners ()
     {
         view.BackButton.OnLeftClick.RemoveListener(HandleBack);
-        songLoaderModel.OnSongLoaded -= HandleSongLoaded;
+        songModel.OnSongRefreshed -= HandleSongRefreshed;
     }
 
     void HandleBack () => SceneManager.LoadScene("MainMenu");
 
-    void HandleSongLoaded ()
+    void HandleSongRefreshed ()
     {
-        Task.Run(() => songLoaderModel.GetSelectedSongAudio(clip =>
-        {
-            audioManager.SetMusicClip(clip);
-            view.WaveForm2D.SetAudio(clip);
-            view.WaveForm2D.ShowWave();
-        }));
+        AudioClip clip = songLoader.GetSelectedSongAudio();
+        audioManager.SetMusicClip(clip);
+        view.WaveForm2D.SetAudio(clip);
+        view.WaveForm2D.ShowWave();
     }
 
     public void Dispose ()

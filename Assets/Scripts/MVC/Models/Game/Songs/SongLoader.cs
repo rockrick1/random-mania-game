@@ -5,11 +5,10 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class SongLoaderModel : ISongLoaderModel
+public class SongLoader : MonoBehaviour
 {
     const string AUDIO_EXTENSION = ".mp3";
     const string SONG_RESOURCES_PATH = "Songs";
@@ -23,23 +22,39 @@ public class SongLoaderModel : ISongLoaderModel
     const string STARTING_TIME_EY = "startingTime";
     const string NOTES_KEY = "notes";
 
-    public event Action OnSongLoaded;
     public event Action OnSongSaved;
     public event Action OnSongCreated;
+
+    public static SongLoader Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                SongLoader songLoader = Instantiate(Resources.Load<SongLoader>("SongLoader"));
+                DontDestroyOnLoad(songLoader.gameObject);
+                instance = songLoader;
+            }
+            return instance;
+        }
+    }
 
     public Dictionary<string, Dictionary<string, ISongSettings>> SongsCache { get; } = new();
     public Dictionary<string, AudioClip> SongsAudioCache { get; } = new();
     public string SongsPath => Path.Combine(Application.persistentDataPath, "SongsDatabase");
     public string SelectedSongId { get; set; }
     public string SelectedSongDifficulty { get; set; }
-    
+
+    static SongLoader instance;
+
     AudioClip tempAudio;
     bool cancellationToken;
 
-    public void Initialize ()
+    public void Awake ()
     {
         TryCreateDefaultFiles();
         LoadAllSongSettings();
+        LoadAllSongAudios();
     }
 
     public static string GetSongId (string songName, string artistName) => $"{artistName} - {songName}";
@@ -55,29 +70,10 @@ public class SongLoaderModel : ISongLoaderModel
 
     public ISongSettings GetSelectedSongSettings () => GetSongSettings(SelectedSongId, SelectedSongDifficulty);
 
-    public async Task<AudioClip> GetSongAudio (string songId)
+    public AudioClip GetSelectedSongAudio ()
     {
-        if (SongsAudioCache.ContainsKey(songId))
-            return SongsAudioCache[songId];
-        tempAudio = null;
-        cancellationToken = false;
-        CoroutineRunner.Instance.StartRoutine(nameof(LoadSongAudio), LoadSongAudio(songId));
-        while (tempAudio == null && !cancellationToken)
-            await Task.Yield();
-        SongsAudioCache[songId] = tempAudio;
-        return SongsAudioCache[songId];
-    }
-
-    public async Task<AudioClip> GetSelectedSongAudio (Action<AudioClip> onFinish)
-    {
-        if (SongsAudioCache.ContainsKey(SelectedSongId))
-        {
-            onFinish?.Invoke(SongsAudioCache[SelectedSongId]);
-            return SongsAudioCache[SelectedSongId];
-        }
-        AudioClip clip = await GetSongAudio(SelectedSongId);
-        SongsAudioCache[SelectedSongId] = clip;
-        onFinish?.Invoke(clip);
+        if (!SongsAudioCache.TryGetValue(SelectedSongId, out AudioClip clip))
+            throw new IndexOutOfRangeException($"No song with id '{SelectedSongId}' found");
         return clip;
     }
 
@@ -154,6 +150,17 @@ public class SongLoaderModel : ISongLoaderModel
         }
     }
 
+    void LoadAllSongAudios ()
+    {
+        StartCoroutine(LoadAllSongAudiosRoutine());
+    }
+
+    IEnumerator LoadAllSongAudiosRoutine ()
+    {
+        foreach (var songId in SongsCache.Keys)
+            yield return LoadSongAudio(songId);
+    }
+
     IEnumerator LoadSongAudio (string songId)
     {
         AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
@@ -162,18 +169,18 @@ public class SongLoaderModel : ISongLoaderModel
             tempAudio = clip;
             yield break;
         }
-
         string path = GetAudioPath(songId);
         if (string.IsNullOrEmpty(path))
             throw new Exception($"audio file was not found on driectory {path}. Make sure there is a {AUDIO_EXTENSION} file in the song directory.");
         UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG);
         yield return req.SendWebRequest();
         tempAudio = DownloadHandlerAudioClip.GetContent(req);
-        if (tempAudio != null)
+        if (tempAudio == null)
+        {
+            Debug.LogException(new ArgumentException($"Could not load song {songId}!"));
             yield break;
-        
-        Debug.LogException(new ArgumentException($"Could not load song {songId}!"));
-        cancellationToken = true;
+        }
+        SongsAudioCache[songId] = tempAudio;
     }
 
     SongSettings ReadSongTextFile (string file)

@@ -2,11 +2,11 @@
 {
     public static MenuModel Create (IMenuInputManager inputManager, IAudioManager audioManager)
     {
-        ISongLoaderModel songLoaderModel = new SongLoaderModel();
+        SongLoader songLoader = SongLoader.Instance;
         IMainMenuModel mainMenuModel = new MainMenuModel();
         ISettingsModel settingsModel = new SettingsModel(audioManager);
-        ISongMenuModel songMenuModel = new SongMenuModel(songLoaderModel);
-        var model = new MenuModel(mainMenuModel, settingsModel, songMenuModel, songLoaderModel, inputManager);
+        ISongMenuModel songMenuModel = new SongMenuModel(songLoader);
+        var model = new MenuModel(mainMenuModel, settingsModel, songMenuModel, songLoader, inputManager);
         return model;
     }
 }

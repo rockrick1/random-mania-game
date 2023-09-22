@@ -2,12 +2,12 @@
 {
     public static EditorModel Create (IEditorInputManager inputManager, IAudioManager audioManager)
     {
-        ISongLoaderModel songLoaderModel = new SongLoaderModel();
+        SongLoader songLoader = SongLoader.Instance;
         IEditorSongPickerModel songPickerModel = new EditorSongPickerModel();
-        IEditorSongModel songModel = new EditorSongModel(inputManager, songLoaderModel);
-        IEditorNewSongModel newSongModel = new EditorNewSongModel(songLoaderModel);
+        IEditorSongModel songModel = new EditorSongModel(inputManager, songLoader);
+        IEditorNewSongModel newSongModel = new EditorNewSongModel(songLoader);
         EditorModel model = new(
-            songLoaderModel,
+            songLoader,
             songPickerModel,
             songModel,
             newSongModel,
