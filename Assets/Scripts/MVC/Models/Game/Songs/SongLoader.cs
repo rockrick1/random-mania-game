@@ -47,9 +47,6 @@ public class SongLoader : MonoBehaviour
 
     static SongLoader instance;
 
-    AudioClip tempAudio;
-    bool cancellationToken;
-
     public void Awake ()
     {
         TryCreateDefaultFiles();
@@ -166,7 +163,7 @@ public class SongLoader : MonoBehaviour
         AudioClip clip = Resources.Load<AudioClip>(GetResourcePath(songId));
         if (clip != null)
         {
-            tempAudio = clip;
+            SongsAudioCache[songId] = clip;
             yield break;
         }
         string path = GetAudioPath(songId);
@@ -174,13 +171,13 @@ public class SongLoader : MonoBehaviour
             throw new Exception($"audio file was not found on driectory {path}. Make sure there is a {AUDIO_EXTENSION} file in the song directory.");
         UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip("file:///" + path, AudioType.MPEG);
         yield return req.SendWebRequest();
-        tempAudio = DownloadHandlerAudioClip.GetContent(req);
-        if (tempAudio == null)
+        clip = DownloadHandlerAudioClip.GetContent(req);
+        if (clip == null)
         {
             Debug.LogException(new ArgumentException($"Could not load song {songId}!"));
             yield break;
         }
-        SongsAudioCache[songId] = tempAudio;
+        SongsAudioCache[songId] = clip;
     }
 
     SongSettings ReadSongTextFile (string file)

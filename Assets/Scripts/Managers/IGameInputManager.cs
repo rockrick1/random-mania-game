@@ -4,7 +4,8 @@ using UnityEngine;
 public interface IGameInputManager
 {
     event Action<int> OnHitterSelect;
-    event Action OnHitPress;
+    event Action<int> OnHitterPress;
+    event Action<int> OnHitterRelease;
     event Action OnEscPressed;
     event Action OnSpacePressed;
 

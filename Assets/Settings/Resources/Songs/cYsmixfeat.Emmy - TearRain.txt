@@ -1,6 +1,9 @@
 [title]
 Tear Rain
 
+[difficultyName]
+Easy
+
 [artist]
 cYsmix feat. Emmy
 
@@ -17,3 +20,6 @@ cYsmix feat. Emmy
 1
 
 [notes]
+0, 1
+.45, 1
+1, 1

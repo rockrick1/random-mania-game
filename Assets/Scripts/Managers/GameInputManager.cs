@@ -4,15 +4,15 @@ using UnityEngine;
 public class GameInputManager : MonoBehaviour, IGameInputManager
 {
     public event Action<int> OnHitterSelect;
-    public event Action OnHitPress;
+    public event Action<int> OnHitterPress;
+    public event Action<int> OnHitterRelease;
     public event Action OnEscPressed;
     public event Action OnSpacePressed;
 
     int selectedPosition = 1;
 
-    public bool GetPositionPressed (int pos) =>
-        (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X)) && selectedPosition == pos;
-    
+    public bool GetPositionPressed (int pos) => (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.X)) && selectedPosition == pos;
+
     public bool GetPositionReleased (int pos) =>
         (Input.GetKeyUp(KeyCode.Z) || Input.GetKeyUp(KeyCode.X)) && selectedPosition == pos;
     
@@ -31,6 +31,7 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
     void Update ()
     {
         CheckHitterChange();
+        CheckHitterHitInteraction();
         CheckEscape();
         CheckSpacebar();
     }
@@ -54,6 +55,17 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
             selectedPosition = 1;
             OnHitterSelect?.Invoke(1);
             return;
+        }
+    }
+
+    void CheckHitterHitInteraction()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if (GetPositionPressed(i))
+                OnHitterPress?.Invoke(i);
+            if (GetPositionReleased(i))
+                OnHitterRelease?.Invoke(i);
         }
     }
 

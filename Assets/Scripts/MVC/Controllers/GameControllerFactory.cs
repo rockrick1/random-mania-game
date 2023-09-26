@@ -4,7 +4,8 @@
     {
         LowerSongController lowerSongController = new(
             view.SongView.LowerSongView,
-            model.InputManager
+            model.InputManager,
+            model.SongModel
         );
 
         UpperSongController upperSongController = new(
