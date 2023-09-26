@@ -155,6 +155,7 @@
      <Compile Include="Assets/Scripts/MVC/Controllers/Menu/MenuControllerFactory.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Scripts/MVC/Views/Game/HitFeedback" />
+     <None Include="Assets/Art/UI/Fonts/Inter/README.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
      <Folder Include="Assets/Scripts/MVC/Models/SongEditor" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader" />
@@ -169,6 +170,7 @@
      <Folder Include="Assets/Scripts/MVC/Views/Menu" />
      <Folder Include="Assets/Scripts/MVC/Views/Game/Songs/Prefabs" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_Bitmap.shader" />
+     <Folder Include="Assets/Art/UI/Fonts/Inter/static" />
      <Folder Include="Assets/Scripts/MVC/Views/Game/Combo" />
      <Folder Include="Assets/Scenes" />
      <Folder Include="Assets/Scripts/MVC/Controllers/Songs" />
@@ -184,9 +186,12 @@
      <Folder Include="Assets/Scripts/MVC/Views/Game/Prefabs" />
      <Folder Include="Assets/Settings/Resources" />
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets/Art/UI/Fonts/Dela_Gothic_One/OFL.txt" />
      <Folder Include="Assets/Scripts/MVC/Views/Utils" />
      <Folder Include="Assets/TextMesh Pro" />
+     <Folder Include="Assets/Art/UI/Fonts/Inter" />
      <Folder Include="Assets/Art" />
+     <Folder Include="Assets/Art/UI/Fonts/Dela_Gothic_One" />
      <Folder Include="Assets/Settings/Resources/Songs" />
      <Folder Include="Assets/DOTween" />
      <Folder Include="Assets/Settings" />
@@ -203,6 +208,7 @@
      <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader" />
      <Folder Include="Assets/Scripts/MVC/Views/Game/Songs" />
      <None Include="Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt" />
+     <None Include="Assets/Art/UI/Fonts/Inter/OFL.txt" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro_Properties.cginc" />
      <Folder Include="Assets/Art/Game/Field" />
      <None Include="Assets/DOTween/readme.txt" />
