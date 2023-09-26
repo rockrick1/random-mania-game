@@ -28,7 +28,6 @@ public class MenuModel : IMenuModel
     public void Initialize ()
     {
         AddListeners();
-        // SongLoader.Initialize();
         MainMenuModel.Initialize();
         SettingsModel.Initialize();
         SongMenuModel.Initialize();

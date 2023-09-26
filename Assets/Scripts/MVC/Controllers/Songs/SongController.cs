@@ -88,7 +88,11 @@ public class SongController
 
     void HandleStartSkipped (float startingTime) => audioManager.SetMusicTime(startingTime);
 
-    void HandleSongFinished () => OnSongFinished?.Invoke();
+    void HandleSongFinished ()
+    {
+        audioManager.PauseMusic();
+        OnSongFinished?.Invoke();
+    }
 
     void HandlePause ()
     {

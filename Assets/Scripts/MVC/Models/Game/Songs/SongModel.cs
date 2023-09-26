@@ -37,7 +37,6 @@ public class SongModel : ISongModel
 
     public void Initialize ()
     {
-        // SongLoader.Initialize();
         AddListeners();
     }
 
@@ -67,7 +66,7 @@ public class SongModel : ISongModel
         dspSongStart = AudioSettings.dspTime + GetStartingElapsed();
         
         CoroutineRunner.Instance.StartRoutine(nameof(AudioStartRoutine), AudioStartRoutine());
-        CoroutineRunner.Instance.StartRoutine(nameof(NoteSpawnRotutine), NoteSpawnRotutine());
+        CoroutineRunner.Instance.StartRoutine(nameof(NoteSpawnRoutine), NoteSpawnRoutine());
         CoroutineRunner.Instance.StartRoutine(nameof(NotesHitRoutine), NotesHitRoutine());
         CoroutineRunner.Instance.StartRoutine(nameof(PauseOffsetRoutine), PauseOffsetRoutine());
     }
@@ -83,7 +82,7 @@ public class SongModel : ISongModel
         OnAudioStartTimeReached?.Invoke();
     }
 
-    IEnumerator NoteSpawnRotutine ()
+    IEnumerator NoteSpawnRoutine ()
     {
         IReadOnlyList<Note> notes = CurrentSongSettings.Notes;
         int noteIndex = 0;
@@ -146,7 +145,6 @@ public class SongModel : ISongModel
                 
                 if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
                 {
-                    // Debug.Log($"{DateTime.Now}");
                     OnLongNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
                     hittingCurrentLongNote = true;
                     continue;
@@ -199,7 +197,7 @@ public class SongModel : ISongModel
     {
         RemoveListeners();
         CoroutineRunner.Instance.StopRoutine(nameof(AudioStartRoutine));
-        CoroutineRunner.Instance.StopRoutine(nameof(NoteSpawnRotutine));
+        CoroutineRunner.Instance.StopRoutine(nameof(NoteSpawnRoutine));
         CoroutineRunner.Instance.StopRoutine(nameof(NotesHitRoutine));
         CoroutineRunner.Instance.StopRoutine(nameof(PauseOffsetRoutine));
     }

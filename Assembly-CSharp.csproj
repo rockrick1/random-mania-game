@@ -61,11 +61,13 @@
      <Compile Include="Assets/Scripts/MVC/Views/SongEditor/EditorSongView.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/SongEditor/EditorSongDetailsView.cs" />
      <Compile Include="Assets/Scripts/MVC/Controllers/GameController.cs" />
+     <Compile Include="Assets/Scripts/MVC/Views/Game/GameBackgroundView.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/SongEditor/EditorTopBarDragHandler.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Game/PauseView.cs" />
      <Compile Include="Assets/Scripts/MVC/Controllers/GameControllerFactory.cs" />
      <Compile Include="Assets/Scripts/MVC/Models/SongEditor/EditorModel.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Game/Songs/LowerSongView.cs" />
+     <Compile Include="Assets/Scripts/MVC/Controllers/Songs/GameBackgroundController.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Game/Songs/EditorLongNoteView.cs" />
      <Compile Include="Assets/Scripts/MVC/Controllers/SongEditor/EditorSongPickerController.cs" />
      <Compile Include="Assets/DOTween/Modules/DOTweenModulePhysics.cs" />
@@ -109,6 +111,7 @@
      <Compile Include="Assets/Scripts/MVC/Controllers/Songs/SongController.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Menu/SongMenuView.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/SongEditor/WaveForm2D.cs" />
+     <Compile Include="Assets/Scripts/MVC/Views/Game/Songs/NoteHitterView.cs" />
      <Compile Include="Assets/DOTween/Modules/DOTweenModuleUtils.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Game/Songs/NoteView.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Game/ComboView.cs" />
@@ -150,9 +153,6 @@
      <Compile Include="Assets/Scripts/MVC/Views/SongEditor/EditorSongPickerView.cs" />
      <Compile Include="Assets/Scripts/MVC/Controllers/Songs/PauseController.cs" />
      <Compile Include="Assets/Scripts/MVC/Controllers/Menu/MenuControllerFactory.cs" />
-     <Compile Include="Assets/Scripts/MVC/Views/Game/Songs/NoteHitterView.cs" />
-     <Compile Include="Assets/Scripts/MVC/Views/Game/GameBackgroundView.cs" />
-     <Compile Include="Assets/Scripts/MVC/Controllers/Songs/GameBackgroundController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Scripts/MVC/Views/Game/HitFeedback" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
