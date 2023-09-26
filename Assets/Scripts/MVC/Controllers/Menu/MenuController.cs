@@ -8,6 +8,7 @@ public class MenuController : IDisposable
     readonly MainMenuController mainMenuController;
     readonly SongMenuController songMenuController;
     readonly SettingsController settingsController;
+    readonly ISongMenuModel songMenuModel;
     readonly IMenuModel model;
 
     MenuType currentMenu = MenuType.MainMenu;
@@ -15,8 +16,9 @@ public class MenuController : IDisposable
     public MenuController (
         MenuView view,
         MainMenuController mainMenuController,
-        SongMenuController songMenuController,
         SettingsController settingsController,
+        SongMenuController songMenuController,
+        ISongMenuModel songMenuModel,
         IMenuModel model
     )
     {
@@ -24,6 +26,7 @@ public class MenuController : IDisposable
         this.mainMenuController = mainMenuController;
         this.songMenuController = songMenuController;
         this.settingsController = settingsController;
+        this.songMenuModel = songMenuModel;
         this.model = model;
     }
 
@@ -43,7 +46,7 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu += HandleOpenSongMenu;
         mainMenuController.OnOpenEditor += HandleOpenEditor;
         mainMenuController.OnOpenSettings += HandleOpenSettings;
-        songMenuController.OnSongSelected += HandleSongSelected;
+        songMenuModel.OnSongSelected += HandleSongSelected;
         songMenuController.OnBackPressed += HandleBackPressed;
     }
 
@@ -53,7 +56,8 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu -= HandleOpenSongMenu;
         mainMenuController.OnOpenEditor -= HandleOpenEditor;
         mainMenuController.OnOpenSettings -= HandleOpenSettings;
-        songMenuController.OnSongSelected -= HandleSongSelected;
+        songMenuModel.OnSongSelected -= HandleSongSelected;
+        songMenuController.OnBackPressed -= HandleBackPressed;
     }
 
     void HandleSongSelected (string songId, string songDifficultyName)

@@ -10,11 +10,11 @@
             view.EditorSongPickerView,
             newSongController,
             model.SongPickerModel,
-            model.SongLoaderModel
+            model.SongLoader
         );
         EditorSongDetailsController songDetailsController = new(
             view.EditorSongDetailsView,
-            model.SongLoaderModel,
+            model.SongLoader,
             model.SongModel
         );
         EditorTopBarController topBarController = new(
@@ -26,7 +26,7 @@
             view.EditorSongView,
             songDetailsController,
             model.SongModel,
-            model.SongLoaderModel,
+            model.SongLoader,
             model.AudioManager,
             model.InputManager
         );
@@ -39,7 +39,7 @@
             view,
             model,
             model.SongModel,
-            model.SongLoaderModel,
+            model.SongLoader,
             model.InputManager,
             model.AudioManager
         );

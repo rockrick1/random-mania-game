@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class SongMenuModel : ISongMenuModel
 {
+    public event Action<string, string> OnSongSelected;
+    
     readonly SongMenuView view;
     readonly SongLoader songLoader;
-    
-    
+
     public SongMenuModel (SongLoader songLoader)
     {
         this.songLoader = songLoader;
@@ -15,6 +17,8 @@ public class SongMenuModel : ISongMenuModel
     {
         AddListeners();
     }
+
+    public void PickSong(string songId, string songDifficultyName) => OnSongSelected?.Invoke(songId, songDifficultyName);
 
     void AddListeners ()
     {

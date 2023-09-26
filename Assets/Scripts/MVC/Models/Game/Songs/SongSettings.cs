@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SongSettings : ISongSettings
 {
@@ -10,6 +11,7 @@ public class SongSettings : ISongSettings
     public float ApproachRate { get; set; }
     public float Difficulty { get; set; }
     public float StartingTime { get; set; }
+    public Sprite Background { get; set; }
     public List<Note> Notes { get; private set; }
     
     public SongSettings ()
@@ -30,6 +32,7 @@ public class SongSettings : ISongSettings
             ApproachRate = ApproachRate,
             Difficulty = Difficulty,
             StartingTime = StartingTime,
+            Background = Background,
             Notes = new List<Note>(Notes)
         };
 }

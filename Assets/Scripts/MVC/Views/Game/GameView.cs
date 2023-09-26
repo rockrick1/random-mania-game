@@ -7,10 +7,12 @@ public class GameView : MonoBehaviour
     [SerializeField] PauseView pauseView;
     [SerializeField] ScoreView scoreView;
     [SerializeField] ResultsView resultsView;
+    [SerializeField] GameBackgroundView backgroundView;
 
     public SongView SongView => songView;
     public ComboView ComboView => comboView;
     public PauseView PauseView => pauseView;
     public ScoreView ScoreView => scoreView;
     public ResultsView ResultsView => resultsView;
+    public GameBackgroundView GameBackgroundView => backgroundView;
 }

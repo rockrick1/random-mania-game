@@ -8,8 +8,9 @@
         return new MenuController(
             view,
             mainMenuController,
-            songMenuController,
             settingsController,
+            songMenuController,
+            model.SongMenuModel,
             model
         );
     }

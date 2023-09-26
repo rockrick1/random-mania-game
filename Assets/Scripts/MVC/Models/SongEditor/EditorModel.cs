@@ -2,7 +2,7 @@
 
 public class EditorModel : IEditorModel
 {
-    public SongLoader SongLoaderModel { get; }
+    public SongLoader SongLoader { get; }
     public IEditorSongPickerModel SongPickerModel { get; }
     public IEditorInputManager InputManager { get; }
     public IAudioManager AudioManager { get; }
@@ -10,7 +10,7 @@ public class EditorModel : IEditorModel
     public IEditorNewSongModel NewSongModel { get; set; }
 
     public EditorModel (
-        SongLoader songLoaderModel,
+        SongLoader songLoader,
         IEditorSongPickerModel songPickerModel,
         IEditorSongModel songModel,
         IEditorNewSongModel newSongModel,
@@ -18,7 +18,7 @@ public class EditorModel : IEditorModel
         IAudioManager audioManager
     )
     {
-        SongLoaderModel = songLoaderModel;
+        SongLoader = songLoader;
         SongPickerModel = songPickerModel;
         SongModel = songModel;
         NewSongModel = newSongModel;

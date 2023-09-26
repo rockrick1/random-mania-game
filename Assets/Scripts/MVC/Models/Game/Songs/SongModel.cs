@@ -15,8 +15,8 @@ public class SongModel : ISongModel
     public event Action<float> OnSongStartSkipped;
     public event Action OnSongFinished;
 
-    public SongLoader SongLoaderModel { get; }
-    public ISongSettings CurrentSongSettings => SongLoaderModel.GetSelectedSongSettings();
+    public SongLoader SongLoader { get; }
+    public ISongSettings CurrentSongSettings => SongLoader.GetSelectedSongSettings();
     public bool AllNotesRead { get; private set; }
 
     readonly IGameInputManager inputManager;
@@ -29,15 +29,15 @@ public class SongModel : ISongModel
     double pauseOffset;
     float skippedTime;
 
-    public SongModel (IGameInputManager inputManager, SongLoader songLoaderModel)
+    public SongModel (IGameInputManager inputManager, SongLoader songLoader)
     {
         this.inputManager = inputManager;
-        SongLoaderModel = songLoaderModel;
+        SongLoader = songLoader;
     }
 
     public void Initialize ()
     {
-        // SongLoaderModel.Initialize();
+        // SongLoader.Initialize();
         AddListeners();
     }
 
@@ -55,8 +55,8 @@ public class SongModel : ISongModel
 
     public void LoadSong (string songId, string songDifficultyName)
     {
-        SongLoaderModel.SelectedSongId = songId;
-        SongLoaderModel.SelectedSongDifficulty = songDifficultyName;
+        SongLoader.SelectedSongId = songId;
+        SongLoader.SelectedSongDifficulty = songDifficultyName;
         perfectHitWindow = (80 - 6 * CurrentSongSettings.Difficulty) / 1000f;
         greatHitWindow = (140 - 8 * CurrentSongSettings.Difficulty) / 1000f;
         okayHitWindow = (200 - 10 * CurrentSongSettings.Difficulty) / 1000f;

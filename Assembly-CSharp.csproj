@@ -151,6 +151,8 @@
      <Compile Include="Assets/Scripts/MVC/Controllers/Songs/PauseController.cs" />
      <Compile Include="Assets/Scripts/MVC/Controllers/Menu/MenuControllerFactory.cs" />
      <Compile Include="Assets/Scripts/MVC/Views/Game/Songs/NoteHitterView.cs" />
+     <Compile Include="Assets/Scripts/MVC/Views/Game/GameBackgroundView.cs" />
+     <Compile Include="Assets/Scripts/MVC/Controllers/Songs/GameBackgroundController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets/Scripts/MVC/Views/Game/HitFeedback" />
      <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />

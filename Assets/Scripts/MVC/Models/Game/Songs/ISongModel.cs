@@ -12,7 +12,7 @@ public interface ISongModel : IDisposable
     event Action<float> OnSongStartSkipped;
     event Action OnSongFinished;
     
-    SongLoader SongLoaderModel { get; }
+    SongLoader SongLoader { get; }
     ISongSettings CurrentSongSettings { get; }
     bool AllNotesRead { get; }
 

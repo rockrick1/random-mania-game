@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -132,6 +133,7 @@ public class SongLoader : MonoBehaviour
     {
         string[] temp = Directory.GetDirectories(SongsPath);
         List<string> dirs = temp.Select(dir => dir.Split('\\').Last()).ToList();
+        Sprite[] songBackgrounds = Resources.LoadAll<Sprite>(SONG_RESOURCES_PATH);
         
         foreach (string dir in dirs)
         {
@@ -143,6 +145,8 @@ public class SongLoader : MonoBehaviour
             ISongSettings settings = ReadSongTextFile(songText);
             if (!SongsCache.TryGetValue(settings.Id, out Dictionary<string, ISongSettings> _))
                 SongsCache[settings.Id] = new Dictionary<string, ISongSettings>();
+            
+            settings.Background = songBackgrounds.FirstOrDefault(x => x.name == settings.Id);
             SongsCache[settings.Id][settings.DifficultyName] = settings;
         }
     }

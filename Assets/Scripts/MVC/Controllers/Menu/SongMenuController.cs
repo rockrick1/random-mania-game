@@ -2,7 +2,6 @@
 
 public class SongMenuController : IDisposable
 {
-    public event Action<string, string> OnSongSelected;
     public event Action OnBackPressed;
     
     readonly SongMenuView view;
@@ -32,7 +31,7 @@ public class SongMenuController : IDisposable
         view.OnBackPressed -= HandleBackPressed;
     }
 
-    void HandleSongClicked (string songId, string songDifficultyName) => OnSongSelected?.Invoke(songId, songDifficultyName);
+    void HandleSongClicked (string songId, string songDifficultyName) => model.PickSong(songId, songDifficultyName);
     
     void HandleBackPressed () => OnBackPressed?.Invoke();
 

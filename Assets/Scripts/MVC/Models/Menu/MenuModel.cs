@@ -7,7 +7,7 @@ public class MenuModel : IMenuModel
     public IMainMenuModel MainMenuModel { get; }
     public ISettingsModel SettingsModel { get; }
     public ISongMenuModel SongMenuModel { get; }
-    public SongLoader SongLoaderModel { get; }
+    public SongLoader SongLoader { get; }
     public IMenuInputManager InputManager { get; }
     
     public MenuModel (
@@ -21,14 +21,14 @@ public class MenuModel : IMenuModel
         MainMenuModel = mainMenuModel;
         SettingsModel = settingsModel;
         SongMenuModel = songMenuModel;
-        SongLoaderModel = songLoader;
+        SongLoader = songLoader;
         InputManager = inputManager;
     }
 
     public void Initialize ()
     {
         AddListeners();
-        // SongLoaderModel.Initialize();
+        // SongLoader.Initialize();
         MainMenuModel.Initialize();
         SettingsModel.Initialize();
         SongMenuModel.Initialize();

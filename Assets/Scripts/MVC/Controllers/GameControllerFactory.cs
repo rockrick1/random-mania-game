@@ -35,13 +35,18 @@
             pauseController,
             model.SongModel,
             model.AudioManager,
-            model.SongModel.SongLoaderModel
+            model.SongModel.SongLoader
         );
 
         ResultsController resultsController = new(
             view.ResultsView,
             songController,
             model.ScoreModel
+        );
+
+        GameBackgroundController gameBackgroundController = new(
+            view.GameBackgroundView,
+            model.SongModel.SongLoader
         );
         
         return new GameController(
@@ -51,7 +56,8 @@
             lowerSongController,
             pauseController,
             scoreController,
-            resultsController
+            resultsController,
+            gameBackgroundController
         );
     }
 }

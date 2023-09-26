@@ -9,15 +9,16 @@ public class GameController : IDisposable
     public PauseController PauseController { get; }
     public ScoreController ScoreController { get; }
     public ResultsController ResultsController { get; }
+    public GameBackgroundController GameBackgroundController { get; }
 
-    public GameController (
-        SongController songController,
+    public GameController(SongController songController,
         UpperSongController upperSongController,
         ComboController comboController,
         LowerSongController lowerSongController,
         PauseController pauseController,
         ScoreController scoreController,
-        ResultsController resultsController
+        ResultsController resultsController,
+        GameBackgroundController gameBackgroundController
     )
     {
         SongController = songController;
@@ -27,6 +28,7 @@ public class GameController : IDisposable
         PauseController = pauseController;
         ScoreController = scoreController;
         ResultsController = resultsController;
+        GameBackgroundController = gameBackgroundController;
     }
 
     public void Initialize ()
@@ -38,6 +40,7 @@ public class GameController : IDisposable
         PauseController.Initialize();
         ScoreController.Initialize();
         ResultsController.Initialize();
+        GameBackgroundController.Initialize();
     }
 
     public void Dispose ()
@@ -49,5 +52,6 @@ public class GameController : IDisposable
         PauseController.Initialize();
         ScoreController.Dispose();
         ResultsController.Dispose();
+        GameBackgroundController.Dispose();
     }
 }
