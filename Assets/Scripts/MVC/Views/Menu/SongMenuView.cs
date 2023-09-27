@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,9 @@ public class SongMenuView : MonoBehaviour
 
     void Start ()
     {
+        transform.DOScale(0, 0);
         backButton.OnLeftClick.AddListener(() => OnBackPressed?.Invoke());
+        gameObject.SetActive(true);
     }
 
     public void Setup (IReadOnlyList<ISongSettings> songs)
@@ -34,12 +37,12 @@ public class SongMenuView : MonoBehaviour
     
     public void Open ()
     {
-        gameObject.SetActive(true);
+        transform.DOScale(Vector3.one, 1f).SetEase(Ease.InOutCubic);
     }
 
     public void Close ()
     {
-        gameObject.SetActive(false);
+        transform.DOScale(Vector3.zero, 1f).SetEase(Ease.InOutCubic);
     }
 
     void SetupSongsListSize (int songCount)

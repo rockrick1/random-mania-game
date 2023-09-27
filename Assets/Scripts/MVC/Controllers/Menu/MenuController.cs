@@ -34,9 +34,7 @@ public class MenuController : IDisposable
     {
         mainMenuController.Initialize();
         songMenuController.Initialize();
-        songMenuController.Close();
         settingsController.Initialize();
-        settingsController.Close();
         AddListeners();
     }
 
@@ -85,6 +83,8 @@ public class MenuController : IDisposable
                 break;
             case MenuType.SongMenu:
                 songMenuController.Open();
+                mainMenuController.ZoomIn();
+                view.AnimateParticlesScale(5f);
                 currentMenu = MenuType.SongMenu;
                 break;
             default:
@@ -105,6 +105,8 @@ public class MenuController : IDisposable
                 break;
             case MenuType.SongMenu:
                 songMenuController.Close();
+                mainMenuController.ZoomOut();
+                view.AnimateParticlesScale(1f);
                 currentMenu = MenuType.MainMenu;
                 break;
             default:

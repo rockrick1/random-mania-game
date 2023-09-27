@@ -45,6 +45,10 @@ public class MainMenuController : IDisposable
     
     void HandleQuit () => OnQuit?.Invoke();
 
+    public void ZoomIn() => view.AnimateScale(5f, 1f);
+    
+    public void ZoomOut() => view.AnimateScale(1f, 1f);
+
     public void Dispose ()
     {
         model.Dispose();
