@@ -55,16 +55,16 @@ public class MainMenuView : MonoBehaviour
         titleShadow.DOLocalMoveX(-2600, 0);
         titleShadow.DOLocalMoveX(titleShadowInitialPos, moveTime).SetEase(Ease.OutBack).SetDelay(.6f);
         
-        songMenuButton.transform.DOLocalMoveX(600, 0);
+        songMenuButton.transform.DOLocalMoveX(800, 0);
         songMenuButton.transform.DOLocalMoveX(menuButton1InitialPos, moveTime).SetEase(Ease.OutBack).SetDelay((buttonAnimInterval) + .5f);
         
-        editorButton.transform.DOLocalMoveX(600, 0);
+        editorButton.transform.DOLocalMoveX(800, 0);
         editorButton.transform.DOLocalMoveX(menuButton2InitialPos, moveTime).SetEase(Ease.OutBack).SetDelay((buttonAnimInterval * 2) + .5f);
         
-        settingsButton.transform.DOLocalMoveX(600, 0);
+        settingsButton.transform.DOLocalMoveX(800, 0);
         settingsButton.transform.DOLocalMoveX(menuButton3InitialPos, moveTime).SetEase(Ease.OutBack).SetDelay((buttonAnimInterval * 3) + .5f);
         
-        quitButton.transform.DOLocalMoveX(600, 0);
+        quitButton.transform.DOLocalMoveX(800, 0);
         quitButton.transform.DOLocalMoveX(menuButton4InitialPos, moveTime).SetEase(Ease.OutBack).SetDelay((buttonAnimInterval * 4) + .5f);
     }
 }
