@@ -29,7 +29,7 @@ public class SongMenuView : MonoBehaviour
         foreach (ISongSettings song in songs)
         {
             SongEntryView entry = Instantiate(songEntryPrefab, songsList.transform);
-            entry.transform.localRotation = Quaternion.Euler(0f, 0f, 20f);
+            entry.transform.localRotation = Quaternion.Euler(0f, 0f, 15f);
             entry.Setup(song);
             entry.Button.OnClick.AddListener(() => OnSongClicked?.Invoke(song.Id, song.DifficultyName));
         }
