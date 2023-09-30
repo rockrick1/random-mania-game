@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class SongMenuModel : ISongMenuModel
 {
-    public event Action<string, string> OnSongSelected;
+    public event Action<ISongSettings> OnSongSelected;
     
+    public ISongSettings SelectedSongSettings { get; private set; }
+
     readonly SongMenuView view;
     readonly SongLoader songLoader;
 
@@ -18,7 +21,18 @@ public class SongMenuModel : ISongMenuModel
         AddListeners();
     }
 
-    public void PickSong(string songId, string songDifficultyName) => OnSongSelected?.Invoke(songId, songDifficultyName);
+    public void PickSong (string songId, string songDifficultyName)
+    {
+        GameContext.Current.SelectedSongId = songId;
+        GameContext.Current.SelectedSongDifficulty = songDifficultyName;
+        SelectedSongSettings = songLoader.SongsCache[songId][songDifficultyName];
+        OnSongSelected?.Invoke(SelectedSongSettings);
+    }
+
+    public void EnterGame ()
+    {
+        SceneManager.LoadScene("Game");
+    }
 
     void AddListeners ()
     {

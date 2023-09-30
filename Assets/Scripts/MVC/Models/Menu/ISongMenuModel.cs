@@ -3,9 +3,12 @@ using System.Collections.Generic;
 
 public interface ISongMenuModel : IDisposable
 {
-    event Action<string, string> OnSongSelected;
+    event Action<ISongSettings> OnSongSelected;
+    
+    ISongSettings SelectedSongSettings { get; }
     
     void Initialize ();
     IReadOnlyList<ISongSettings> GetAllSongs ();
     void PickSong(string songId, string songDifficultyName);
+    void EnterGame ();
 }

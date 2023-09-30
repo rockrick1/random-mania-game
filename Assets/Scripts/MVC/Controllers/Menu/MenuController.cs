@@ -44,7 +44,6 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu += HandleOpenSongMenu;
         mainMenuController.OnOpenEditor += HandleOpenEditor;
         mainMenuController.OnOpenSettings += HandleOpenSettings;
-        songMenuModel.OnSongSelected += HandleSongSelected;
         songMenuController.OnBackPressed += HandleBackPressed;
     }
 
@@ -54,15 +53,7 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu -= HandleOpenSongMenu;
         mainMenuController.OnOpenEditor -= HandleOpenEditor;
         mainMenuController.OnOpenSettings -= HandleOpenSettings;
-        songMenuModel.OnSongSelected -= HandleSongSelected;
         songMenuController.OnBackPressed -= HandleBackPressed;
-    }
-
-    void HandleSongSelected (string songId, string songDifficultyName)
-    {
-        GameContext.Current.SelectedSongId = songId;
-        GameContext.Current.SelectedSongDifficulty = songDifficultyName;
-        SceneManager.LoadScene("Game");
     }
 
     void HandleBackPressed () => CloseMenu(currentMenu);
@@ -116,7 +107,9 @@ public class MenuController : IDisposable
 
     public void Dispose ()
     {
-        model.Dispose();
+        mainMenuController.Dispose();
+        songMenuController.Dispose();
+        settingsController.Dispose();
         RemoveListeners();
     }
 }

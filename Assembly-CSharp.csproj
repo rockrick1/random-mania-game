@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\SongSettings.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\HitScore.cs" />
      <Compile Include="Assets\Scripts\Managers\EditorManager.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Utils\AnimationUtils\MoveAnimation.cs" />
      <Compile Include="Assets\Scripts\MVC\Views\Menu\MenuView.cs" />
      <Compile Include="Assets\Scripts\MVC\Models\Game\Songs\Note.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\ResultsController.cs" />
@@ -153,7 +154,6 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
-     <Compile Include="Assets\Scripts\MVC\Views\Utils\AnimationUtils\MoveAnimation.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\Art\UI\Fonts\Inter\README.txt" />
