@@ -11,6 +11,9 @@ public interface ISongSettings
     float ApproachRate { get; }
     float Difficulty { get; }
     float StartingTime { get; }
+    float Length { get; }
+    string LengthString { get; }
     Sprite Background { get; set; }
     List<Note> Notes { get; }
+
 }

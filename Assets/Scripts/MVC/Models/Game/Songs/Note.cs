@@ -8,6 +8,7 @@
     public Note (float time, int position)
     {
         Time = time;
+        EndTime = time;
         Position = position;
         IsLong = false;
     }

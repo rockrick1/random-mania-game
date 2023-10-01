@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SongSettings : ISongSettings
@@ -11,6 +12,15 @@ public class SongSettings : ISongSettings
     public float ApproachRate { get; set; }
     public float Difficulty { get; set; }
     public float StartingTime { get; set; }
+    public float Length { get; set; }
+    public string LengthString
+    {
+        get
+        {
+            TimeSpan time = TimeSpan.FromSeconds(Length);
+            return $"{time.Minutes}:{time.Seconds:D2}";
+        }
+    }
     public Sprite Background { get; set; }
     public List<Note> Notes { get; private set; }
     
@@ -32,6 +42,7 @@ public class SongSettings : ISongSettings
             ApproachRate = ApproachRate,
             Difficulty = Difficulty,
             StartingTime = StartingTime,
+            Length = Length,
             Background = Background,
             Notes = new List<Note>(Notes)
         };

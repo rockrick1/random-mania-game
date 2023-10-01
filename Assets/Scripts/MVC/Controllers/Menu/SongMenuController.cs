@@ -32,6 +32,7 @@ public class SongMenuController : IDisposable
         view.SetSelectedSongBPM(model.SelectedSongSettings.Bpm.ToString(CultureInfo.InvariantCulture));
         view.SetSelectedSongApproachRate(model.SelectedSongSettings.ApproachRate.ToString(CultureInfo.InvariantCulture));
         view.SetSelectedSongDifficulty(model.SelectedSongSettings.Difficulty.ToString(CultureInfo.InvariantCulture));
+        view.SetSelectedSongLength(model.SelectedSongSettings.LengthString);
     }
 
     void AddListeners ()

@@ -23,6 +23,7 @@ public class SongMenuView : MonoBehaviour
     [SerializeField] TextMeshProUGUI selectedSongBPM;
     [SerializeField] TextMeshProUGUI selectedSongApproachRate;
     [SerializeField] TextMeshProUGUI selectedSongDifficulty;
+    [SerializeField] TextMeshProUGUI selectedSongLength;
 
     [Header("Misc")]
     [SerializeField] UIClickHandler backButton;
@@ -72,7 +73,8 @@ public class SongMenuView : MonoBehaviour
     
     public void SetSelectedSongDifficulty (string text) => selectedSongDifficulty.text = text;
     
-
+    public void SetSelectedSongLength (string text) => selectedSongLength.text = text;
+    
     void SetupSongsListSize (int songCount)
     {
         float height = ((RectTransform) songEntryPrefab.transform).rect.height;

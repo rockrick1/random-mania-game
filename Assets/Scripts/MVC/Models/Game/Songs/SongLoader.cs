@@ -248,9 +248,10 @@ public class SongLoader : MonoBehaviour
         }
 
         result.Id = GetSongId(result.Title, result.Artist);
+        result.Length = GetSongLength(result.Notes);
         return result;
     }
-    
+
     void SaveSongTextFile (ISongSettings settings)
     {
         string text = string.Empty;
@@ -292,6 +293,8 @@ public class SongLoader : MonoBehaviour
     }
 
     string GetResourcePath(string songId) => Path.Combine(SONG_RESOURCES_PATH, songId);
+
+    float GetSongLength (List<Note> notes) => notes[^1].EndTime - notes[0].Time;
 
     float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);
 }
