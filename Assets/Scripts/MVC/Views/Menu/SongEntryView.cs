@@ -13,6 +13,7 @@ public class SongEntryView : MonoBehaviour
     [SerializeField] TextMeshProUGUI bpm;
     [SerializeField] TextMeshProUGUI ar;
     [SerializeField] TextMeshProUGUI diff;
+    [SerializeField] ScaleAnimation outlineAnimation;
 
     public UIClickHandler Button => button;
     
@@ -24,4 +25,12 @@ public class SongEntryView : MonoBehaviour
         ar.text = song.ApproachRate.ToString(FORMATTING, CultureInfo.InvariantCulture);
         diff.text = song.Difficulty.ToString(FORMATTING, CultureInfo.InvariantCulture);
     }
+
+    public void PlayOutlineAnimation ()
+    {
+        outlineAnimation.gameObject.SetActive(true);
+        outlineAnimation.Play();
+    }
+    
+    public void HideOutline () => outlineAnimation.gameObject.SetActive(false);
 }

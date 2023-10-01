@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class SongMenuView : MonoBehaviour
 {
-    public event Action<string, string> OnSongClicked;
+    const float LIST_ROTATION = 15f;
+    
     public event Action OnBackPressed;
     public event Action OnPlayPressed;
 
@@ -40,16 +41,15 @@ public class SongMenuView : MonoBehaviour
     public void Setup (IReadOnlyList<ISongSettings> songs)
     {
         SetupSongsListSize(songs.Count);
-
-        foreach (ISongSettings song in songs)
-        {
-            SongEntryView entry = Instantiate(songEntryPrefab, songsList.transform);
-            entry.transform.localRotation = Quaternion.Euler(0f, 0f, 15f);
-            entry.Setup(song);
-            entry.Button.OnClick.AddListener(() => OnSongClicked?.Invoke(song.Id, song.DifficultyName));
-        }
     }
-    
+
+    public SongEntryView CreateEntryView ()
+    {
+        SongEntryView view = Instantiate(songEntryPrefab, songsList.transform);
+        view.transform.localRotation = Quaternion.Euler(0f, 0f, LIST_ROTATION);
+        return view;
+    }
+
     public void Open ()
     {
         gameObject.SetActive(true);

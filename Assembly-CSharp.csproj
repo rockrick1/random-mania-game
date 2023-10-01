@@ -154,6 +154,8 @@
      <Compile Include="Assets\Scripts\MVC\Views\SongEditor\EditorSongPickerView.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Songs\PauseController.cs" />
      <Compile Include="Assets\Scripts\MVC\Controllers\Menu\MenuControllerFactory.cs" />
+     <Compile Include="Assets\Scripts\MVC\Views\Utils\AnimationUtils\ScaleAnimation.cs" />
+     <Compile Include="Assets\Scripts\MVC\Controllers\Menu\SongEntryController.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\Scripts\MVC\Views\Game\HitFeedback" />
      <None Include="Assets\Art\UI\Fonts\Inter\README.txt" />

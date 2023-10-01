@@ -9,6 +9,7 @@ public interface ISongMenuModel : IDisposable
     
     void Initialize ();
     IReadOnlyList<ISongSettings> GetAllSongs ();
-    void PickSong(string songId, string songDifficultyName);
+    void PickFirstSong ();
+    bool PickSong(string songId, string songDifficultyName);
     void EnterGame ();
 }

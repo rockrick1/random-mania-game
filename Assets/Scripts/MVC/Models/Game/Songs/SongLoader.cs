@@ -94,7 +94,7 @@ public class SongLoader : MonoBehaviour
 
     public void SaveSong (ISongSettings settings)
     {
-        SaveSongTextFile(settings);
+        SaveSongTextFile((SongSettings) settings);
         OnSongSaved?.Invoke();
     }
 
@@ -252,7 +252,7 @@ public class SongLoader : MonoBehaviour
         return result;
     }
 
-    void SaveSongTextFile (ISongSettings settings)
+    void SaveSongTextFile (SongSettings settings)
     {
         string text = string.Empty;
 
@@ -273,6 +273,7 @@ public class SongLoader : MonoBehaviour
             text += $"{times},{note.Position}\n";
         }
 
+        settings.Length = GetSongLength(settings.Notes);
         File.WriteAllText(GetTextPath(settings.Id), text);
         if (!SongsCache.ContainsKey(settings.Id))
             SongsCache[settings.Id] = new Dictionary<string, ISongSettings>();
