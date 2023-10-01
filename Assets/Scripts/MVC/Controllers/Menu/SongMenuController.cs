@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 public class SongMenuController : IDisposable
 {
@@ -21,7 +20,6 @@ public class SongMenuController : IDisposable
     public void Initialize ()
     {
         AddListeners();
-        view.Setup(model.GetAllSongs());
         model.PickFirstSong();
     }
 
@@ -35,9 +33,11 @@ public class SongMenuController : IDisposable
 
     void SyncView ()
     {
+        view.Setup(model.GetAllSongs());
         CreateMissingInstances();
         UpdateInstances();
         SyncSongInfoBox();
+        HighlightSelectedSong();
     }
 
     void CreateMissingInstances ()
@@ -89,9 +89,15 @@ public class SongMenuController : IDisposable
         if (!model.PickSong(songId, songDifficultyName))
             return;
         SyncSongInfoBox();
+        HighlightSelectedSong();
+    }
+
+    void HighlightSelectedSong ()
+    {
         foreach (SongEntryController controller in entryControllers)
         {
-            if (controller.SongId == songId && controller.SongDifficultyName == songDifficultyName)
+            if (controller.SongId == model.SelectedSongSettings.Id &&
+                controller.SongDifficultyName == model.SelectedSongSettings.DifficultyName)
                 controller.PlayOutlineAnimation();
             else
                 controller.HideOutline();

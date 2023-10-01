@@ -80,7 +80,7 @@ public class SongMenuView : MonoBehaviour
         float height = ((RectTransform) songEntryPrefab.transform).rect.height;
         height *= songCount + 2;
         height += songsList.spacing * (songCount + 2);
-        var transform1 = songsList.transform;
-        ((RectTransform) transform1).sizeDelta = new Vector2(((RectTransform) transform1).sizeDelta.x, height);
+        RectTransform rectTransform = (RectTransform)songsList.transform;
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, height);
     }
 }

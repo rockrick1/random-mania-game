@@ -15,13 +15,20 @@ public class MoveAnimation : MonoBehaviour
     
     void Awake ()
     {
-        moveTo = Transform.localPosition;
+        Setup();
         if (playOnAwake)
             Play();
     }
 
+    void Setup ()
+    {
+        moveTo = Transform.localPosition;
+    }
+
     public void Play ()
     {
+        if (moveTo == default)
+            Setup();
         transform.DOLocalMove(moveFrom, 0);
         transform.DOLocalMove(moveTo, duration).SetDelay(delay).SetEase(ease);
     }

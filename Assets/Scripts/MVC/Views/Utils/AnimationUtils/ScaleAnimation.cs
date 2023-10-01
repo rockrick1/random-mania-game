@@ -15,13 +15,20 @@ public class ScaleAnimation : MonoBehaviour
     
     void Awake ()
     {
-        scaleTo = Transform.localScale;
+        Setup();
         if (playOnAwake)
             Play();
     }
 
+    void Setup ()
+    {
+        scaleTo = Transform.localScale;
+    }
+
     public void Play ()
     {
+        if (scaleTo == default)
+            Setup();
         transform.DOScale(scaleFrom, 0);
         transform.DOScale(scaleTo, duration).SetDelay(delay).SetEase(ease);
     }
