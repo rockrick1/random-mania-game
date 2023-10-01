@@ -27,6 +27,7 @@ public class SongMenuView : MonoBehaviour
     [SerializeField] TextMeshProUGUI selectedSongLength;
 
     [Header("Misc")]
+    [SerializeField] Image backgroundImage;
     [SerializeField] UIClickHandler backButton;
     [SerializeField] UIClickHandler playButton;
 
@@ -74,7 +75,13 @@ public class SongMenuView : MonoBehaviour
     public void SetSelectedSongDifficulty (string text) => selectedSongDifficulty.text = text;
     
     public void SetSelectedSongLength (string text) => selectedSongLength.text = text;
-    
+
+    public void SetBackgroundImage (Sprite sprite)
+    {
+        backgroundImage.gameObject.SetActive(sprite != null);
+        backgroundImage.sprite = sprite;
+    }
+
     void SetupSongsListSize (int songCount)
     {
         float height = ((RectTransform) songEntryPrefab.transform).rect.height;

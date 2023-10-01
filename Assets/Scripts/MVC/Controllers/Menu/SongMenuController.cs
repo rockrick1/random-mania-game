@@ -36,7 +36,7 @@ public class SongMenuController : IDisposable
         view.Setup(model.GetAllSongs());
         CreateMissingInstances();
         UpdateInstances();
-        SyncSongInfoBox();
+        SyncSongInfos();
         HighlightSelectedSong();
     }
 
@@ -61,7 +61,7 @@ public class SongMenuController : IDisposable
         }
     }
 
-    void SyncSongInfoBox ()
+    void SyncSongInfos ()
     {
         view.SetSelectedSongTitle(model.SelectedSongSettings.Title);
         view.SetSelectedSongArtist(model.SelectedSongSettings.Artist);
@@ -70,6 +70,8 @@ public class SongMenuController : IDisposable
         view.SetSelectedSongApproachRate(model.SelectedSongSettings.ApproachRate.ToString(CultureInfo.InvariantCulture));
         view.SetSelectedSongDifficulty(model.SelectedSongSettings.Difficulty.ToString(CultureInfo.InvariantCulture));
         view.SetSelectedSongLength(model.SelectedSongSettings.LengthString);
+        
+        view.SetBackgroundImage(model.SelectedSongSettings.Background);
     }
 
     void AddListeners ()
@@ -88,7 +90,7 @@ public class SongMenuController : IDisposable
     {
         if (!model.PickSong(songId, songDifficultyName))
             return;
-        SyncSongInfoBox();
+        SyncSongInfos();
         HighlightSelectedSong();
     }
 
