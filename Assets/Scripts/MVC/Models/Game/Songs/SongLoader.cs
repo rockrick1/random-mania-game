@@ -192,13 +192,9 @@ public class SongLoader : MonoBehaviour
         string key = "";
         foreach (string t in lines)
         {
-            string line = t;
+            string line = t.Trim();
             if (string.IsNullOrWhiteSpace(line))
                 continue;
-
-            line = line.Trim();
-            // if (char.IsWhiteSpace(t[^1]))
-            //     line = line.Remove(line.Length - 1, 1);
 
             if (line.Contains('['))
             {
