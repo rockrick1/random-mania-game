@@ -86,7 +86,7 @@ public class SongController
         audioManager.PlaySfx(HIT_SOUND);
     }
 
-    void HandleStartSkipped (float startingTime) => audioManager.SetMusicTime(startingTime);
+    void HandleStartSkipped (float skippedTime) => audioManager.SkipMusicTime(skippedTime);
 
     void HandleSongFinished ()
     {

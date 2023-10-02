@@ -63,6 +63,13 @@ public class AudioManager : MonoBehaviour, IAudioManager
             return;
         musicPlayer.time = Mathf.Clamp(time, 0, musicPlayer.clip.length - .1f);
     }
+    
+    public void SkipMusicTime (float time)
+    {
+        if (!HasMusicClip)
+            return;
+        musicPlayer.time = Mathf.Clamp(musicPlayer.time + time, 0, musicPlayer.clip.length - .1f);
+    }
 
     public void SetMusicPlaybackSpeed (float speed)
     {
