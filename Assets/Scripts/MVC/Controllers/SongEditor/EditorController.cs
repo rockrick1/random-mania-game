@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +9,8 @@ public class EditorController : IDisposable
     readonly EditorTopBarController topBarController;
     readonly EditorSongController songController;
     readonly EditorNewSongController newSongController;
+    readonly EditorSongSavedController songSavedController;
+    readonly EditorConfirmQuitController editorConfirmQuitController;
     readonly EditorView view;
     readonly IEditorModel model;
     readonly IEditorSongModel songModel;
@@ -23,6 +24,8 @@ public class EditorController : IDisposable
         EditorTopBarController topBarController,
         EditorSongController songController,
         EditorNewSongController newSongController,
+        EditorSongSavedController songSavedController,
+        EditorConfirmQuitController editorConfirmQuitController,
         EditorView view,
         IEditorModel model,
         IEditorSongModel songModel,
@@ -36,6 +39,8 @@ public class EditorController : IDisposable
         this.topBarController = topBarController;
         this.songController = songController;
         this.newSongController = newSongController;
+        this.songSavedController = songSavedController;
+        this.editorConfirmQuitController = editorConfirmQuitController;
         this.view = view;
         this.model = model;
         this.songModel = songModel;
@@ -51,22 +56,34 @@ public class EditorController : IDisposable
         topBarController.Initialize();
         songController.Initialize();
         newSongController.Initialize();
+        songSavedController.Initialize();
+        editorConfirmQuitController.Initialize();
         AddListeners();
     }
 
     void AddListeners ()
     {
-        view.BackButton.OnLeftClick.AddListener(HandleBack);
+        view.BackButton.OnLeftClick.AddListener(HandleBackClicked);
         songModel.OnSongRefreshed += HandleSongRefreshed;
+        editorConfirmQuitController.OnQuit += Quit;
     }
 
     void RemoveListeners ()
     {
-        view.BackButton.OnLeftClick.RemoveListener(HandleBack);
+        view.BackButton.OnLeftClick.RemoveListener(HandleBackClicked);
         songModel.OnSongRefreshed -= HandleSongRefreshed;
+        editorConfirmQuitController.OnQuit -= Quit;
     }
 
-    void HandleBack () => SceneManager.LoadScene("MainMenu");
+    void HandleBackClicked ()
+    {
+        if (songModel.HasUnsavedChanges)
+            editorConfirmQuitController.Show();
+        else
+            Quit();
+    }
+
+    void Quit () => SceneManager.LoadScene("MainMenu");
 
     void HandleSongRefreshed ()
     {
@@ -84,5 +101,7 @@ public class EditorController : IDisposable
         topBarController.Dispose();
         songController.Dispose();
         newSongController.Dispose();
+        songSavedController.Dispose();
+        editorConfirmQuitController.Dispose();
     }
 }

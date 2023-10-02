@@ -7,10 +7,12 @@ public class EditorSongModel : IEditorSongModel
     const int DEFAULT_SIGNATURE = 4;
 
     public event Action OnSongRefreshed;
+    public event Action OnSongSaved;
     
     public int SelectedSignature { get; private set; }
     public float SignedBeatInterval { get; private set; }
-    
+    public bool HasUnsavedChanges { get; private set; }
+
     readonly IEditorInputManager inputManager;
     readonly SongLoader songLoader;
 
@@ -49,8 +51,6 @@ public class EditorSongModel : IEditorSongModel
         SetBeatInterval(currentSongSettings.Bpm);
         OnSongRefreshed?.Invoke();
     }
-    
-    void HandleSavePressed () => songLoader.SaveSong(currentSongSettings);
 
     public void StartCreatingNote (int pos, float songProgress, float height)
     {
@@ -98,7 +98,7 @@ public class EditorSongModel : IEditorSongModel
         }
         currentSongSettings.Notes.Insert(insertAtIndex, note);
 
-        
+        HasUnsavedChanges = true;
         return new NoteCreationResult
         {
             Substituted = substituted,
@@ -109,6 +109,7 @@ public class EditorSongModel : IEditorSongModel
 
     public void RemoveNoteAt (int index)
     {
+        HasUnsavedChanges = true;
         currentSongSettings.Notes.RemoveAt(index);
     }
 
@@ -145,14 +146,13 @@ public class EditorSongModel : IEditorSongModel
     
     public float GetNextBeat (float time, int direction) => SnapToBeat(time) + (direction * SignedBeatInterval);
 
-    void AddListeners ()
+    public void SaveSong ()
     {
-        inputManager.OnSavePressed += HandleSavePressed;
-    }
-
-    void RemoveListeners ()
-    {
-        inputManager.OnSavePressed -= HandleSavePressed;
+        if (currentSongSettings == null)
+            return;
+        HasUnsavedChanges = false;
+        songLoader.SaveSong(currentSongSettings);
+        OnSongSaved?.Invoke();
     }
     
     float GetTimeClicked (float songProgress, float height)
@@ -197,6 +197,18 @@ public class EditorSongModel : IEditorSongModel
         beatInterval = 60f / bpm;
         SignedBeatInterval = beatInterval / SelectedSignature;
     }
+
+    void AddListeners ()
+    {
+        inputManager.OnSavePressed += HandleSavePressed;
+    }
+
+    void RemoveListeners ()
+    {
+        inputManager.OnSavePressed -= HandleSavePressed;
+    }
+    
+    void HandleSavePressed () => SaveSong();
 
     public void Dispose ()
     {

@@ -30,12 +30,22 @@
             model.AudioManager,
             model.InputManager
         );
+        EditorSongSavedController songSavedController = new(
+            view.EditorSongSavedView,
+            model.SongModel
+        );
+        EditorConfirmQuitController songConfirmQuitController = new(
+            view.EditorConfirmQuitView,
+            model.SongModel
+        );
         EditorController controller = new(
             songPickerController,
             songDetailsController,
             topBarController,
             songController,
             newSongController,
+            songSavedController,
+            songConfirmQuitController,
             view,
             model,
             model.SongModel,

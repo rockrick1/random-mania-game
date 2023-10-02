@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class SongModel : ISongModel
 {
-    const float SKIP_TO_SECONDS_BEFORE = .2f;
+    const float SKIP_TO_SECONDS_BEFORE = 2;
+    
     public event Action<Note> OnNoteSpawned;
     public event Action<Note, HitScore> OnNoteHit;
     public event Action<Note, HitScore> OnLongNoteHit;

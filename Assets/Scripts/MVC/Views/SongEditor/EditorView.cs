@@ -9,6 +9,8 @@ public class EditorView : MonoBehaviour
     [SerializeField] EditorSongDetailsView editorSongDetailsView;
     [SerializeField] EditorTopBarView editorTopBarView;
     [SerializeField] EditorSongView editorSongView;
+    [SerializeField] EditorSongSavedView editorSongSavedView;
+    [SerializeField] EditorConfirmQuitView editorConfirmQuitView;
     
     [SerializeField] UIClickHandler backButton;
 
@@ -19,4 +21,6 @@ public class EditorView : MonoBehaviour
     public EditorTopBarView EditorTopBarView => editorTopBarView;
     public EditorSongView EditorSongView => editorSongView;
     public UIClickHandler BackButton => backButton;
+    public EditorSongSavedView EditorSongSavedView => editorSongSavedView;
+    public EditorConfirmQuitView EditorConfirmQuitView => editorConfirmQuitView;
 }

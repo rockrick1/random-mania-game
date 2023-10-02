@@ -3,9 +3,11 @@
 public interface IEditorSongModel : IDisposable
 {
     event Action OnSongRefreshed;
+    event Action OnSongSaved;
     
     int SelectedSignature { get; }
     float SignedBeatInterval { get; }
+    bool HasUnsavedChanges { get; }
 
     void Initialize ();
     void Refresh (string songId, string songDifficultyName);
@@ -19,4 +21,5 @@ public interface IEditorSongModel : IDisposable
     void ChangeDiff (float val);
     void ChangeStartingTime (float val);
     void ChangeSignature (int signature);
+    void SaveSong ();
 }
