@@ -11,6 +11,7 @@ public interface ISongModel : IDisposable
     event Action OnAudioStartTimeReached;
     event Action<float> OnSongStartSkipped;
     event Action OnSongFinished;
+    event Action<bool> OnSkippableChanged;
     
     SongLoader SongLoader { get; }
     ISongSettings CurrentSongSettings { get; }

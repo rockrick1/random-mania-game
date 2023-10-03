@@ -64,15 +64,15 @@ public class EditorController : IDisposable
     void AddListeners ()
     {
         view.BackButton.OnLeftClick.AddListener(HandleBackClicked);
-        songModel.OnSongRefreshed += HandleSongRefreshed;
         editorConfirmQuitController.OnQuit += Quit;
+        songModel.OnSongRefreshed += HandleSongRefreshed;
     }
 
     void RemoveListeners ()
     {
         view.BackButton.OnLeftClick.RemoveListener(HandleBackClicked);
-        songModel.OnSongRefreshed -= HandleSongRefreshed;
         editorConfirmQuitController.OnQuit -= Quit;
+        songModel.OnSongRefreshed -= HandleSongRefreshed;
     }
 
     void HandleBackClicked ()

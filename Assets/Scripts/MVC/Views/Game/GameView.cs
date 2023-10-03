@@ -8,6 +8,7 @@ public class GameView : MonoBehaviour
     [SerializeField] ScoreView scoreView;
     [SerializeField] ResultsView resultsView;
     [SerializeField] GameBackgroundView backgroundView;
+    [SerializeField] SkipSongStartView skipSongStartView;
 
     public SongView SongView => songView;
     public ComboView ComboView => comboView;
@@ -15,4 +16,5 @@ public class GameView : MonoBehaviour
     public ScoreView ScoreView => scoreView;
     public ResultsView ResultsView => resultsView;
     public GameBackgroundView GameBackgroundView => backgroundView;
+    public SkipSongStartView SkipSongStartView => skipSongStartView;
 }

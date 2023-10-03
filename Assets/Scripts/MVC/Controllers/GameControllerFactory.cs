@@ -48,6 +48,11 @@
             view.GameBackgroundView,
             model.SongModel.SongLoader
         );
+
+        SkipSongStartController skipSongStartController = new(
+            view.SkipSongStartView,
+            model.SongModel
+        );
         
         return new GameController(
             songController,
@@ -57,7 +62,8 @@
             pauseController,
             scoreController,
             resultsController,
-            gameBackgroundController
+            gameBackgroundController,
+            skipSongStartController
         );
     }
 }

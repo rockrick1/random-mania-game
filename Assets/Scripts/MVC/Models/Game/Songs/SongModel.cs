@@ -15,13 +15,27 @@ public class SongModel : ISongModel
     public event Action OnAudioStartTimeReached;
     public event Action<float> OnSongStartSkipped;
     public event Action OnSongFinished;
+    public event Action<bool> OnSkippableChanged;
 
     public SongLoader SongLoader { get; }
     public ISongSettings CurrentSongSettings => SongLoader.GetSelectedSongSettings();
     public bool AllNotesRead { get; private set; }
 
     readonly IGameInputManager inputManager;
-    
+
+    bool skippable;
+    bool Skippable
+    {
+        get => skippable;
+        set
+        {
+            if (skippable == value)
+                return;
+            OnSkippableChanged?.Invoke(value);
+            skippable = value;
+        }
+    }
+
     float perfectHitWindow;
     float greatHitWindow;
     float okayHitWindow;
@@ -53,6 +67,7 @@ public class SongModel : ISongModel
 
     public void Play ()
     {
+        Skippable = false;
         dspStart = AudioSettings.dspTime;
         dspSongStart = AudioSettings.dspTime + GetStartingElapsed();
         
@@ -72,6 +87,7 @@ public class SongModel : ISongModel
     {
         if (CurrentSongSettings.ApproachRate > CurrentSongSettings.StartingTime)
             yield return new WaitForSeconds(CurrentSongSettings.ApproachRate);
+        Skippable = true;
         OnAudioStartTimeReached?.Invoke();
     }
 
@@ -88,6 +104,7 @@ public class SongModel : ISongModel
             
             if (elapsed > noteSpawnTime)
             {
+                Skippable = false;
                 OnNoteSpawned?.Invoke(notes[noteIndex]);
                 if (++noteIndex >= notes.Count)
                     break;
@@ -181,6 +198,9 @@ public class SongModel : ISongModel
 
     void SkipSongStart ()
     {
+        if (skippedTime != 0 || !Skippable)
+            return;
+        Skippable = false;
         float threshold = Mathf.Max(CurrentSongSettings.ApproachRate, SKIP_TO_SECONDS_BEFORE);
         skippedTime = CurrentSongSettings.StartingTime + CurrentSongSettings.Notes[0].Time - threshold -
                       (float) (AudioSettings.dspTime - dspStart);

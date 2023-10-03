@@ -71,8 +71,7 @@ public class EditorSongModel : IEditorSongModel
         
         currentNoteCreationTimeEnd = SnapToBeat(time);
 
-        if (TryFindNote(pos, currentNoteCreationTime, currentNoteCreationTimeEnd,
-                out List<int> substituted))
+        if (TryFindNote(pos, currentNoteCreationTime, currentNoteCreationTimeEnd, out List<int> substituted))
             return null;
 
         Note note = Mathf.Approximately(currentNoteCreationTime, currentNoteCreationTimeEnd)
