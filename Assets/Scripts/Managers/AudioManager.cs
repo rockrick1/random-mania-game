@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour, IAudioManager
 {
+    const int MAX_SFX_SOURCES = 10;
+    
     [SerializeField] AudioSource musicPlayer;
-    [SerializeField] AudioSource sfxPlayer;
     
     public bool HasMusicClip => musicPlayer.clip != null;
     public float MusicLength => HasMusicClip ? musicPlayer.clip.length : 0f;
@@ -13,6 +14,9 @@ public class AudioManager : MonoBehaviour, IAudioManager
     static AudioManager _instance;
 
     readonly Dictionary<string, AudioClip> sfxDict = new();
+    readonly List<AudioSource> sfxPlayers = new();
+
+    int sfxSourceToUse;
     
     public static AudioManager GetOrCreate ()
     {
@@ -30,6 +34,8 @@ public class AudioManager : MonoBehaviour, IAudioManager
         AudioClip[] clips = Resources.LoadAll<AudioClip>("SFX");
         foreach (AudioClip clip in clips)
             sfxDict.Add(clip.name, clip);
+        for (int i = 0; i < MAX_SFX_SOURCES; i++)
+            sfxPlayers.Add(gameObject.AddComponent<AudioSource>());
     }
 
     public void SetMusicClip (AudioClip clip)
@@ -50,11 +56,13 @@ public class AudioManager : MonoBehaviour, IAudioManager
             musicPlayer.Play();
     }
 
-    public void PlaySfx (string sfx)
+    public void PlaySFX (string sfx)
     {
+        AudioSource sfxPlayer = sfxPlayers[sfxSourceToUse];
         sfxPlayer.clip = sfxDict[sfx];
         sfxPlayer.time = 0;
         sfxPlayer.Play();
+        sfxSourceToUse = (sfxSourceToUse + 1) % MAX_SFX_SOURCES;
     }
     
     public void SetMusicTime (float time)
@@ -79,5 +87,9 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     public void SetMusicVolume (float value) => musicPlayer.volume = value;
 
-    public void SetSFXVolume (float value) => sfxPlayer.volume = value;
+    public void SetSFXVolume (float value)
+    {
+        foreach (AudioSource sfxPlayer in sfxPlayers)
+            sfxPlayer.volume = value;
+    }
 }

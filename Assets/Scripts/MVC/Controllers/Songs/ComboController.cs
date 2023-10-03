@@ -36,7 +36,7 @@ public class ComboController : IDisposable
 
     void HandleComboChanged (int combo) => view.SetCombo(combo);
 
-    void HandlePlayComboBreakSFX () => audioManager.PlaySfx("combobreak");
+    void HandlePlayComboBreakSFX () => audioManager.PlaySFX("combobreak");
 
     public void Dispose ()
     {

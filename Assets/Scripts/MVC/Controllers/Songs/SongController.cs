@@ -83,7 +83,7 @@ public class SongController
     void HandleNoteHit (Note _, HitScore __)
     {
         //TODO add dynamic hit sound check based on note settings
-        audioManager.PlaySfx(HIT_SOUND);
+        audioManager.PlaySFX(HIT_SOUND);
     }
 
     void HandleStartSkipped (float skippedTime) => audioManager.SkipMusicTime(skippedTime);
