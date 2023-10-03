@@ -15,7 +15,7 @@ public class EditorConfirmQuitView : MonoBehaviour
 
     void Start ()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
         canvasGroup.alpha = 0;
         
         quitButton.OnLeftClick.AddListener(() => OnQuitClicked?.Invoke());
@@ -23,7 +23,14 @@ public class EditorConfirmQuitView : MonoBehaviour
         cancelButton.OnLeftClick.AddListener(Hide);
     }
 
-    public void Show () => canvasGroup.DOFade(1, .2f);
+    public void Show ()
+    {
+        gameObject.SetActive(true);
+        canvasGroup.DOFade(1, .2f);
+    }
 
-    void Hide () => canvasGroup.DOFade(0, .2f);
+    void Hide ()
+    {
+        canvasGroup.DOFade(0, .2f).OnComplete(() => gameObject.SetActive(false));
+    }
 }
