@@ -6,6 +6,7 @@ using UnityEngine;
 public class ScoreModel : IScoreModel
 {
     public event Action<int> OnComboChanged;
+    public event Action OnPlayComboBreakSFX;
     public event Action<int> OnScoreChanged;
     public event Action<float> OnAccuracyChanged;
     
@@ -125,6 +126,8 @@ public class ScoreModel : IScoreModel
 
     void HandleNoteMissed (Note _)
     {
+        if (Combo >= 10)
+            OnPlayComboBreakSFX?.Invoke();
         Combo = 0;
         noteScores[HitScore.Miss]++;
         UpdateAccuracy();

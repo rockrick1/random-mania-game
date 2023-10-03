@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public interface IScoreModel : IDisposable
 {
     event Action<int> OnComboChanged;
+    event Action OnPlayComboBreakSFX;
     event Action<int> OnScoreChanged;
     event Action<float> OnAccuracyChanged;
     

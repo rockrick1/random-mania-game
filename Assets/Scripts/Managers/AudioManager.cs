@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour, IAudioManager
 
     void Initialize ()
     {
-        AudioClip[] clips = Resources.LoadAll<AudioClip>("Hitsounds");
+        AudioClip[] clips = Resources.LoadAll<AudioClip>("SFX");
         foreach (AudioClip clip in clips)
             sfxDict.Add(clip.name, clip);
     }

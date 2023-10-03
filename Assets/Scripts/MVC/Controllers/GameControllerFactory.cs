@@ -21,7 +21,8 @@
 
         ComboController comboController = new(
             view.ComboView,
-            model.ScoreModel
+            model.ScoreModel,
+            model.AudioManager
         );
 
         PauseController pauseController = new(
