@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Device;
 
 public class MainMenuController : IDisposable
 {
@@ -58,16 +59,12 @@ public class MainMenuController : IDisposable
         view.OnQuit -= HandleQuit;
     }
 
-    void HandleOpenSongMenu ()
-    {
-        menuAnimationsController.PlayClose();
-        OnOpenSongMenu?.Invoke();
-    }
+    void HandleOpenSongMenu () => OnOpenSongMenu?.Invoke();
 
     void HandleOpenEditor () => OnOpenEditor?.Invoke();
 
     void HandleOpenSettings () => OnOpenSettings?.Invoke();
-    
+
     void HandleQuit () => OnQuit?.Invoke();
 
     public void Dispose ()

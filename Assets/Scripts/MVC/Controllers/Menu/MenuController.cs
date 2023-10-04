@@ -44,7 +44,9 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu += HandleOpenSongMenu;
         mainMenuController.OnOpenEditor += HandleOpenEditor;
         mainMenuController.OnOpenSettings += HandleOpenSettings;
+        mainMenuController.OnQuit += HandleBackPressed;
         songMenuController.OnBackPressed += HandleBackPressed;
+        settingsController.OnClose += HandleBackPressed;
     }
 
     void RemoveListeners ()
@@ -53,7 +55,9 @@ public class MenuController : IDisposable
         mainMenuController.OnOpenSongMenu -= HandleOpenSongMenu;
         mainMenuController.OnOpenEditor -= HandleOpenEditor;
         mainMenuController.OnOpenSettings -= HandleOpenSettings;
+        mainMenuController.OnQuit -= HandleBackPressed;
         songMenuController.OnBackPressed -= HandleBackPressed;
+        settingsController.OnClose -= HandleBackPressed;
     }
 
     void HandleBackPressed () => CloseMenu(currentMenu);
@@ -61,7 +65,7 @@ public class MenuController : IDisposable
     void HandleOpenSongMenu () => OpenMenu(MenuType.SongMenu);
 
     void HandleOpenSettings () => OpenMenu(MenuType.Settings);
-    
+
     void HandleOpenEditor () => SceneManager.LoadScene("SongEditor");
 
     void OpenMenu (MenuType menu)

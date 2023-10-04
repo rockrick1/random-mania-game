@@ -8,6 +8,7 @@ public class SettingsView : MonoBehaviour
     public event Action<float> OnMainVolumeChanged;
     public event Action<float> OnMusicVolumeChanged;
     public event Action<float> OnSFXVolumeChanged;
+    public event Action OnClose;
     
     [SerializeField] Slider mainVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
@@ -27,18 +28,8 @@ public class SettingsView : MonoBehaviour
         mainVolumeSlider.onValueChanged.AddListener((value) => OnMainVolumeChanged?.Invoke(value));
         musicVolumeSlider.onValueChanged.AddListener((value) => OnMusicVolumeChanged?.Invoke(value));
         sfxVolumeSlider.onValueChanged.AddListener((value) => OnSFXVolumeChanged?.Invoke(value));
-        closeButton.OnLeftClick.AddListener(Close);
+        closeButton.OnLeftClick.AddListener(() => OnClose?.Invoke());
     }
 
-    public void Open ()
-    {
-        gameObject.SetActive(true);
-        canvasGroup.alpha = 0f;
-        canvasGroup.DOFade(1, fadeDuration).SetEase(Ease.OutCubic);
-    }
-
-    public void Close ()
-    {
-        canvasGroup.DOFade(0, fadeDuration).SetEase(Ease.OutCubic).OnComplete(() => gameObject.SetActive(false));
-    }
+    public void Open () => gameObject.SetActive(true);
 }
