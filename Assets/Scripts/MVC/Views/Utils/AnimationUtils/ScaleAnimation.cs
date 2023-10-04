@@ -1,35 +1,23 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-public class ScaleAnimation : MonoBehaviour
+public class ScaleAnimation : BaseTransformAnimation
 {
-    [SerializeField] public Vector3 scaleFrom;
-    [SerializeField] float duration;
-    [SerializeField] float delay;
-    [SerializeField] Ease ease;
-    [SerializeField] bool playOnAwake;
+    [SerializeField] Vector3 scaleFrom;
+    [SerializeField] Vector3 overrideScaleTo;
 
     Vector3 scaleTo;
 
-    RectTransform Transform => (RectTransform) transform;
-    
-    void Awake ()
-    {
-        Setup();
-        if (playOnAwake)
-            Play();
-    }
-
-    void Setup ()
-    {
-        scaleTo = Transform.localScale;
-    }
-
-    public void Play ()
+    public override void Play ()
     {
         if (scaleTo == default)
             Setup();
-        transform.DOScale(scaleFrom, 0);
-        transform.DOScale(scaleTo, duration).SetDelay(delay).SetEase(ease);
+        _transform.DOScale(scaleFrom, 0);
+        _transform.DOScale(overrideDestinationValue ? overrideScaleTo : scaleTo, duration).SetDelay(delay).SetEase(ease);
+    }
+
+    protected override void Setup ()
+    {
+        scaleTo = _transform.localScale;
     }
 }

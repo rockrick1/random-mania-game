@@ -11020,11 +11020,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveFrom: {x: -3200, y: 360.9399, z: 0}
+  _transform: {fileID: 1403752379}
   duration: 0.8
   delay: 0.5
   ease: 27
   playOnAwake: 1
+  overrideStartValue: 0
+  moveFrom: {x: -3200, y: 360.9399, z: 0}
+  overrideMoveTo: {x: 0, y: 0, z: 0}
 --- !u!1 &1479093336
 GameObject:
   m_ObjectHideFlags: 0
@@ -11193,11 +11196,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveFrom: {x: 800, y: 0, z: 0}
+  _transform: {fileID: 1357684504}
   duration: 0.8
   delay: 1.2
   ease: 27
   playOnAwake: 1
+  overrideStartValue: 0
+  moveFrom: {x: 800, y: 0, z: 0}
+  overrideMoveTo: {x: 0, y: 0, z: 0}
 --- !u!1 &1659773581
 GameObject:
   m_ObjectHideFlags: 0
@@ -11279,11 +11285,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveFrom: {x: 800, y: 0, z: 0}
+  _transform: {fileID: 1746877426}
   duration: 0.8
   delay: 1
   ease: 27
   playOnAwake: 1
+  overrideStartValue: 0
+  moveFrom: {x: 800, y: 0, z: 0}
+  overrideMoveTo: {x: 0, y: 0, z: 0}
 --- !u!114 &1775582687 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
@@ -11307,11 +11316,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveFrom: {x: 800, y: 0, z: 0}
+  _transform: {fileID: 1295198364}
   duration: 0.8
   delay: 1.4
   ease: 27
   playOnAwake: 1
+  overrideStartValue: 0
+  moveFrom: {x: 800, y: 0, z: 0}
+  overrideMoveTo: {x: 0, y: 0, z: 0}
 --- !u!114 &1973648643 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
@@ -11440,11 +11452,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveFrom: {x: 800, y: 0, z: 0}
+  _transform: {fileID: 728571344}
   duration: 0.8
   delay: 1.6
   ease: 27
   playOnAwake: 1
+  overrideStartValue: 0
+  moveFrom: {x: 800, y: 0, z: 0}
+  overrideMoveTo: {x: 0, y: 0, z: 0}
 --- !u!1001 &1567123654142958538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12196,15 +12211,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4978724160910269021, guid: 1a09572863fa3364b994446301f66655, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4978724160910269021, guid: 1a09572863fa3364b994446301f66655, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4978724160910269021, guid: 1a09572863fa3364b994446301f66655, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4978724160910269021, guid: 1a09572863fa3364b994446301f66655, type: 3}
       propertyPath: m_LocalPosition.x
