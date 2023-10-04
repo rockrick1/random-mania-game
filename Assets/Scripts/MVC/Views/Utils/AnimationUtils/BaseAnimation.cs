@@ -8,6 +8,8 @@ public abstract class BaseAnimation : MonoBehaviour
     [SerializeField] protected Ease ease;
     [SerializeField] protected bool playOnAwake;
     [SerializeField] protected bool overrideDestinationValue;
+
+    protected Tween tween;
     
     void Awake ()
     {
@@ -16,7 +18,9 @@ public abstract class BaseAnimation : MonoBehaviour
             Play();
     }
 
-    public abstract void Play ();
+    public virtual void Play () => tween?.Kill();
+
+    public void Kill () => tween?.Kill();
 
     protected abstract void Setup ();
 }

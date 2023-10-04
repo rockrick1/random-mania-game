@@ -75,7 +75,6 @@ public class MenuController : IDisposable
             case MenuType.SongMenu:
                 songMenuController.Open();
                 mainMenuController.Close();
-                view.AnimateParticlesScale(5f);
                 currentMenu = MenuType.SongMenu;
                 break;
             default:
@@ -97,7 +96,6 @@ public class MenuController : IDisposable
             case MenuType.SongMenu:
                 songMenuController.Close();
                 mainMenuController.Open();
-                view.AnimateParticlesScale(1f);
                 currentMenu = MenuType.MainMenu;
                 break;
             default:

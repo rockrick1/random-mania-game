@@ -5134,13 +5134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.8
-  delay: 0.5
+  duration: 1
+  delay: 1.3
   ease: 27
   playOnAwake: 0
   overrideDestinationValue: 1
   _transform: {fileID: 1403752379}
-  moveFrom: {x: -3200, y: 360.9399, z: 0}
+  moveFrom: {x: -4000, y: 360.9399, z: 0}
   overrideMoveTo: {x: -960, y: 360.9399, z: 0}
 --- !u!1 &489710499
 GameObject:
@@ -10826,7 +10826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.8
-  delay: 1.6
+  delay: 1
   ease: 27
   playOnAwake: 0
   overrideDestinationValue: 0
@@ -10846,7 +10846,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.8
-  delay: 1.4
+  delay: 0.8
   ease: 27
   playOnAwake: 0
   overrideDestinationValue: 0
@@ -10866,7 +10866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.8
-  delay: 1.2
+  delay: 0.6
   ease: 27
   playOnAwake: 0
   overrideDestinationValue: 0
@@ -10886,7 +10886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.8
-  delay: 1
+  delay: 0.4
   ease: 27
   playOnAwake: 0
   overrideDestinationValue: 0
@@ -11337,7 +11337,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -960, y: 360.93994}
+  m_AnchoredPosition: {x: -960.00006, y: 360.93985}
   m_SizeDelta: {x: 1214.4199, y: 174.87}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1479093336

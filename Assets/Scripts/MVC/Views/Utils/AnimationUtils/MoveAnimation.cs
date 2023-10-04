@@ -10,10 +10,11 @@ public class MoveAnimation : BaseTransformAnimation
 
     public override void Play ()
     {
+        base.Play();
         if (moveTo == default)
             Setup();
-        _transform.DOLocalMove(moveFrom, 0);
-        _transform.DOLocalMove(overrideDestinationValue ? overrideMoveTo : moveTo, duration).SetDelay(delay).SetEase(ease);
+        _transform.localPosition = moveFrom;
+        tween = _transform.DOLocalMove(overrideDestinationValue ? overrideMoveTo : moveTo, duration).SetDelay(delay).SetEase(ease);
     }
 
     protected override void Setup ()

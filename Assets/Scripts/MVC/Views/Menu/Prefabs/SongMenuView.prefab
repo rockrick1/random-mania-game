@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3613887fd194b88bacc8f1a1053370d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.6
+  duration: 0.4
   delay: 0
   ease: 9
   playOnAwake: 0
@@ -1358,8 +1358,8 @@ CanvasGroup:
   m_GameObject: {fileID: 3374858599700541411}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &3621664062628456273
 GameObject:
@@ -2085,7 +2085,6 @@ MonoBehaviour:
   backgroundImage: {fileID: 4845825310804810911}
   backButton: {fileID: 4978724160555762714}
   playButton: {fileID: 7225681374444351847}
-  songListCloseMoveAnimation: {fileID: 1636258668011158091}
 --- !u!222 &4978724160910269022
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2200,9 +2199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25be341ad554740a948694232b179b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 2
   delay: 0
-  ease: 11
+  ease: 12
   playOnAwake: 0
   overrideDestinationValue: 1
   _transform: {fileID: 4978724158966118336}

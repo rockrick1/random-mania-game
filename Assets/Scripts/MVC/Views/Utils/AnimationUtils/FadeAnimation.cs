@@ -10,10 +10,11 @@ public class FadeAnimation : BaseCanvasGroupAnimation
 
     public override void Play ()
     {
+        base.Play();
         if (fadeTo == default)
             Setup();
-        _canvasGroup.DOFade(fadeFrom, 0);
-        _canvasGroup.DOFade(overrideDestinationValue ? overrideFadeTo : fadeTo, duration).SetDelay(delay).SetEase(ease);
+        _canvasGroup.alpha = fadeFrom;
+        tween = _canvasGroup.DOFade(overrideDestinationValue ? overrideFadeTo : fadeTo, duration).SetDelay(delay).SetEase(ease);
     }
 
     protected override void Setup ()

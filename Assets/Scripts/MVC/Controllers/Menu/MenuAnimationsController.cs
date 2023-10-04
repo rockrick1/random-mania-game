@@ -25,12 +25,16 @@ public class MenuAnimationsController
 
     public void PlayOpen ()
     {
+        foreach (BaseAnimation animation in closeAnimations)
+            animation.Kill();
         foreach (BaseAnimation animation in openAnimations)
             animation.Play();
     }
 
     public void PlayClose ()
     {
+        foreach (BaseAnimation animation in openAnimations)
+            animation.Kill();
         foreach (BaseAnimation animation in closeAnimations)
             animation.Play();
     }
