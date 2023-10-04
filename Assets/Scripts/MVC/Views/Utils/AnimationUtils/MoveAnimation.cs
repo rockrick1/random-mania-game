@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class MoveAnimation : BaseTransformAnimation
 {
-    [SerializeField] Vector3 moveFrom;
-    [SerializeField] Vector3 overrideMoveTo;
+    [SerializeField] public Vector3 moveFrom;
+    [SerializeField] public Vector3 overrideMoveTo;
 
     Vector3 moveTo;
 

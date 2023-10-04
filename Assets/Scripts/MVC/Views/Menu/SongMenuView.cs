@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,23 +30,10 @@ public class SongMenuView : MonoBehaviour
     [SerializeField] UIClickHandler backButton;
     [SerializeField] UIClickHandler playButton;
 
-    List<BaseAnimation> openAnimations = new();
-    List<BaseAnimation> closeAnimations = new();
-
     void Start ()
     {
         backButton.OnLeftClick.AddListener(() => OnBackPressed?.Invoke());
         playButton.OnLeftClick.AddListener(() => OnPlayPressed?.Invoke());
-
-        TryPopulateAnimations();
-    }
-
-    void TryPopulateAnimations ()
-    {
-        if (openAnimations.Count == 0)
-            openAnimations = transform.GetComponentsInChildren<BaseAnimation>().Where(t => t.name == "OpenAnimation").ToList();
-        if (closeAnimations.Count == 0)
-            closeAnimations = transform.GetComponentsInChildren<BaseAnimation>().Where(t => t.name == "CloseAnimation").ToList();
     }
 
     public void Setup (IReadOnlyList<ISongSettings> songs)
@@ -63,21 +48,8 @@ public class SongMenuView : MonoBehaviour
         return view;
     }
 
-    public void Open ()
-    {
-        gameObject.SetActive(true);
-        TryPopulateAnimations();
-        foreach (BaseAnimation animation in openAnimations)
-            animation.Play();
-    }
+    public void Open () => gameObject.SetActive(true);
 
-    public void Close ()
-    {
-        TryPopulateAnimations();
-        foreach (BaseAnimation animation in closeAnimations)
-            animation.Play();
-    }
-    
     public void SetSelectedSongTitle (string text) => selectedSongTitle.text = text;
     
     public void SetSelectedSongArtist (string text) => selectedSongArtist.text = text;

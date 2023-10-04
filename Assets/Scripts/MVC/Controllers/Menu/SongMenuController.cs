@@ -8,28 +8,35 @@ public class SongMenuController : IDisposable
     
     readonly SongMenuView view;
     readonly ISongMenuModel model;
-
+    readonly MenuAnimationsController menuAnimationsController;
+    
     readonly List<SongEntryController> entryControllers = new();
     
     public SongMenuController (SongMenuView view, ISongMenuModel model)
     {
         this.view = view;
         this.model = model;
+        menuAnimationsController = new MenuAnimationsController(view.transform);
     }
 
     public void Initialize ()
     {
         AddListeners();
         model.PickFirstSong();
+        menuAnimationsController.Initialize();
     }
 
     public void Open ()
     {
         SyncView();
         view.Open();
+        menuAnimationsController.PlayOpen();
     }
 
-    public void Close () => view.Close();
+    public void Close ()
+    {
+        menuAnimationsController.PlayClose();
+    }
 
     void SyncView ()
     {

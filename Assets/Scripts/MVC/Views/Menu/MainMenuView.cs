@@ -21,7 +21,4 @@ public class MainMenuView : MonoBehaviour
         settingsButton.OnLeftClick.AddListener(() => OnOpenSettings?.Invoke());
         quitButton.OnLeftClick.AddListener(() => OnQuit?.Invoke());
     }
-
-    public void AnimateScale(float scale, float duration) =>
-        transform.DOScale(new Vector3(scale, scale, 1), duration).SetEase(Ease.InOutCubic);
 }

@@ -9,17 +9,25 @@ public class MainMenuController : IDisposable
     
     readonly MainMenuView view;
     readonly IMainMenuModel model;
+    readonly MenuAnimationsController menuAnimationsController;
     
     public MainMenuController (MainMenuView view, IMainMenuModel model)
     {
         this.view = view;
         this.model = model;
+        menuAnimationsController = new MenuAnimationsController(view.transform);
     }
 
     public void Initialize ()
     {
         AddListeners();
+        menuAnimationsController.Initialize();
+        menuAnimationsController.PlayOpen();
     }
+
+    public void Open () => menuAnimationsController.PlayOpen();
+
+    public void Close() => menuAnimationsController.PlayClose();
 
     void AddListeners ()
     {
@@ -37,17 +45,17 @@ public class MainMenuController : IDisposable
         view.OnQuit -= HandleQuit;
     }
 
-    void HandleOpenSongMenu () => OnOpenSongMenu?.Invoke();
+    void HandleOpenSongMenu ()
+    {
+        menuAnimationsController.PlayClose();
+        OnOpenSongMenu?.Invoke();
+    }
 
     void HandleOpenEditor () => OnOpenEditor?.Invoke();
 
     void HandleOpenSettings () => OnOpenSettings?.Invoke();
     
     void HandleQuit () => OnQuit?.Invoke();
-
-    public void ZoomIn() => view.AnimateScale(5f, 1f);
-    
-    public void ZoomOut() => view.AnimateScale(1f, 1f);
 
     public void Dispose ()
     {
