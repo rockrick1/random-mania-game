@@ -262,6 +262,12 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7126964130083996736
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.054957267, g: 0.3626677, b: 0.6132076, a: 1}
+  m_Color: {r: 0.09758811, g: 0.2668108, b: 0.4056604, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
