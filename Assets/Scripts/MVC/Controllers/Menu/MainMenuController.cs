@@ -10,24 +10,37 @@ public class MainMenuController : IDisposable
     readonly MainMenuView view;
     readonly IMainMenuModel model;
     readonly MenuAnimationsController menuAnimationsController;
+    readonly MainMenuButtonAnimationsController buttonAnimationsController;
     
     public MainMenuController (MainMenuView view, IMainMenuModel model)
     {
         this.view = view;
         this.model = model;
         menuAnimationsController = new MenuAnimationsController(view.transform);
+        buttonAnimationsController = new MainMenuButtonAnimationsController(view);
     }
 
     public void Initialize ()
     {
         AddListeners();
+        
         menuAnimationsController.Initialize();
+        buttonAnimationsController.Initialize();
+        
         menuAnimationsController.PlayOpen();
     }
 
-    public void Open () => menuAnimationsController.PlayOpen();
+    public void Open ()
+    {
+        buttonAnimationsController.SetActive(true);
+        menuAnimationsController.PlayOpen();
+    }
 
-    public void Close() => menuAnimationsController.PlayClose();
+    public void Close()
+    {
+        buttonAnimationsController.SetActive(false);
+        menuAnimationsController.PlayClose();
+    }
 
     void AddListeners ()
     {
@@ -60,6 +73,7 @@ public class MainMenuController : IDisposable
     public void Dispose ()
     {
         model.Dispose();
+        buttonAnimationsController.Dispose();
         RemoveListeners();
     }
 }

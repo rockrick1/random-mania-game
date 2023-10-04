@@ -4,7 +4,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler
+public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler,
+    IPointerEnterHandler, IPointerExitHandler
 {
     [HideInInspector] public UnityEvent OnClick;
 
@@ -15,6 +16,9 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     [HideInInspector] public UnityEvent OnLeftRelease;
     [HideInInspector] public UnityEvent OnRightRelease;
     [HideInInspector] public UnityEvent OnMiddleRelease;
+    
+    [HideInInspector] public UnityEvent OnHover;
+    [HideInInspector] public UnityEvent OnUnhover;
 
     bool isDragging;
 
@@ -73,4 +77,8 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     {
         isDragging = false;
     }
+
+    public void OnPointerEnter (PointerEventData eventData) => OnHover?.Invoke();
+
+    public void OnPointerExit (PointerEventData eventData) => OnUnhover?.Invoke();
 }

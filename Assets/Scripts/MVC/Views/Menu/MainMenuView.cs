@@ -1,5 +1,4 @@
 ﻿using System;
-using DG.Tweening;
 using UnityEngine;
 
 public class MainMenuView : MonoBehaviour
@@ -13,6 +12,11 @@ public class MainMenuView : MonoBehaviour
     [SerializeField] UIClickHandler editorButton;
     [SerializeField] UIClickHandler settingsButton;
     [SerializeField] UIClickHandler quitButton;
+    
+    public UIClickHandler SongMenuButton => songMenuButton;
+    public UIClickHandler EditorButton => editorButton;
+    public UIClickHandler SettingsButton => settingsButton;
+    public UIClickHandler QuitButton => quitButton;
     
     void Start ()
     {
