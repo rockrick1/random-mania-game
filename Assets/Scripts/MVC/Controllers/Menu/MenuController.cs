@@ -74,6 +74,7 @@ public class MenuController : IDisposable
         {
             case MenuType.Settings:
                 settingsController.Open();
+                mainMenuController.Close();
                 currentMenu = MenuType.Settings;
                 break;
             case MenuType.SongMenu:
@@ -95,6 +96,7 @@ public class MenuController : IDisposable
                 break;
             case MenuType.Settings:
                 settingsController.Close();
+                mainMenuController.Open();
                 currentMenu = MenuType.MainMenu;
                 break;
             case MenuType.SongMenu:

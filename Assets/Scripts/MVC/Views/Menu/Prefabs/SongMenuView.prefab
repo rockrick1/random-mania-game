@@ -2774,7 +2774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.5
-  delay: 0.25
+  delay: 0.1
   ease: 8
   playOnAwake: 0
   overrideDestinationValue: 1
