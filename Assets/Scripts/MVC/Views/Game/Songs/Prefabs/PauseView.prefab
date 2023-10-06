@@ -354,6 +354,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7325000776060190664}
     m_Modifications:
+    - target: {fileID: 4329893089872908258, guid: 42ffa0d643e221e45a472348112d311c, type: 3}
+      propertyPath: onLeftClickSFX
+      value: buttonClick
+      objectReference: {fileID: 0}
     - target: {fileID: 4329893089872908285, guid: 42ffa0d643e221e45a472348112d311c, type: 3}
       propertyPath: m_Name
       value: RetryButton
@@ -471,6 +475,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7325000776060190664}
     m_Modifications:
+    - target: {fileID: 4329893089872908258, guid: 42ffa0d643e221e45a472348112d311c, type: 3}
+      propertyPath: onLeftClickSFX
+      value: backButton
+      objectReference: {fileID: 0}
     - target: {fileID: 4329893089872908285, guid: 42ffa0d643e221e45a472348112d311c, type: 3}
       propertyPath: m_Name
       value: QuitButton
@@ -588,6 +596,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7325000776060190664}
     m_Modifications:
+    - target: {fileID: 4329893089872908258, guid: 42ffa0d643e221e45a472348112d311c, type: 3}
+      propertyPath: onLeftClickSFX
+      value: buttonClick
+      objectReference: {fileID: 0}
     - target: {fileID: 4329893089872908285, guid: 42ffa0d643e221e45a472348112d311c, type: 3}
       propertyPath: m_Name
       value: ResumeButton

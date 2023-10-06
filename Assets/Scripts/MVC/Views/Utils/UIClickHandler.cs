@@ -20,10 +20,19 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     [HideInInspector] public UnityEvent OnHover;
     [HideInInspector] public UnityEvent OnUnhover;
 
+    [Header("SFX")]
+    [SerializeField] string onHoverSFX;
+    [SerializeField] string onUnhoverSFX;
+    [SerializeField] string onLeftClickSFX;
+    [SerializeField] string onRightClickSFX;
+    [SerializeField] string onMiddleClickSFX;
+
     bool isDragging;
+    IAudioManager audioManager;
 
     void Start ()
     {
+        audioManager = AudioManager.GetOrCreate();
         GetComponent<Button>().onClick.AddListener(() =>
         {
             if (isDragging)
@@ -39,12 +48,15 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
+                TryPlaySFX(onLeftClickSFX);
                 OnLeftClick.Invoke();
                 break;
             case PointerEventData.InputButton.Right:
+                TryPlaySFX(onRightClickSFX);
                 OnRightClick.Invoke();
                 break;
             case PointerEventData.InputButton.Middle:
+                TryPlaySFX(onMiddleClickSFX);
                 OnMiddleClick.Invoke();
                 break;
         }
@@ -78,7 +90,21 @@ public class UIClickHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHand
         isDragging = false;
     }
 
-    public void OnPointerEnter (PointerEventData eventData) => OnHover?.Invoke();
+    public void OnPointerEnter (PointerEventData eventData)
+    {
+        TryPlaySFX(onHoverSFX);
+        OnHover?.Invoke();
+    }
 
-    public void OnPointerExit (PointerEventData eventData) => OnUnhover?.Invoke();
+    public void OnPointerExit (PointerEventData eventData)
+    {
+        TryPlaySFX(onUnhoverSFX);
+        OnUnhover?.Invoke();
+    }
+
+    void TryPlaySFX (string sfx)
+    {
+        if (!string.IsNullOrEmpty(sfx))
+            audioManager.PlaySFX(sfx);
+    }
 }

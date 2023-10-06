@@ -11,7 +11,7 @@ public class EditorSongController : IDisposable
     readonly IAudioManager audioManager;
     readonly IEditorInputManager inputManager;
     
-    List<BaseNoteView> activeNoteViews = new();
+    readonly List<BaseNoteView> activeNoteViews = new();
 
     public EditorSongController (
         EditorSongView view,

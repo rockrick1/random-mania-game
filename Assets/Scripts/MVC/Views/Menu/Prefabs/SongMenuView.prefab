@@ -3311,6 +3311,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4329893089872908258, guid: 80a111432e4e23742b099354a5943d21, type: 3}
+      propertyPath: onLeftClickSFX
+      value: confirmation_002
+      objectReference: {fileID: 0}
     - target: {fileID: 4329893089872908285, guid: 80a111432e4e23742b099354a5943d21, type: 3}
       propertyPath: m_Name
       value: PlayButton
@@ -3560,6 +3564,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4978724160910269021}
     m_Modifications:
+    - target: {fileID: 4329893089872908258, guid: 80a111432e4e23742b099354a5943d21, type: 3}
+      propertyPath: onLeftClickSFX
+      value: backButton
+      objectReference: {fileID: 0}
     - target: {fileID: 4329893089872908285, guid: 80a111432e4e23742b099354a5943d21, type: 3}
       propertyPath: m_Name
       value: BackButton

@@ -8,6 +8,7 @@ public class MenuController : IDisposable
     readonly MainMenuController mainMenuController;
     readonly SongMenuController songMenuController;
     readonly SettingsController settingsController;
+    readonly MenuMusicController menuMusicController;
     readonly ISongMenuModel songMenuModel;
     readonly IMenuModel model;
 
@@ -18,6 +19,7 @@ public class MenuController : IDisposable
         MainMenuController mainMenuController,
         SettingsController settingsController,
         SongMenuController songMenuController,
+        MenuMusicController menuMusicController,
         ISongMenuModel songMenuModel,
         IMenuModel model
     )
@@ -26,6 +28,7 @@ public class MenuController : IDisposable
         this.mainMenuController = mainMenuController;
         this.songMenuController = songMenuController;
         this.settingsController = settingsController;
+        this.menuMusicController = menuMusicController;
         this.songMenuModel = songMenuModel;
         this.model = model;
     }
@@ -35,6 +38,7 @@ public class MenuController : IDisposable
         mainMenuController.Initialize();
         songMenuController.Initialize();
         settingsController.Initialize();
+        menuMusicController.Initialize();
         AddListeners();
     }
 
@@ -114,6 +118,7 @@ public class MenuController : IDisposable
         mainMenuController.Dispose();
         songMenuController.Dispose();
         settingsController.Dispose();
+        menuMusicController.Dispose();
         RemoveListeners();
     }
 }

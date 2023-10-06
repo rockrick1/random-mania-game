@@ -5663,6 +5663,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onHoverSFX
+      value: buttonHover
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onLeftClickSFX
+      value: buttonClick
+      objectReference: {fileID: 0}
     - target: {fileID: 1567123655888117819, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
       propertyPath: m_Name
       value: QuitButton
@@ -11008,6 +11016,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onHoverSFX
+      value: buttonHover
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onLeftClickSFX
+      value: buttonClick
+      objectReference: {fileID: 0}
     - target: {fileID: 1567123655888117819, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
       propertyPath: m_Name
       value: SettingsButton
@@ -11287,6 +11303,14 @@ PrefabInstance:
     - target: {fileID: 1567123655888117816, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onHoverSFX
+      value: buttonHover
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onLeftClickSFX
+      value: buttonClick
       objectReference: {fileID: 0}
     - target: {fileID: 1567123655888117819, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
       propertyPath: m_Name
@@ -11833,6 +11857,14 @@ PrefabInstance:
     - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onHoverSFX
+      value: buttonHover
+      objectReference: {fileID: 0}
+    - target: {fileID: 1567123655888117817, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
+      propertyPath: onLeftClickSFX
+      value: buttonClick
       objectReference: {fileID: 0}
     - target: {fileID: 1567123655888117819, guid: 2259ad04af6a44dfa81e7f8844966f98, type: 3}
       propertyPath: m_Name

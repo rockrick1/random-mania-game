@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour, IAudioManager
@@ -44,7 +45,12 @@ public class AudioManager : MonoBehaviour, IAudioManager
         musicPlayer.clip = clip;
     }
 
-    public void PlayMusic () => musicPlayer.Play();
+    public void PlayMusic (bool loop = false, bool fadeIn = false)
+    {
+        musicPlayer.loop = loop;
+        musicPlayer.Play();
+        musicPlayer.DOFade(musicPlayer.volume, 1).From(0);
+    }
 
     public void PauseMusic () => musicPlayer.Pause();
     

@@ -9,13 +9,15 @@ public class MenuModel : IMenuModel
     public ISongMenuModel SongMenuModel { get; }
     public SongLoader SongLoader { get; }
     public IMenuInputManager InputManager { get; }
+    public IAudioManager AudioManager { get; }
     
     public MenuModel (
         IMainMenuModel mainMenuModel,
         ISettingsModel settingsModel,
         ISongMenuModel songMenuModel,
         SongLoader songLoader,
-        IMenuInputManager inputManager
+        IMenuInputManager inputManager,
+        IAudioManager audioManager
     )
     {
         MainMenuModel = mainMenuModel;
@@ -23,6 +25,7 @@ public class MenuModel : IMenuModel
         SongMenuModel = songMenuModel;
         SongLoader = songLoader;
         InputManager = inputManager;
+        AudioManager = audioManager;
     }
 
     public void Initialize ()

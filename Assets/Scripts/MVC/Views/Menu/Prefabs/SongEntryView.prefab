@@ -1086,6 +1086,17 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverSFX: 
+  onUnhoverSFX: 
+  onLeftClickSFX: buttonClick
+  onRightClickSFX: 
+  onMiddleClickSFX: 
 --- !u!1 &411921342928889234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,12 +1608,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a012e2ce5c684025943e4e56ad76a508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 2210544025074321257}
   duration: 0.25
   delay: 0
   ease: 12
   playOnAwake: 0
+  overrideDestinationValue: 0
+  _transform: {fileID: 2210544025074321257}
   scaleFrom: {x: 0, y: 0, z: 0}
+  overrideScaleTo: {x: 0, y: 0, z: 0}
 --- !u!1 &8928885684641558689
 GameObject:
   m_ObjectHideFlags: 0

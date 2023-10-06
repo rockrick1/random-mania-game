@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ public class MenuAnimationsController
 {
     const string OPEN_ANIMATION = "OpenAnimation";
     const string CLOSE_ANIMATION = "CloseAnimation";
+
+    public event Action OnOpenFinished;
+    public event Action OnCloseFinished;
     
     readonly Transform menuView;
 

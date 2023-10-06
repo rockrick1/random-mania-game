@@ -7,7 +7,7 @@ public interface IAudioManager
     float MusicTime { get; }
     
     void SetMusicClip (AudioClip clip);
-    void PlayMusic ();
+    void PlayMusic (bool loop = false, bool fadeIn = false);
     void PauseMusic ();
     
     void PlayPauseMusic ();

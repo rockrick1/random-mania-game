@@ -1,7 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 
-public class MainMenuButtonAnimationsController : IDisposable
+public class MainMenuButtonsController : IDisposable
 {
     const float INITIAL_X_POS = 229.45f;
     const float MOVE_X_AMOUNT = -100;
@@ -11,7 +11,7 @@ public class MainMenuButtonAnimationsController : IDisposable
 
     bool active;
     
-    public MainMenuButtonAnimationsController (MainMenuView view)
+    public MainMenuButtonsController (MainMenuView view)
     {
         this.view = view;
     }
