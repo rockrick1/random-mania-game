@@ -11,6 +11,7 @@ public class EditorController : IDisposable
     readonly EditorNewSongController newSongController;
     readonly EditorSongSavedController songSavedController;
     readonly EditorConfirmQuitController editorConfirmQuitController;
+    readonly EditorHitsoundsController editorHitsoundsController;
     readonly EditorView view;
     readonly IEditorModel model;
     readonly IEditorSongModel songModel;
@@ -26,6 +27,7 @@ public class EditorController : IDisposable
         EditorNewSongController newSongController,
         EditorSongSavedController songSavedController,
         EditorConfirmQuitController editorConfirmQuitController,
+        EditorHitsoundsController editorHitsoundsController,
         EditorView view,
         IEditorModel model,
         IEditorSongModel songModel,
@@ -41,6 +43,7 @@ public class EditorController : IDisposable
         this.newSongController = newSongController;
         this.songSavedController = songSavedController;
         this.editorConfirmQuitController = editorConfirmQuitController;
+        this.editorHitsoundsController = editorHitsoundsController;
         this.view = view;
         this.model = model;
         this.songModel = songModel;
@@ -58,6 +61,7 @@ public class EditorController : IDisposable
         newSongController.Initialize();
         songSavedController.Initialize();
         editorConfirmQuitController.Initialize();
+        editorHitsoundsController.Initialize();
         AddListeners();
     }
 
@@ -103,5 +107,6 @@ public class EditorController : IDisposable
         newSongController.Dispose();
         songSavedController.Dispose();
         editorConfirmQuitController.Dispose();
+        editorHitsoundsController.Dispose();
     }
 }

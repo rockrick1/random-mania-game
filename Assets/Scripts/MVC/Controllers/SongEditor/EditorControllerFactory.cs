@@ -38,6 +38,10 @@
             view.EditorConfirmQuitView,
             model.SongModel
         );
+        EditorHitsoundsController hitsoundsController = new(
+            model.AudioManager,
+            model.SongModel
+        );
         EditorController controller = new(
             songPickerController,
             songDetailsController,
@@ -46,6 +50,7 @@
             newSongController,
             songSavedController,
             songConfirmQuitController,
+            hitsoundsController,
             view,
             model,
             model.SongModel,

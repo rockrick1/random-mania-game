@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public interface IEditorSongModel : IDisposable
 {
@@ -8,6 +9,7 @@ public interface IEditorSongModel : IDisposable
     int SelectedSignature { get; }
     float SignedBeatInterval { get; }
     bool HasUnsavedChanges { get; }
+    List<Note> Notes { get; }
 
     void Initialize ();
     void Refresh (string songId, string songDifficultyName);

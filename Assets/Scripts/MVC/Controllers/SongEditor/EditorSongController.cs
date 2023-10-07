@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class EditorSongController : IDisposable
@@ -35,7 +33,6 @@ public class EditorSongController : IDisposable
     public void Initialize ()
     {
         AddListeners();
-        CoroutineRunner.Instance.StartRoutine(nameof(HitsoundsRoutine), HitsoundsRoutine());
     }
 
     void AddListeners ()
@@ -184,18 +181,6 @@ public class EditorSongController : IDisposable
             view.CreateSeparator(model.GetSeparatorColorByIndex(i));
         }
         view.ChangeSeparatorsDistance(model.SelectedSignature);
-    }
-
-    IEnumerator HitsoundsRoutine ()
-    {
-        while (true)
-        {
-            yield return null;
-            if (audioManager.IsPlayingMusic)
-                continue;
-            Note nextNote = activeNoteViews.First(x => x.Note.Time > ).Note;
-            audioManager.MusicTime;
-        }
     }
 
     public void Dispose ()
