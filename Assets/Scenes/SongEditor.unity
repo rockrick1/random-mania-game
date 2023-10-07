@@ -16330,6 +16330,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 741944442916700347, guid: a48eb1f7264ab5047a8e168ae0c9f04a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3993795760167119416, guid: a48eb1f7264ab5047a8e168ae0c9f04a, type: 3}
       propertyPath: onLeftClickSFX
       value: buttonClick

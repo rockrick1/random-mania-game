@@ -1,0 +1,22 @@
+[title]
+Cold Green Eyes
+
+[difficultyName]
+Easy
+
+[artist]
+Station Earth
+
+[bpm]
+174
+
+[difficulty]
+5
+
+[startingTime]
+1.269714
+
+[approachRate]
+1
+
+[notes]

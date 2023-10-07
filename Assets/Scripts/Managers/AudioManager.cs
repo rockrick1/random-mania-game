@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour, IAudioManager
     public bool HasMusicClip => musicPlayer.clip != null;
     public float MusicLength => HasMusicClip ? musicPlayer.clip.length : 0f;
     public float MusicTime => musicPlayer.time;
+    public bool IsPlayingMusic => musicPlayer.isPlaying;
 
     static AudioManager _instance;
 

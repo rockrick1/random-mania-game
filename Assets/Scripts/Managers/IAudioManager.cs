@@ -5,6 +5,7 @@ public interface IAudioManager
     bool HasMusicClip { get; }
     float MusicLength { get; }
     float MusicTime { get; }
+    bool IsPlayingMusic { get; }
     
     void SetMusicClip (AudioClip clip);
     void PlayMusic (bool loop = false, bool fadeIn = false);

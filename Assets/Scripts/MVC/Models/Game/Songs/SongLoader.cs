@@ -295,7 +295,12 @@ public class SongLoader : MonoBehaviour
 
     string GetResourcePath(string songId) => Path.Combine(SONG_RESOURCES_PATH, songId);
 
-    float GetSongLength (List<Note> notes) => notes[^1].EndTime - notes[0].Time;
+    float GetSongLength (List<Note> notes)
+    {
+        if (notes.Count == 0)
+            return 0;
+        return notes[^1].EndTime - notes[0].Time;
+    }
 
     float ParseFloat (string s) => float.Parse(s, CultureInfo.InvariantCulture);
 }
