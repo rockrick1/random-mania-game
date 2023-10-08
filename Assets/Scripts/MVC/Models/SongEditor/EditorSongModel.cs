@@ -47,7 +47,7 @@ public class EditorSongModel : IEditorSongModel
         songLoader.SelectedSongId = songId;
         songLoader.SelectedSongDifficulty = songDifficultyName;
         if (songLoader.GetSongSettings(songId, songDifficultyName) is not SongSettings songSettings)
-            throw new Exception("Cant't convert loaded song settings");
+            throw new Exception("Can't convert loaded song settings");
         SelectedSignature = DEFAULT_SIGNATURE;
         currentSongSettings = songSettings;
         SetBeatInterval(currentSongSettings.Bpm);
