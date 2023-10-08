@@ -1,6 +1,8 @@
 ﻿using System;
 
-public interface IEditorHitsoundsModel
+public interface IEditorHitsoundsModel : IDisposable
 {
     event Action OnPlayHitsound;
+
+    void Initialize ();
 }

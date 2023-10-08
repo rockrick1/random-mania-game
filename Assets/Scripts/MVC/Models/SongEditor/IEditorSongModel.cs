@@ -10,6 +10,7 @@ public interface IEditorSongModel : IDisposable
     float SignedBeatInterval { get; }
     bool HasUnsavedChanges { get; }
     List<Note> Notes { get; }
+    float SongStartingTime { get; }
 
     void Initialize ();
     void Refresh (string songId, string songDifficultyName);

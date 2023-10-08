@@ -40,7 +40,7 @@
         );
         EditorHitsoundsController hitsoundsController = new(
             model.AudioManager,
-            model.SongModel
+            model.HitsoundsModel
         );
         EditorController controller = new(
             songPickerController,

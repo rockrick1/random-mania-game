@@ -21,23 +21,15 @@ public class EditorHitsoundsController : IDisposable
 
     void AddListeners ()
     {
-        view.OnCreateSong += HandleCreateSong;
-        view.OnOpenFolder += HandleOpenNewSongFolder;
-        view.OnEdit += HandleEditNewSong;
+        model.OnPlayHitsound += HandlePlayHitsound;
     }
 
     void RemoveListeners ()
     {
-        view.OnCreateSong -= HandleCreateSong;
-        view.OnOpenFolder -= HandleOpenNewSongFolder;
-        view.OnEdit -= HandleEditNewSong;
+        model.OnPlayHitsound -= HandlePlayHitsound;
     }
 
-    public void Open ()
-    {
-        view.SetCreationState(false);
-        view.Open();
-    }
+    void HandlePlayHitsound() => audioManager.PlaySFX("soft-hitnormal");
 
     public void Dispose ()
     {

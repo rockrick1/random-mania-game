@@ -12,7 +12,8 @@ public class EditorSongModel : IEditorSongModel
     public int SelectedSignature { get; private set; }
     public float SignedBeatInterval { get; private set; }
     public bool HasUnsavedChanges { get; private set; }
-    public List<Note> Notes => currentSongSettings.Notes;
+    public List<Note> Notes => currentSongSettings?.Notes ?? new List<Note>();
+    public float SongStartingTime => currentSongSettings.StartingTime;
 
     readonly IEditorInputManager inputManager;
     readonly SongLoader songLoader;

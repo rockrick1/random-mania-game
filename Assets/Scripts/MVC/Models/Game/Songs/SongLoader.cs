@@ -53,6 +53,7 @@ public class SongLoader : MonoBehaviour
         TryCreateDefaultFiles();
         LoadAllSongSettings();
         LoadAllSongAudios();
+        Debug.Log($"Song Database Folder: {SongsPath}");
     }
 
     public static string GetSongId (string songName, string artistName) => $"{artistName} - {songName}";

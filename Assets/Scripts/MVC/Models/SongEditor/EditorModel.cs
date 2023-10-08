@@ -7,21 +7,22 @@ public class EditorModel : IEditorModel
     public IEditorInputManager InputManager { get; }
     public IAudioManager AudioManager { get; }
     public IEditorSongModel SongModel { get; }
-    public IEditorNewSongModel NewSongModel { get; set; }
+    public IEditorNewSongModel NewSongModel { get; }
+    public IEditorHitsoundsModel HitsoundsModel { get; }
 
-    public EditorModel (
-        SongLoader songLoader,
+    public EditorModel(SongLoader songLoader,
         IEditorSongPickerModel songPickerModel,
         IEditorSongModel songModel,
         IEditorNewSongModel newSongModel,
+        IEditorHitsoundsModel hitsoundsModel,
         IEditorInputManager inputManager,
-        IAudioManager audioManager
-    )
+        IAudioManager audioManager)
     {
         SongLoader = songLoader;
         SongPickerModel = songPickerModel;
         SongModel = songModel;
         NewSongModel = newSongModel;
+        HitsoundsModel = hitsoundsModel;
         InputManager = inputManager;
         AudioManager = audioManager;
     }
@@ -30,6 +31,7 @@ public class EditorModel : IEditorModel
     {
         AddListeners();
         SongModel.Initialize();
+        HitsoundsModel.Initialize();
     }
 
     void AddListeners ()
@@ -48,5 +50,6 @@ public class EditorModel : IEditorModel
     {
         RemoveListeners();
         SongModel.Dispose();
+        HitsoundsModel.Dispose();
     }
 }
