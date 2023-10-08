@@ -27,7 +27,7 @@ public class EditorInputManager : MonoBehaviour, IEditorInputManager
 
         if (Input.mouseScrollDelta.y != 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.LeftCommand))
                 OnZoomScroll?.Invoke(Input.mouseScrollDelta.y);
             else
             {

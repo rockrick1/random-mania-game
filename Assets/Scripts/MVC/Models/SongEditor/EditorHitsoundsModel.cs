@@ -28,26 +28,39 @@ public class EditorHitsoundsModel : IEditorHitsoundsModel
     {
         while (true)
         {
-            float lastNoteTime = GetNextNoteTime();
+            float lastNoteTime = GetNextNoteStart();
+            float lastNoteEndTime = GetNextNoteEnd();
             
             yield return null;
             
             if (!audioManager.IsPlayingMusic)
                 continue;
 
-            float nextNoteTime = GetNextNoteTime();
-            if (!Mathf.Approximately(lastNoteTime, nextNoteTime))
+            float nextNoteTime = GetNextNoteStart();
+            float nextNoteEndTime = GetNextNoteEnd();
+            
+            if (!Mathf.Approximately(lastNoteTime, nextNoteTime) ||
+                !Mathf.Approximately(lastNoteEndTime, nextNoteEndTime))
                 OnPlayHitsound?.Invoke();
         }
     }
 
-    float GetNextNoteTime ()
+    float GetNextNoteStart ()
     {
         int noteIndex = 0;
         while (noteIndex < songModel.Notes.Count &&
                songModel.Notes[noteIndex].Time + songModel.SongStartingTime < audioManager.MusicTime)
             noteIndex++;
         return noteIndex == songModel.Notes.Count ? -1 : songModel.Notes[noteIndex].Time;
+    }
+
+    float GetNextNoteEnd ()
+    {
+        int noteIndex = 0;
+        while (noteIndex < songModel.Notes.Count &&
+               songModel.Notes[noteIndex].EndTime + songModel.SongStartingTime < audioManager.MusicTime)
+            noteIndex++;
+        return noteIndex == songModel.Notes.Count ? -1 : songModel.Notes[noteIndex].EndTime;
     }
 
     void AddListeners ()
