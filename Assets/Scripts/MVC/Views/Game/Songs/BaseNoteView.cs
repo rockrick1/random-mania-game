@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BaseNoteView : MonoBehaviour
 {
-    [SerializeField] Image image;
+    [SerializeField] CanvasGroup canvasGroup;
     [SerializeField] Vector3 hitEndScale;
     [SerializeField] float hitAnimDuration;
     
@@ -17,7 +17,7 @@ public class BaseNoteView : MonoBehaviour
     {
         hit = true;
         transform.DOScale(hitEndScale, hitAnimDuration).SetEase(Ease.OutCubic);
-        image.DOFade(0f, hitAnimDuration).SetEase(Ease.OutQuad).OnComplete(OnHitAnimationEnd);
+        canvasGroup.DOFade(0f, hitAnimDuration).SetEase(Ease.OutQuad).OnComplete(OnHitAnimationEnd);
     }
 
     public void Destroy () => Destroy(gameObject);

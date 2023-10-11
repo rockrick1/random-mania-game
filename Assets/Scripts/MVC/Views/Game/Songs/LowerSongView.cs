@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LowerSongView : MonoBehaviour
 {
@@ -12,16 +11,16 @@ public class LowerSongView : MonoBehaviour
     public void SetActiveHitter (int index)
     {
         for (var i = 0; i < hitters.Count; i++)
-            hitters[i].gameObject.SetActive(i == index);
+            hitters[i].SetHitterSelectedState(i == index);
     }
 
-    public void PlayHitterPressed (int index) => hitters[index].PlayHitterPressed();
+    public void PlayHitterPressed (int index) => hitters[index].SetHitterPressedState(true);
 
-    public void PlayHitterReleased(int index) => hitters[index].PlayHitterReleased();
+    public void PlayHitterReleased (int index) => hitters[index].SetHitterPressedState(false);
 
     public void PlayHitterEffect (int index) => hitters[index].PlayHitterEffect();
 
-    public void StartLongNoteEffect(int index) => hitters[index].StartLongNoteEffect();
+    public void StartLongNoteEffect (int index) => hitters[index].StartLongNoteEffect();
 
-    public void EndLongNoteEffect(int index) => hitters[index].EndLongNoteEffect();
+    public void EndLongNoteEffect (int index) => hitters[index].EndLongNoteEffect();
 }

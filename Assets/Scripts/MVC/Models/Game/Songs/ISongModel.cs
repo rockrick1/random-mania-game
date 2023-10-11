@@ -10,6 +10,7 @@ public interface ISongModel : IDisposable
     event Action<Note> OnNoteMissed;
     event Action OnAudioStartTimeReached;
     event Action<float> OnSongStartSkipped;
+    event Action OnSongStarted;
     event Action OnSongFinished;
     event Action<bool> OnSkippableChanged;
     

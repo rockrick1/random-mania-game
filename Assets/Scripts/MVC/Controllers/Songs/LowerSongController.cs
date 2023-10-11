@@ -8,6 +8,8 @@ public class LowerSongController : IDisposable
 
     public float HitterYPos => view.HitterYPos;
 
+    int selectedHitter = 1;
+
     public LowerSongController (LowerSongView view, IGameInputManager inputManager, ISongModel songModel)
     {
         this.inputManager = inputManager;
@@ -28,6 +30,7 @@ public class LowerSongController : IDisposable
         songModel.OnNoteHit += HandleNoteHit;
         songModel.OnLongNoteHit += HandleLongNoteHit;
         songModel.OnLongNoteReleased += HandleLongNoteReleased;
+        songModel.OnSongStarted += HandleSongStarted;
     }
 
     void RemoveListeners ()
@@ -38,9 +41,16 @@ public class LowerSongController : IDisposable
         songModel.OnNoteHit -= HandleNoteHit;
         songModel.OnLongNoteHit -= HandleLongNoteHit;
         songModel.OnLongNoteReleased -= HandleLongNoteReleased;
+        songModel.OnSongStarted -= HandleSongStarted;
     }
 
-    void HandleHitterSelect (int index) => view.SetActiveHitter(index);
+    void HandleHitterSelect (int index)
+    {
+        if (index == selectedHitter)
+            return;
+        selectedHitter = index;
+        view.SetActiveHitter(index);
+    }
 
     void HandleHitterPressed(int index) => view.PlayHitterPressed(index);
 
@@ -51,6 +61,12 @@ public class LowerSongController : IDisposable
     void HandleLongNoteHit(Note note, HitScore _) => view.StartLongNoteEffect(note.Position);
 
     void HandleLongNoteReleased(Note note, HitScore _) => view.EndLongNoteEffect(note.Position);
+
+    void HandleSongStarted ()
+    {
+        selectedHitter = 1;
+        view.SetActiveHitter(selectedHitter);
+    }
 
     public void Dispose ()
     {

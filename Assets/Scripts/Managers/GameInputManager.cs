@@ -64,7 +64,7 @@ public class GameInputManager : MonoBehaviour, IGameInputManager
         {
             if (GetPositionPressed(i))
                 OnHitterPress?.Invoke(i);
-            if (GetPositionReleased(i))
+            if (GetPositionReleased(i) && !GetPositionHeld(i))
                 OnHitterRelease?.Invoke(i);
         }
     }

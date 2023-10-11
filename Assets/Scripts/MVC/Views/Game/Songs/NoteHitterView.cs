@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class NoteHitterView : MonoBehaviour
 {
     [Header("Hitter")]
+    [SerializeField] Color unselectedColor;
+    [SerializeField] Color selectedColor;
+    [SerializeField] Image hitterPressedImage;
     [SerializeField] Image hitter;
     [SerializeField] float hitterDuration;
     [SerializeField] Vector3 hitterScale;
@@ -26,15 +29,23 @@ public class NoteHitterView : MonoBehaviour
         hitEffect.DOFade(0, 0);
     }
 
-    public void PlayHitterPressed ()
+    public void SetHitterSelectedState (bool selected)
     {
-        hitter.transform.DOScale(hitterScale, hitterDuration);
+        hitter.color = selected ? selectedColor : unselectedColor;
+        SetHitterPressedState(false);
     }
 
-    public void PlayHitterReleased()
-    {
-        hitter.transform.DOScale(Vector3.one, hitterDuration);
-    }
+    public void SetHitterPressedState (bool pressed) => hitterPressedImage.DOFade(pressed ? 1 : 0, .08f);
+
+    // public void PlayHitterPressed ()
+    // {
+    //     hitter.transform.DOScale(hitterScale, hitterDuration);
+    // }
+    //
+    // public void PlayHitterReleased()
+    // {
+    //     hitter.transform.DOScale(Vector3.one, hitterDuration);
+    // }
 
     public void PlayHitterEffect ()
     {

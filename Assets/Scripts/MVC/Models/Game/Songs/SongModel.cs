@@ -14,6 +14,7 @@ public class SongModel : ISongModel
     public event Action<Note> OnNoteMissed;
     public event Action OnAudioStartTimeReached;
     public event Action<float> OnSongStartSkipped;
+    public event Action OnSongStarted;
     public event Action OnSongFinished;
     public event Action<bool> OnSkippableChanged;
 
@@ -75,6 +76,8 @@ public class SongModel : ISongModel
         CoroutineRunner.Instance.StartRoutine(nameof(NoteSpawnRoutine), NoteSpawnRoutine());
         CoroutineRunner.Instance.StartRoutine(nameof(NotesHitRoutine), NotesHitRoutine());
         CoroutineRunner.Instance.StartRoutine(nameof(PauseOffsetRoutine), PauseOffsetRoutine());
+        
+        OnSongStarted?.Invoke();
     }
 
     double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
