@@ -121,6 +121,8 @@ public class ScoreModel : IScoreModel
             noteScores[hitScore]++;
             UpdateAccuracy();
         }
+        else
+            HandleNoteMissed(note);
         holdingLongNote = false;
     }
 
