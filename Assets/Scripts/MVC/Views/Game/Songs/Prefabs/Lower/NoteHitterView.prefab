@@ -217,8 +217,7 @@ MonoBehaviour:
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   hitterPressedImage: {fileID: 981418427080008512}
   hitter: {fileID: 7740123283270179981}
-  hitterDuration: 0.05
-  hitterScale: {x: 0.9, y: 0.9, z: 1}
+  hitterDuration: 0.08
   hitEffect: {fileID: 6340813308049609089}
   effectDuration: 0.02
   effectEndDuration: 0.3

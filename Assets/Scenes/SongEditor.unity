@@ -5823,7 +5823,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 2b9689b8ebb1345e1a1a3fe68bd384eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5847,7 +5847,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 5
+    widthMultiplier: 1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -5889,7 +5889,7 @@ LineRenderer:
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -7904,6 +7904,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1557133803}
     m_Modifications:
+    - target: {fileID: 1746939910980493141, guid: b79028fbe0fa39249a2ef2f67e0f7767, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7596972834950272587, guid: b79028fbe0fa39249a2ef2f67e0f7767, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -11206,7 +11210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 1}
+  m_Color: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 0.6}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14998,6 +15002,10 @@ PrefabInstance:
     - target: {fileID: 4329893089872908285, guid: 80a111432e4e23742b099354a5943d21, type: 3}
       propertyPath: m_Name
       value: BackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329893089872908285, guid: 80a111432e4e23742b099354a5943d21, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4329893089872908286, guid: 80a111432e4e23742b099354a5943d21, type: 3}
       propertyPath: m_Pivot.x

@@ -11,7 +11,6 @@ public class NoteHitterView : MonoBehaviour
     [SerializeField] Image hitterPressedImage;
     [SerializeField] Image hitter;
     [SerializeField] float hitterDuration;
-    [SerializeField] Vector3 hitterScale;
     
     [Header("Hit effect")]
     [SerializeField] Image hitEffect;
@@ -22,6 +21,10 @@ public class NoteHitterView : MonoBehaviour
     
     [SerializeField] float effectFadeDuration;
     [SerializeField] float effectFadeEndDuration;
+
+    Sequence scaleSequence;
+    Sequence alphaSequence;
+    Tween effectFade;
     
     void Awake()
     {
@@ -35,25 +38,17 @@ public class NoteHitterView : MonoBehaviour
         SetHitterPressedState(false);
     }
 
-    public void SetHitterPressedState (bool pressed) => hitterPressedImage.DOFade(pressed ? 1 : 0, .08f);
-
-    // public void PlayHitterPressed ()
-    // {
-    //     hitter.transform.DOScale(hitterScale, hitterDuration);
-    // }
-    //
-    // public void PlayHitterReleased()
-    // {
-    //     hitter.transform.DOScale(Vector3.one, hitterDuration);
-    // }
+    public void SetHitterPressedState (bool pressed) => hitterPressedImage.DOFade(pressed ? 1 : 0, hitterDuration);
 
     public void PlayHitterEffect ()
     {
-        Sequence scaleSequence = DOTween.Sequence();
+        scaleSequence?.Kill();
+        scaleSequence = DOTween.Sequence();
         scaleSequence.Append(hitEffect.transform.DOScale(Vector3.one, effectDuration));
         scaleSequence.Append(hitEffect.transform.DOScale(Vector3.zero, effectEndDuration));
         scaleSequence.Play();
-        Sequence alphaSequence = DOTween.Sequence();
+        alphaSequence?.Kill();
+        alphaSequence = DOTween.Sequence();
         alphaSequence.Append(hitEffect.DOFade(1, effectFadeDuration));
         alphaSequence.Append(hitEffect.DOFade(0, effectFadeEndDuration));
         alphaSequence.Play();
@@ -63,7 +58,8 @@ public class NoteHitterView : MonoBehaviour
     {
         hitEffect.transform.DOScale(Vector3.one, effectDuration).OnComplete(() =>
         {
-            Sequence scaleSequence = DOTween.Sequence();
+            scaleSequence?.Kill();
+            scaleSequence = DOTween.Sequence();
             scaleSequence.Append(hitEffect.transform.DOScale(effectMiddleScale, effectMiddleDuration).SetEase(Ease.InOutCubic));
             scaleSequence.Append(hitEffect.transform.DOScale(Vector3.one, effectMiddleDuration).SetEase(Ease.InOutCubic));
             scaleSequence.SetLoops(-1);
