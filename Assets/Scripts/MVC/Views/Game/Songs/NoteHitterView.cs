@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +13,7 @@ public class NoteHitterView : MonoBehaviour
     
     [Header("Hit effect")]
     [SerializeField] Image hitEffect;
+    [SerializeField] Image holdEffect;
     [SerializeField] float effectDuration;
     [SerializeField] float effectEndDuration;
     [SerializeField] float effectMiddleDuration;
@@ -24,12 +24,14 @@ public class NoteHitterView : MonoBehaviour
 
     Sequence scaleSequence;
     Sequence alphaSequence;
-    Tween effectFade;
+    Tween holdFade;
     
     void Awake()
     {
         hitEffect.transform.DOScale(Vector3.zero, 0);
         hitEffect.DOFade(0, 0);
+        holdEffect.transform.DOScale(Vector3.zero, 0);
+        holdEffect.DOFade(0, 0);
     }
 
     public void SetHitterSelectedState (bool selected)
@@ -56,21 +58,22 @@ public class NoteHitterView : MonoBehaviour
 
     public void StartLongNoteEffect ()
     {
-        hitEffect.transform.DOScale(Vector3.one, effectDuration).OnComplete(() =>
+        holdFade?.Kill();
+        holdEffect.transform.DOScale(Vector3.one, effectDuration).OnComplete(() =>
         {
             scaleSequence?.Kill();
             scaleSequence = DOTween.Sequence();
-            scaleSequence.Append(hitEffect.transform.DOScale(effectMiddleScale, effectMiddleDuration).SetEase(Ease.InOutCubic));
-            scaleSequence.Append(hitEffect.transform.DOScale(Vector3.one, effectMiddleDuration).SetEase(Ease.InOutCubic));
+            scaleSequence.Append(holdEffect.transform.DOScale(effectMiddleScale, effectMiddleDuration).SetEase(Ease.InOutCubic));
+            scaleSequence.Append(holdEffect.transform.DOScale(Vector3.one, effectMiddleDuration).SetEase(Ease.InOutCubic));
             scaleSequence.SetLoops(-1);
             scaleSequence.Play();
-            hitEffect.DOFade(1, effectFadeDuration);
+            holdEffect.DOFade(1, effectFadeDuration);
         });
     }
 
     public void EndLongNoteEffect ()
     {
-        hitEffect.transform.DOScale(Vector3.zero, effectEndDuration);
-        hitEffect.DOFade(0, effectFadeEndDuration);
+        holdEffect.transform.DOScale(Vector3.zero, effectEndDuration);
+        holdFade = holdEffect.DOFade(0, effectFadeEndDuration);
     }
 }
