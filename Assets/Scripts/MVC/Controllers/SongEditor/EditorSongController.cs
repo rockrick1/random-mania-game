@@ -186,5 +186,6 @@ public class EditorSongController : IDisposable
     public void Dispose ()
     {
         RemoveListeners();
+        audioManager.SetMusicPlaybackSpeed(1);
     }
 }
