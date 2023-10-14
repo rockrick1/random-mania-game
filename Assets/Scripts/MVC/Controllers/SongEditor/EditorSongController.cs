@@ -161,8 +161,14 @@ public class EditorSongController : IDisposable
 
     void HandlePlayPause () => audioManager.PlayPauseMusic();
 
-    void HandleSongScroll (float amount) =>
-        audioManager.SetMusicTime(model.GetNextBeat(audioManager.MusicTime, Mathf.RoundToInt(-amount)));
+    void HandleSongScroll (float amount)
+    {
+        float time = model.GetNextBeat(audioManager.MusicTime, Mathf.RoundToInt(-amount));
+        if (audioManager.IsPlayingMusic)
+            audioManager.SetMusicTime(time);
+        else
+            audioManager.AnimateMusicTime(time);
+    }
 
     void RemoveNoteViewAt (int index)
     {

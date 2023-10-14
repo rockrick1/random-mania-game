@@ -14,6 +14,7 @@ public interface IAudioManager
     void PlayPauseMusic ();
     void PlaySFX (string sfx);
     void SetMusicTime (float time);
+    void AnimateMusicTime (float time);
     void SkipMusicTime (float time);
     void SetMusicPlaybackSpeed (float speed);
     void SetMusicVolume (float value);
