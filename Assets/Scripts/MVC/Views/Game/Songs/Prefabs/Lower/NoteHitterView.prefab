@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a3f75614294882936089fd9a18abc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unselectedColor: {r: 0.40784314, g: 0.40784314, b: 0.40784314, a: 1}
+  unselectedColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
   selectedColor: {r: 1, g: 1, b: 1, a: 1}
   hitterPressedImage: {fileID: 981418427080008512}
   hitter: {fileID: 7740123283270179981}
