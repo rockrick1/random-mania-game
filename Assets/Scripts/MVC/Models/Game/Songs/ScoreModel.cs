@@ -52,7 +52,6 @@ public class ScoreModel : IScoreModel
         {HitScore.Okay, 0},
         {HitScore.Miss, 0},
     };
-
     
     int combo;
     int score;
@@ -90,7 +89,7 @@ public class ScoreModel : IScoreModel
     {
         while (true)
         {
-            if (!holdingLongNote)
+            if (!holdingLongNote || GameManager.IsPaused)
             {
                 yield return null;
                 continue;

@@ -42,6 +42,8 @@ public class PauseController : IDisposable
 
     void HandleEscPressed ()
     {
+        if (view.IsPlayingAnimation)
+            return;
         switch (model.HandleEscPressed())
         {
             case PauseRequestResult.Paused:

@@ -14,6 +14,9 @@ public class PauseView : MonoBehaviour
     public UIClickHandler ResumeButton => resumeButton;
     public UIClickHandler RetryButton => retryButton;
     public UIClickHandler QuitButton => quitButton;
+    public bool IsPlayingAnimation => fadeTween?.IsPlaying() ?? false;
+
+    Tween fadeTween;
 
     void Start ()
     {
@@ -24,12 +27,12 @@ public class PauseView : MonoBehaviour
     {
         gameObject.SetActive(true);
         canvasGroup.alpha = 0f;
-        canvasGroup.DOFade(1, fadeDuration).SetEase(Ease.OutCubic);
+        fadeTween = canvasGroup.DOFade(1, fadeDuration).SetEase(Ease.OutCubic);
     }
 
     public void Close (Action onFinish = null)
     {
-        canvasGroup.DOFade(0, fadeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
+        fadeTween = canvasGroup.DOFade(0, fadeDuration).SetEase(Ease.OutCubic).OnComplete(() =>
         {
             gameObject.SetActive(false);
             onFinish?.Invoke();
