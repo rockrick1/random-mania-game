@@ -10,6 +10,7 @@ public class SongMenuView : MonoBehaviour
     
     public event Action OnBackPressed;
     public event Action OnPlayPressed;
+    public event Action<float> OnARSliderValueChanged;
 
     [Header("Song List")]
     [SerializeField] ScrollRect scrollRect;
@@ -25,6 +26,10 @@ public class SongMenuView : MonoBehaviour
     [SerializeField] TextMeshProUGUI selectedSongDifficulty;
     [SerializeField] TextMeshProUGUI selectedSongLength;
 
+    [Header("Approach Rate Slider")]
+    [SerializeField] Slider arSlider;
+    [SerializeField] SliderValueView arSliderValueView;
+
     [Header("Misc")]
     [SerializeField] Image backgroundImage;
     [SerializeField] UIClickHandler backButton;
@@ -34,6 +39,7 @@ public class SongMenuView : MonoBehaviour
     {
         backButton.OnLeftClick.AddListener(() => OnBackPressed?.Invoke());
         playButton.OnLeftClick.AddListener(() => OnPlayPressed?.Invoke());
+        arSlider.onValueChanged.AddListener(x => OnARSliderValueChanged?.Invoke(x));
     }
 
     public void Setup (IReadOnlyList<ISongSettings> songs)
@@ -68,6 +74,12 @@ public class SongMenuView : MonoBehaviour
     {
         backgroundImage.gameObject.SetActive(sprite != null);
         backgroundImage.sprite = sprite;
+    }
+
+    public void SetARSliderValue (float value)
+    {
+        arSlider.value = value;
+        arSliderValueView.UpdateText(value);
     }
 
     void SetupSongsListSize (int songCount)

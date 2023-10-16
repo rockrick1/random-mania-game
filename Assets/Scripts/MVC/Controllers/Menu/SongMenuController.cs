@@ -79,18 +79,21 @@ public class SongMenuController : IDisposable
         view.SetSelectedSongLength(model.SelectedSongSettings.LengthString);
         
         view.SetBackgroundImage(model.SelectedSongSettings.Background);
+        view.SetARSliderValue(GameContext.Current.ApproachRate);
     }
 
     void AddListeners ()
     {
         view.OnBackPressed += HandleBackPressed;
         view.OnPlayPressed += HandlePlayPressed;
+        view.OnARSliderValueChanged += HandleARSliderValueChanged;
     }
 
     void RemoveListeners ()
     {
         view.OnBackPressed -= HandleBackPressed;
         view.OnPlayPressed -= HandlePlayPressed;
+        view.OnARSliderValueChanged -= HandleARSliderValueChanged;
     }
 
     void HandleSongClicked (string songId, string songDifficultyName)
@@ -116,6 +119,8 @@ public class SongMenuController : IDisposable
     void HandleBackPressed () => OnBackPressed?.Invoke();
 
     void HandlePlayPressed () => model.EnterGame();
+
+    void HandleARSliderValueChanged (float value) => model.SetAR(value);
 
     public void Dispose ()
     {

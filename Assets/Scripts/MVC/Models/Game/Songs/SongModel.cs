@@ -20,6 +20,7 @@ public class SongModel : ISongModel
 
     public SongLoader SongLoader { get; }
     public ISongSettings CurrentSongSettings => SongLoader.GetSelectedSongSettings();
+    public float ApproachRate => GameContext.Current.ApproachRate;
     public bool AllNotesRead { get; private set; }
 
     readonly IGameInputManager inputManager;
@@ -80,16 +81,16 @@ public class SongModel : ISongModel
         OnSongStarted?.Invoke();
     }
 
-    double GetStartingElapsed () => CurrentSongSettings.StartingTime < CurrentSongSettings.ApproachRate
-        ? CurrentSongSettings.ApproachRate + CurrentSongSettings.StartingTime
+    double GetStartingElapsed () => CurrentSongSettings.StartingTime < ApproachRate
+        ? ApproachRate + CurrentSongSettings.StartingTime
         : CurrentSongSettings.StartingTime;
     
     double GetElapsedTime () => AudioSettings.dspTime - dspSongStart - pauseOffset + skippedTime;
 
     IEnumerator AudioStartRoutine ()
     {
-        if (CurrentSongSettings.ApproachRate > CurrentSongSettings.StartingTime)
-            yield return new WaitForSeconds(CurrentSongSettings.ApproachRate);
+        if (ApproachRate > CurrentSongSettings.StartingTime)
+            yield return new WaitForSeconds(ApproachRate);
         Skippable = true;
         OnAudioStartTimeReached?.Invoke();
     }
@@ -103,7 +104,7 @@ public class SongModel : ISongModel
             yield return null;
             
             double elapsed = GetElapsedTime();
-            double noteSpawnTime = notes[noteIndex].Time - CurrentSongSettings.ApproachRate;
+            double noteSpawnTime = notes[noteIndex].Time - ApproachRate;
             
             if (elapsed > noteSpawnTime)
             {
@@ -204,7 +205,7 @@ public class SongModel : ISongModel
         if (skippedTime != 0 || !Skippable)
             return;
         Skippable = false;
-        float threshold = Mathf.Max(CurrentSongSettings.ApproachRate, SKIP_TO_SECONDS_BEFORE);
+        float threshold = Mathf.Max(ApproachRate, SKIP_TO_SECONDS_BEFORE);
         skippedTime = CurrentSongSettings.StartingTime + CurrentSongSettings.Notes[0].Time - threshold -
                       (float) (AudioSettings.dspTime - dspStart);
         OnSongStartSkipped?.Invoke(skippedTime);

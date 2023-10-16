@@ -12,4 +12,5 @@ public interface ISongMenuModel : IDisposable
     void PickFirstSong ();
     bool PickSong(string songId, string songDifficultyName);
     void EnterGame ();
+    void SetAR (float value);
 }

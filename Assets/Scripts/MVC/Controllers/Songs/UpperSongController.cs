@@ -22,7 +22,7 @@ public class UpperSongController : IDisposable
     public void Initialize ()
     {
         Addlisteners();
-        noteSpeed = (view.SpawnerYPos - lowerSongController.HitterYPos) / songModel.CurrentSongSettings.ApproachRate;
+        noteSpeed = (view.SpawnerYPos - lowerSongController.HitterYPos) / songModel.ApproachRate;
     }
 
     void Addlisteners ()

@@ -11,7 +11,6 @@ public class SongEntryView : MonoBehaviour
     [SerializeField] TextMeshProUGUI artistName;
     [SerializeField] TextMeshProUGUI songName;
     [SerializeField] TextMeshProUGUI bpm;
-    [SerializeField] TextMeshProUGUI ar;
     [SerializeField] TextMeshProUGUI diff;
     [SerializeField] ScaleAnimation outlineAnimation;
 
@@ -22,7 +21,6 @@ public class SongEntryView : MonoBehaviour
         songName.text = string.IsNullOrEmpty(song.Title) ? song.Id : song.Title;
         artistName.text = string.IsNullOrEmpty(song.Artist) ? UNKNOWN : song.Artist;
         bpm.text = song.Bpm.ToString(FORMATTING, CultureInfo.InvariantCulture);
-        ar.text = song.ApproachRate.ToString(FORMATTING, CultureInfo.InvariantCulture);
         diff.text = song.Difficulty.ToString(FORMATTING, CultureInfo.InvariantCulture);
     }
 

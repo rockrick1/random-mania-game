@@ -16,6 +16,7 @@ public interface ISongModel : IDisposable
     
     SongLoader SongLoader { get; }
     ISongSettings CurrentSongSettings { get; }
+    float ApproachRate { get; }
     bool AllNotesRead { get; }
 
     void Initialize ();

@@ -44,6 +44,12 @@ public class SongMenuModel : ISongMenuModel
         SceneManager.LoadScene("Game");
     }
 
+    public void SetAR (float value)
+    {
+        double roundedValue = Math.Round(value, 1);
+        GameContext.Current.ApproachRate = (float)roundedValue;
+    }
+
     void AddListeners ()
     {
     }
