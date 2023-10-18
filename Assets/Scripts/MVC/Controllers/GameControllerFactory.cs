@@ -43,7 +43,8 @@
         ResultsController resultsController = new(
             view.ResultsView,
             songController,
-            model.ScoreModel
+            model.ScoreModel,
+            model.SongModel
         );
 
         GameBackgroundController gameBackgroundController = new(

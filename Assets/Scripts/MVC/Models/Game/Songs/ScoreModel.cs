@@ -18,7 +18,7 @@ public class ScoreModel : IScoreModel
         {HitScore.Miss, 0},
     };
 
-    public List<double> NoteHitTimes = new();
+    public List<double> NoteHitTimes { get; } = new();
     
     public int Combo
     {
@@ -93,6 +93,21 @@ public class ScoreModel : IScoreModel
         return HitScore.Miss;
     }
 
+    public string GetResult ()
+    {
+        if (NoteScores[HitScore.Miss] == 0)
+            return "FC";
+        if (accuracy < .7f)
+            return "D";
+        if (accuracy < .85f)
+            return "C";
+        if (accuracy < .9f)
+            return "B";
+        if (accuracy < .95f)
+            return "A";
+        return "S";
+    }
+
     void AddListeners ()
     {
         songModel.OnNoteHit += HandleNoteHit;
@@ -127,7 +142,7 @@ public class ScoreModel : IScoreModel
 
     void HandleNoteHit (Note _, double timeToNote)
     {
-        NoteHitTimes.Add(timeToNote);
+        NoteHitTimes.Add(-timeToNote);
         HitScore hitScore = GetHitScore(timeToNote);
         NoteScores[hitScore]++;
         Combo++;
@@ -142,7 +157,7 @@ public class ScoreModel : IScoreModel
 
     void HandleLongNoteReleased (Note note, double timeToNote)
     {
-        NoteHitTimes.Add(timeToNote);
+        NoteHitTimes.Add(-timeToNote);
         HitScore hitScore = GetHitScore(timeToNote);
         if (hitScore != HitScore.Miss)
         {
