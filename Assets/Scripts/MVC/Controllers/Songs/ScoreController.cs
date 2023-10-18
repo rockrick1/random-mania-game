@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 public class ScoreController : IDisposable
 {
@@ -7,11 +6,17 @@ public class ScoreController : IDisposable
     
     readonly ScoreView view;
     readonly IScoreModel model;
+    readonly ISongModel songModel;
 
-    public ScoreController (ScoreView view, IScoreModel model)
+    public ScoreController (
+        ScoreView view,
+        IScoreModel model,
+        ISongModel songModel
+    )
     {
         this.view = view;
         this.model = model;
+        this.songModel = songModel;
     }
 
     public void Initialize ()
@@ -23,18 +28,26 @@ public class ScoreController : IDisposable
     {
         model.OnScoreChanged += HandleScoreChanged;
         model.OnAccuracyChanged += HandleAccuracyChanged;
+        songModel.OnSongStarted += HandleSongStarted;
+        songModel.OnSongFinished += HandleSongFinished;
     }
 
     void RemoveListeners ()
     {
         model.OnScoreChanged -= HandleScoreChanged;
         model.OnAccuracyChanged -= HandleAccuracyChanged;
+        songModel.OnSongStarted -= HandleSongStarted;
+        songModel.OnSongFinished -= HandleSongFinished;
     }
 
     void HandleScoreChanged (int combo) => view.SetScore(combo.ToString());
 
     void HandleAccuracyChanged (float accuracy) =>
         view.SetAccuracy(accuracy.FormatAccuracy());
+
+    void HandleSongStarted () => view.PlayFadeInAnimation();
+
+    void HandleSongFinished () => view.PlayFadeOutAnimation();
 
     public void Dispose ()
     {

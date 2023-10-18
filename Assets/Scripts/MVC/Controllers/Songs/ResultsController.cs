@@ -9,19 +9,16 @@ public class ResultsController : IDisposable
     public event Action OnQuit;
 
     readonly ResultsView view;
-    readonly SongController songController;
     readonly IScoreModel scoreModel;
     readonly ISongModel songModel;
 
     public ResultsController (
         ResultsView view,
-        SongController songController,
         IScoreModel scoreModel,
         ISongModel songModel
     )
     {
         this.view = view;
-        this.songController = songController;
         this.scoreModel = scoreModel;
         this.songModel = songModel;
     }
@@ -81,14 +78,14 @@ public class ResultsController : IDisposable
     {
         view.RetryButton.OnLeftClick.AddListener(HandleRetry);
         view.QuitButton.OnLeftClick.AddListener(HandleQuit);
-        songController.OnSongFinished += HandleSongFinished;
+        songModel.OnSongFinished += HandleSongFinished;
     }
 
     void RemoveListeners ()
     {
         view.RetryButton.OnLeftClick.RemoveAllListeners();
         view.QuitButton.OnLeftClick.RemoveAllListeners();
-        songController.OnSongFinished -= HandleSongFinished;
+        songModel.OnSongFinished -= HandleSongFinished;
     }
 
     void HandleEscPressed ()

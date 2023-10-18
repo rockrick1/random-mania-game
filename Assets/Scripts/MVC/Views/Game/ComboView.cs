@@ -8,6 +8,9 @@ public class ComboView : MonoBehaviour
     
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] float animDuration;
+    [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] FadeAnimation fadeIn;
+    [SerializeField] FadeAnimation fadeOut;
     
     readonly Vector3 scale = new(1.3f, 1.2f, 1f);
     readonly Vector3 original = new(1f, 1f, 1f);
@@ -22,4 +25,8 @@ public class ComboView : MonoBehaviour
         sequence.Play();
         text.text = string.Format(COMBO_FORMAT, combo);
     }
+
+    public void PlayFadeInAnimation () => canvasGroup.alpha = 1;
+
+    public void PlayFadeOutAnimation () => fadeOut.Play();
 }

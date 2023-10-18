@@ -1,21 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using System.Threading.Tasks;
 
 public class SongController
 {
     const string HIT_SOUND = "soft-hitnormal";
 
-    public event Action OnSongFinished;
-
     readonly SongView view;
     readonly PauseController pauseController;
+    readonly ResultsController resultsController;
     readonly ISongModel model;
     readonly IAudioManager audioManager;
     readonly SongLoader songLoader;
     
     public SongController (SongView view,
         PauseController pauseController,
+        ResultsController resultsController,
         ISongModel model,
         IAudioManager audioManager,
         SongLoader songLoader
@@ -23,6 +21,7 @@ public class SongController
     {
         this.view = view;
         this.pauseController = pauseController;
+        this.resultsController = resultsController;
         this.model = model;
         this.audioManager = audioManager;
         this.songLoader = songLoader;
@@ -56,11 +55,13 @@ public class SongController
         model.OnLongNoteHit += HandleNoteHit;
         model.OnLongNoteReleased += HandleNoteHit;
         model.OnSongStartSkipped += HandleStartSkipped;
+        model.OnSongStarted += HandleSongStarted;
         model.OnSongFinished += HandleSongFinished;
         pauseController.OnPause += HandlePause;
         pauseController.OnResume += HandleResume;
         pauseController.OnRetry += HandleRetry;
         pauseController.OnQuit += HandleQuit;
+        resultsController.OnRetry += HandleRetry;
     }
 
     void RemoveListeners ()
@@ -70,11 +71,13 @@ public class SongController
         model.OnLongNoteHit -= HandleNoteHit;
         model.OnLongNoteReleased -= HandleNoteHit;
         model.OnSongStartSkipped -= HandleStartSkipped;
+        model.OnSongStarted -= HandleSongStarted;
         model.OnSongFinished -= HandleSongFinished;
         pauseController.OnPause -= HandlePause;
         pauseController.OnResume -= HandleResume;
         pauseController.OnRetry -= HandleRetry;
         pauseController.OnQuit -= HandleQuit;
+        resultsController.OnRetry -= HandleRetry;
     }
 
 
@@ -88,10 +91,9 @@ public class SongController
 
     void HandleStartSkipped (float skippedTime) => audioManager.SkipMusicTime(skippedTime);
 
-    void HandleSongFinished ()
-    {
-        OnSongFinished?.Invoke();
-    }
+    void HandleSongStarted () => view.PlayFadeInAnimation();
+
+    void HandleSongFinished () => view.PlayFadeOutAnimation();
 
     void HandlePause ()
     {
@@ -106,6 +108,7 @@ public class SongController
     }
     void HandleRetry ()
     {
+        audioManager.PauseMusic();
         GameManager.IsPaused = false;
     }
 

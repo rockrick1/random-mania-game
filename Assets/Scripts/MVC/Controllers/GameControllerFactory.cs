@@ -17,12 +17,14 @@
 
         ScoreController scoreController = new(
             view.ScoreView,
-            model.ScoreModel
+            model.ScoreModel,
+            model.SongModel
         );
 
         ComboController comboController = new(
             view.ComboView,
             model.ScoreModel,
+            model.SongModel,
             model.AudioManager
         );
 
@@ -32,17 +34,8 @@
             model.InputManager
         );
 
-        SongController songController = new(
-            view.SongView,
-            pauseController,
-            model.SongModel,
-            model.AudioManager,
-            model.SongModel.SongLoader
-        );
-
         ResultsController resultsController = new(
             view.ResultsView,
-            songController,
             model.ScoreModel,
             model.SongModel
         );
@@ -55,6 +48,15 @@
         SkipSongStartController skipSongStartController = new(
             view.SkipSongStartView,
             model.SongModel
+        );
+
+        SongController songController = new(
+            view.SongView,
+            pauseController,
+            resultsController,
+            model.SongModel,
+            model.AudioManager,
+            model.SongModel.SongLoader
         );
         
         return new GameController(
