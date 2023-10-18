@@ -54,7 +54,7 @@ public class ResultsController : IDisposable
         double earliestHit = scoreModel.NoteHitTimes.Min();
         double latestHit = scoreModel.NoteHitTimes.Max();
         double maxOffset = Math.Max(Math.Abs(earliestHit), Math.Abs(latestHit));
-        view.SetOffsets($"{maxOffset * 1000:F0}");
+        view.SetOffsets($"{maxOffset * 1000:F0}ms");
 
         int sections = view.BarCount;
         double step = 2 * maxOffset / sections;
