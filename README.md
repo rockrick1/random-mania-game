@@ -1,5 +1,5 @@
 # Random Mania Game
-A rhythm game developed on an MVC architecture using Unity2D and C#. Very much inspired by other rhythm games like osu! and Gutiar Hero.
+A rhythm game developed on an MVC architecture using Unity2D and C#. Very much inspired by other rhythm games like osu! and Guitar Hero.
 
 # How to play
 Notes will fall from one of three lanes. Select which lane to hit using the **left and right arrow keys**. Then, tap falling notes to the beat using **Z** and **X**.
