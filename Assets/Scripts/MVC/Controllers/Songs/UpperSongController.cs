@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class UpperSongController : IDisposable
 {
     readonly ISongModel songModel;
+    readonly IScoreModel scoreModel;
     readonly UpperSongView view;
     readonly SongController songController;
     readonly LowerSongController lowerSongController;
@@ -12,11 +13,17 @@ public class UpperSongController : IDisposable
     
     float noteSpeed;
 
-    public UpperSongController (UpperSongView view, LowerSongController lowerSongController, ISongModel songModel)
+    public UpperSongController (
+        UpperSongView view,
+        LowerSongController lowerSongController,
+        ISongModel songModel,
+        IScoreModel scoreModel
+    )
     {
         this.view = view;
-        this.songModel = songModel;
         this.lowerSongController = lowerSongController;
+        this.songModel = songModel;
+        this.scoreModel = scoreModel;
     }
 
     public void Initialize ()
@@ -52,8 +59,9 @@ public class UpperSongController : IDisposable
             liveNotes.Add(view.SpawnNote(note, noteSpeed));
     }
 
-    void HandleNoteHit (Note note, HitScore score)
+    void HandleNoteHit (Note note, double timeToNote)
     {
+        HitScore score = scoreModel.GetHitScore(timeToNote);
         view.ShowHitFeedback(score);
         
         for (int i = 0; i < liveNotes.Count; i++)
@@ -66,7 +74,7 @@ public class UpperSongController : IDisposable
         }
     }
 
-    void HandleLongNoteReleased (Note note, HitScore score) => HandleNoteHit(note, score);
+    void HandleLongNoteReleased (Note note, double timeToNote) => HandleNoteHit(note, timeToNote);
 
     void HandleNoteMissed (Note note)
     {

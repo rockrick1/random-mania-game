@@ -9,8 +9,16 @@ public class ScoreModel : IScoreModel
     public event Action OnPlayComboBreakSFX;
     public event Action<int> OnScoreChanged;
     public event Action<float> OnAccuracyChanged;
-    
-    public Dictionary<HitScore, int> NoteScores => noteScores;
+
+    public Dictionary<HitScore, int> NoteScores { get; } = new()
+    {
+        {HitScore.Perfect, 0},
+        {HitScore.Great, 0},
+        {HitScore.Okay, 0},
+        {HitScore.Miss, 0},
+    };
+
+    public List<double> NoteHitTimes = new();
     
     public int Combo
     {
@@ -43,30 +51,46 @@ public class ScoreModel : IScoreModel
             accuracy = value;
         }
     }
+
+    public float MaximumHitWindow => okayHitWindow;
     
     readonly ISongModel songModel;
-    readonly Dictionary<HitScore, int> noteScores = new()
-    {
-        {HitScore.Perfect, 0},
-        {HitScore.Great, 0},
-        {HitScore.Okay, 0},
-        {HitScore.Miss, 0},
-    };
-    
+    readonly SongLoader songLoader;
+
     int combo;
     int score;
-    float accuracy = 1f;
+    float accuracy = 1;
     bool holdingLongNote;
+    
+    float perfectHitWindow;
+    float greatHitWindow;
+    float okayHitWindow;
 
-    public ScoreModel (ISongModel songModel)
+    public ScoreModel (
+        ISongModel songModel,
+        SongLoader songLoader
+    )
     {
         this.songModel = songModel;
+        this.songLoader = songLoader;
     }
 
     public void Initialize ()
     {
         AddListeners();
         CoroutineRunner.Instance.StartRoutine(nameof(LongNoteHoldRoutine), LongNoteHoldRoutine());
+    }
+    
+    public HitScore GetHitScore (double timeToNoteHit)
+    {
+        double absValue = Math.Abs(timeToNoteHit);
+        if (absValue <= perfectHitWindow)
+            return HitScore.Perfect;
+        if (absValue <= greatHitWindow)
+            return HitScore.Great;
+        if (absValue <= okayHitWindow)
+            return HitScore.Okay;
+        return HitScore.Miss;
     }
 
     void AddListeners ()
@@ -75,6 +99,7 @@ public class ScoreModel : IScoreModel
         songModel.OnLongNoteHit += HandleLongNoteHit;
         songModel.OnLongNoteReleased += HandleLongNoteReleased;
         songModel.OnNoteMissed += HandleNoteMissed;
+        songModel.OnSongLoaded += HandleSongLoaded;
     }
 
     void RemoveListeners ()
@@ -83,6 +108,7 @@ public class ScoreModel : IScoreModel
         songModel.OnLongNoteHit -= HandleLongNoteHit;
         songModel.OnLongNoteReleased -= HandleLongNoteReleased;
         songModel.OnNoteMissed -= HandleNoteMissed;
+        songModel.OnSongLoaded -= HandleSongLoaded;
     }
 
     IEnumerator LongNoteHoldRoutine ()
@@ -99,25 +125,29 @@ public class ScoreModel : IScoreModel
         }
     }
 
-    void HandleNoteHit (Note _, HitScore hitScore)
+    void HandleNoteHit (Note _, double timeToNote)
     {
-        noteScores[hitScore]++;
+        NoteHitTimes.Add(timeToNote);
+        HitScore hitScore = GetHitScore(timeToNote);
+        NoteScores[hitScore]++;
         Combo++;
         UpdateScore(hitScore);
         UpdateAccuracy();
     }
 
-    void HandleLongNoteHit (Note note, HitScore hitScore)
+    void HandleLongNoteHit (Note note, double timeToNote)
     {
         holdingLongNote = true;
     }
 
-    void HandleLongNoteReleased (Note note, HitScore hitScore)
+    void HandleLongNoteReleased (Note note, double timeToNote)
     {
+        NoteHitTimes.Add(timeToNote);
+        HitScore hitScore = GetHitScore(timeToNote);
         if (hitScore != HitScore.Miss)
         {
             UpdateScore(hitScore);
-            noteScores[hitScore]++;
+            NoteScores[hitScore]++;
             UpdateAccuracy();
         }
         else
@@ -130,16 +160,24 @@ public class ScoreModel : IScoreModel
         if (Combo >= 10)
             OnPlayComboBreakSFX?.Invoke();
         Combo = 0;
-        noteScores[HitScore.Miss]++;
+        NoteScores[HitScore.Miss]++;
         UpdateAccuracy();
+    }
+
+    void HandleSongLoaded ()
+    {
+        float difficulty = songLoader.SelectedSongSettings.Difficulty;
+        perfectHitWindow = (80 - 6 * difficulty) / 1000f;
+        greatHitWindow = (140 - 8 * difficulty) / 1000f;
+        okayHitWindow = (200 - 10 * difficulty) / 1000f;
     }
 
     void UpdateScore (HitScore hitScore) => Score += (int) ((float) hitScore * Mathf.Pow(combo, .4f));
     
     void UpdateAccuracy ()
     {
-        Accuracy = (((float)HitScore.Perfect * noteScores[HitScore.Perfect]) + ((float)HitScore.Great * noteScores[HitScore.Great]) + ((float)HitScore.Okay * noteScores[HitScore.Okay])) /
-                   ((float)HitScore.Perfect * (noteScores[HitScore.Perfect] + noteScores[HitScore.Great] + noteScores[HitScore.Okay] + noteScores[HitScore.Miss]));
+        Accuracy = (((float)HitScore.Perfect * NoteScores[HitScore.Perfect]) + ((float)HitScore.Great * NoteScores[HitScore.Great]) + ((float)HitScore.Okay * NoteScores[HitScore.Okay])) /
+                   ((float)HitScore.Perfect * (NoteScores[HitScore.Perfect] + NoteScores[HitScore.Great] + NoteScores[HitScore.Okay] + NoteScores[HitScore.Miss]));
     }
 
     public void Dispose ()

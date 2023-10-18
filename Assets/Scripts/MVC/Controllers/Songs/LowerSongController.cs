@@ -56,11 +56,11 @@ public class LowerSongController : IDisposable
 
     void HandleHitterReleased(int index) => view.PlayHitterReleased(index);
 
-    void HandleNoteHit(Note note, HitScore _) => view.PlayHitterEffect(note.Position);
+    void HandleNoteHit(Note note, double _) => view.PlayHitterEffect(note.Position);
 
-    void HandleLongNoteHit(Note note, HitScore _) => view.StartLongNoteEffect(note.Position);
+    void HandleLongNoteHit(Note note, double _) => view.StartLongNoteEffect(note.Position);
 
-    void HandleLongNoteReleased(Note note, HitScore _) => view.EndLongNoteEffect(note.Position);
+    void HandleLongNoteReleased(Note note, double _) => view.EndLongNoteEffect(note.Position);
 
     void HandleSongStarted ()
     {

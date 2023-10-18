@@ -11,7 +11,8 @@
         UpperSongController upperSongController = new(
             view.SongView.UpperSongView,
             lowerSongController,
-            model.SongModel
+            model.SongModel,
+            model.ScoreModel
         );
 
         ScoreController scoreController = new(

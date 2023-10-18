@@ -45,6 +45,7 @@ public class SongLoader : MonoBehaviour
     public string SongsPath => Path.Combine(Application.persistentDataPath, "SongsDatabase");
     public string SelectedSongId { get; set; }
     public string SelectedSongDifficulty { get; set; }
+    public ISongSettings SelectedSongSettings => SongsCache[SelectedSongId][SelectedSongDifficulty];
 
     static SongLoader instance;
 

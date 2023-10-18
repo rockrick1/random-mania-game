@@ -8,15 +8,16 @@ public class SongModel : ISongModel
     const float SKIP_TO_SECONDS_BEFORE = 2;
     
     public event Action<Note> OnNoteSpawned;
-    public event Action<Note, HitScore> OnNoteHit;
-    public event Action<Note, HitScore> OnLongNoteHit;
-    public event Action<Note, HitScore> OnLongNoteReleased;
+    public event Action<Note, double> OnNoteHit;
+    public event Action<Note, double> OnLongNoteHit;
+    public event Action<Note, double> OnLongNoteReleased;
     public event Action<Note> OnNoteMissed;
     public event Action OnAudioStartTimeReached;
     public event Action<float> OnSongStartSkipped;
     public event Action OnSongStarted;
     public event Action OnSongFinished;
     public event Action<bool> OnSkippableChanged;
+    public event Action OnSongLoaded;
 
     public SongLoader SongLoader { get; }
     public ISongSettings CurrentSongSettings => SongLoader.GetSelectedSongSettings();
@@ -38,14 +39,12 @@ public class SongModel : ISongModel
         }
     }
 
-    float perfectHitWindow;
-    float greatHitWindow;
-    float okayHitWindow;
-
     double dspStart;
     double dspSongStart;
     double pauseOffset;
     float skippedTime;
+
+    IScoreModel scoreModel;
 
     public SongModel (IGameInputManager inputManager, SongLoader songLoader)
     {
@@ -58,13 +57,16 @@ public class SongModel : ISongModel
         AddListeners();
     }
 
+    public void UpdateDependencies (IScoreModel scoreModel)
+    {
+        this.scoreModel = scoreModel;
+    }
+
     public void LoadSong (string songId, string songDifficultyName)
     {
         SongLoader.SelectedSongId = songId;
         SongLoader.SelectedSongDifficulty = songDifficultyName;
-        perfectHitWindow = (80 - 6 * CurrentSongSettings.Difficulty) / 1000f;
-        greatHitWindow = (140 - 8 * CurrentSongSettings.Difficulty) / 1000f;
-        okayHitWindow = (200 - 10 * CurrentSongSettings.Difficulty) / 1000f;
+        OnSongLoaded?.Invoke();
     }
 
     public void Play ()
@@ -137,9 +139,9 @@ public class SongModel : ISongModel
 
             if (!currentNote.IsLong)
             {
-                if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
+                if (timeToNote < scoreModel.MaximumHitWindow && inputManager.GetPositionPressed(currentNote.Position))
                 {
-                    OnNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
+                    OnNoteHit?.Invoke(currentNote, timeToNote);
                     noteIndex++;
                     continue;
                 }
@@ -151,21 +153,21 @@ public class SongModel : ISongModel
                     if (timeToNoteEnd < 0 || !inputManager.GetPositionHeld(currentNote.Position))
                     {
                         hittingCurrentLongNote = false;
-                        OnLongNoteReleased?.Invoke(currentNote, GetHitScore(timeToNoteEnd));
+                        OnLongNoteReleased?.Invoke(currentNote, timeToNoteEnd);
                         noteIndex++;
                     }
                     continue;
                 }
                 
-                if (timeToNote < okayHitWindow && inputManager.GetPositionPressed(currentNote.Position))
+                if (timeToNote < scoreModel.MaximumHitWindow && inputManager.GetPositionPressed(currentNote.Position))
                 {
-                    OnLongNoteHit?.Invoke(currentNote, GetHitScore(timeToNote));
+                    OnLongNoteHit?.Invoke(currentNote, timeToNote);
                     hittingCurrentLongNote = true;
                     continue;
                 }
             }
             
-            if (timeToNote < -okayHitWindow)
+            if (timeToNote < -scoreModel.MaximumHitWindow)
             {
                 OnNoteMissed?.Invoke(currentNote);
                 noteIndex++;
@@ -173,7 +175,7 @@ public class SongModel : ISongModel
         }
 
         AllNotesRead = true;
-        yield return new WaitForSeconds(okayHitWindow * 3);
+        yield return new WaitForSeconds(scoreModel.MaximumHitWindow * 3);
         OnSongFinished?.Invoke();
     }
 
@@ -186,18 +188,6 @@ public class SongModel : ISongModel
             if (GameManager.IsPaused)
                 pauseOffset += AudioSettings.dspTime - lastDspTime;
         }
-    }
-    
-    HitScore GetHitScore (double timeToNoteHit)
-    {
-        double absValue = Math.Abs(timeToNoteHit);
-        if (absValue <= perfectHitWindow)
-            return HitScore.Perfect;
-        if (absValue <= greatHitWindow)
-            return HitScore.Great;
-        if (absValue <= okayHitWindow)
-            return HitScore.Okay;
-        return HitScore.Miss;
     }
 
     void SkipSongStart ()

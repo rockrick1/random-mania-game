@@ -80,7 +80,7 @@ public class SongController
 
     void HandleAudioStartTimeReached () => audioManager.PlayMusic();
 
-    void HandleNoteHit (Note _, HitScore __)
+    void HandleNoteHit (Note _, double __)
     {
         //TODO add dynamic hit sound check based on note settings
         audioManager.PlaySFX(HIT_SOUND);
