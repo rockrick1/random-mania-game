@@ -90,7 +90,6 @@ public class SongController
 
     void HandleSongFinished ()
     {
-        audioManager.PauseMusic();
         OnSongFinished?.Invoke();
     }
 

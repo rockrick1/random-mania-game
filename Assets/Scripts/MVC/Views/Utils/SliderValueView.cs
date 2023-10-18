@@ -16,8 +16,7 @@ public class SliderValueView : MonoBehaviour
 
     public void UpdateText (float value)
     {
-        text.text = string.IsNullOrEmpty(formatting)
-            ? value.ToString(CultureInfo.InvariantCulture)
-            : string.Format(formatting, value);
+        string valueString = value.ToString(CultureInfo.InvariantCulture);
+        text.text = string.IsNullOrEmpty(formatting) ? valueString : string.Format(formatting, value);
     }
 }

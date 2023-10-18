@@ -79,15 +79,15 @@ public class AudioManager : MonoBehaviour, IAudioManager
         musicPlayer.time = Mathf.Clamp(time, 0, musicPlayer.clip.length - .1f);
     }
 
-    Tween musicTimeTweer;
+    Tween musicTimeTween;
     
     public void AnimateMusicTime (float time)
     {
         if (!HasMusicClip)
             return;
-        musicTimeTweer?.Kill();
+        musicTimeTween?.Kill();
         float value = Mathf.Clamp(time, 0, musicPlayer.clip.length - .1f);
-        musicTimeTweer = DOTween.To(() => musicPlayer.time, x => musicPlayer.time = x, value, .2f)
+        musicTimeTween = DOTween.To(() => musicPlayer.time, x => musicPlayer.time = x, value, .2f)
             .SetEase(Ease.OutCubic);
     }
     
