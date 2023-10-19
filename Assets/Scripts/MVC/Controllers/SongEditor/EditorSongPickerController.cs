@@ -51,8 +51,8 @@ public class EditorSongPickerController : IDisposable
 
     void HandleEditNewSong (string songId, string songDifficultyName)
     {
-        view.PickSong(songId);
         model.PickSong(songId, songDifficultyName);
+        view.PickSong($"{songId} [{songDifficultyName}]");
     }
 
     void HandleSongCreated () => RefreshOptions();

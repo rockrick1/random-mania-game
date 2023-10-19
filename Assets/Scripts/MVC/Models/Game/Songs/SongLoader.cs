@@ -70,11 +70,18 @@ public class SongLoader : MonoBehaviour
 
     public ISongSettings GetSelectedSongSettings () => GetSongSettings(SelectedSongId, SelectedSongDifficulty);
 
-    public AudioClip GetSelectedSongAudio ()
+    public void GetSelectedSongAudio (Action<AudioClip> onFinish)
     {
+        StartCoroutine(GetSelectedSongAudioRoutine(onFinish));
+    }
+
+    IEnumerator GetSelectedSongAudioRoutine (Action<AudioClip> onFinish)
+    {
+        if (!SongsAudioCache.ContainsKey(SelectedSongId))
+            yield return LoadAllSongAudiosRoutine();
         if (!SongsAudioCache.TryGetValue(SelectedSongId, out AudioClip clip))
             throw new IndexOutOfRangeException($"No song with id '{SelectedSongId}' found");
-        return clip;
+        onFinish?.Invoke(clip);
     }
 
     public void CreateSong (string songName, string artistName, string songDifficultyName)

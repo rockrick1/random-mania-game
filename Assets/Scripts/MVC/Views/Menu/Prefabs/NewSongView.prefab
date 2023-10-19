@@ -286,8 +286,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -96.29}
-  m_SizeDelta: {x: 923.5, y: 115.15}
+  m_AnchoredPosition: {x: 0, y: -105}
+  m_SizeDelta: {x: 923.5, y: 83.2979}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2940866029263631071
 CanvasRenderer:
@@ -317,11 +317,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Once with the mp3 file ready, you can start editing! Don't forget to find
-    the song's BPM and set it on the left menu!
+  m_text: With the mp3 file ready, you can start editing! Don't forget to find the
+    song's BPM and set it on the left menu.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
-  m_sharedMaterial: {fileID: -9052593987302279855, guid: ba618325c2725da4384fe4e46f4aa139, type: 2}
+  m_sharedMaterial: {fileID: 578770911790930257, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -345,8 +345,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -384,7 +384,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1290745776004644813
@@ -678,6 +678,17 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverSFX: 
+  onUnhoverSFX: 
+  onLeftClickSFX: 
+  onRightClickSFX: 
+  onMiddleClickSFX: 
 --- !u!1 &2027305805886092745
 GameObject:
   m_ObjectHideFlags: 0
@@ -1071,7 +1082,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: -3.9500132}
+  m_AnchoredPosition: {x: -0.000030517578, y: -1}
   m_SizeDelta: {x: 0, y: -7.899974}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &633272198676633212
@@ -1105,7 +1116,7 @@ MonoBehaviour:
   m_text: X
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
-  m_sharedMaterial: {fileID: -9052593987302279855, guid: ba618325c2725da4384fe4e46f4aa139, type: 2}
+  m_sharedMaterial: {fileID: 578770911790930257, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1293,7 +1304,7 @@ MonoBehaviour:
   m_text: Yahoo! Song created!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
-  m_sharedMaterial: {fileID: -9052593987302279855, guid: ba618325c2725da4384fe4e46f4aa139, type: 2}
+  m_sharedMaterial: {fileID: 578770911790930257, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1517,6 +1528,17 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverSFX: 
+  onUnhoverSFX: 
+  onLeftClickSFX: 
+  onRightClickSFX: 
+  onMiddleClickSFX: 
 --- !u!222 &1317453678308679080
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1766,8 +1788,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 57.575012}
-  m_SizeDelta: {x: 923.5, y: 115.15}
+  m_AnchoredPosition: {x: 0, y: 53}
+  m_SizeDelta: {x: 923.5, y: 78.7476}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &467994811889037626
 CanvasRenderer:
@@ -1801,7 +1823,7 @@ MonoBehaviour:
     You can open the folder with this button here.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
-  m_sharedMaterial: {fileID: -9052593987302279855, guid: ba618325c2725da4384fe4e46f4aa139, type: 2}
+  m_sharedMaterial: {fileID: 578770911790930257, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1825,8 +1847,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1864,7 +1886,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6185496512976293509
@@ -1936,7 +1958,7 @@ MonoBehaviour:
   m_text: Open folder
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
-  m_sharedMaterial: {fileID: 1643567591920868794, guid: 8af0aaa54f4b7214c87a512edf6eaae1, type: 2}
+  m_sharedMaterial: {fileID: 578770911790930257, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2158,6 +2180,17 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverSFX: 
+  onUnhoverSFX: 
+  onLeftClickSFX: 
+  onRightClickSFX: 
+  onMiddleClickSFX: 
 --- !u!1 &7023948808236738051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2227,7 +2260,7 @@ MonoBehaviour:
   m_text: Start editing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
-  m_sharedMaterial: {fileID: 1643567591920868794, guid: 8af0aaa54f4b7214c87a512edf6eaae1, type: 2}
+  m_sharedMaterial: {fileID: 578770911790930257, guid: 05432cf7fc48749d8bb9d2a496fae507, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3177,6 +3210,17 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverSFX: 
+  onUnhoverSFX: 
+  onLeftClickSFX: 
+  onRightClickSFX: 
+  onMiddleClickSFX: 
 --- !u!1 &7734440018355722236
 GameObject:
   m_ObjectHideFlags: 0
@@ -4093,3 +4137,14 @@ MonoBehaviour:
   OnMiddleRelease:
     m_PersistentCalls:
       m_Calls: []
+  OnHover:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUnhover:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverSFX: 
+  onUnhoverSFX: 
+  onLeftClickSFX: 
+  onRightClickSFX: 
+  onMiddleClickSFX: 

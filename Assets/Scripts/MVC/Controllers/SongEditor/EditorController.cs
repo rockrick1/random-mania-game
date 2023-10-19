@@ -91,10 +91,12 @@ public class EditorController : IDisposable
 
     void HandleSongRefreshed ()
     {
-        AudioClip clip = songLoader.GetSelectedSongAudio();
-        audioManager.SetMusicClip(clip);
-        view.WaveForm2D.SetAudio(clip);
-        view.WaveForm2D.ShowWave();
+        songLoader.GetSelectedSongAudio(clip =>
+        {
+            audioManager.SetMusicClip(clip);
+            view.WaveForm2D.SetAudio(clip);
+            view.WaveForm2D.ShowWave();
+        });
     }
 
     public void Dispose ()

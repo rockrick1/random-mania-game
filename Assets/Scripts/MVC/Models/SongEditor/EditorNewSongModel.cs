@@ -30,6 +30,7 @@ public class EditorNewSongModel : IEditorNewSongModel
     {
         songLoader.CreateSong(songName, artistName, songDifficultyName);
         LastCreatedSongId = SongLoader.GetSongId(songName, artistName);
+        LastCreatedSongDifficultyName = songDifficultyName;
     }
 
     public void OpenSongFolder ()

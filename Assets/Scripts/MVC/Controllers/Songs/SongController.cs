@@ -44,8 +44,11 @@ public class SongController
     {
         //TODO find a way to do this better
         await Task.Delay(500);
-        audioManager.SetMusicClip(songLoader.GetSelectedSongAudio());
-        model.Play();
+        songLoader.GetSelectedSongAudio((clip) =>
+        {
+            audioManager.SetMusicClip(clip);
+            model.Play();
+        });
     }
 
     void AddListeners ()

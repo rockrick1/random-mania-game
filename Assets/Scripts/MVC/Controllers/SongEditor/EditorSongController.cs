@@ -106,12 +106,14 @@ public class EditorSongController : IDisposable
 
     void HandleSongRefreshed ()
     {
-        AudioClip clip = songLoader.GetSelectedSongAudio();
-        ClearNotes();
-        view.ClearSeparators();
-        view.SetupSong(songLoader.GetSelectedSongSettings(), clip.length);
-        CreateNotes();
-        CreateHorizontalSeparators();
+        songLoader.GetSelectedSongAudio(clip =>
+        {
+            ClearNotes();
+            view.ClearSeparators();
+            view.SetupSong(songLoader.GetSelectedSongSettings(), clip.length);
+            CreateNotes();
+            CreateHorizontalSeparators();
+        });
     }
 
     void CreateNotes ()
@@ -159,7 +161,10 @@ public class EditorSongController : IDisposable
         //TODO transform long note to single note
     }
 
-    void HandlePlayPause () => audioManager.PlayPauseMusic();
+    void HandlePlayPause ()
+    {
+        audioManager.PlayPauseMusic();
+    }
 
     void HandleSongScroll (float amount)
     {
@@ -178,15 +183,17 @@ public class EditorSongController : IDisposable
 
     void CreateHorizontalSeparators ()
     {
-        AudioClip clip = songLoader.GetSelectedSongAudio();
-        int i = 0;
-        for (float t = songLoader.GetSelectedSongSettings().StartingTime;
-             t < clip.length;
-             t += model.SignedBeatInterval, i++)
+        songLoader.GetSelectedSongAudio(clip =>
         {
-            view.CreateSeparator(model.GetSeparatorColorByIndex(i));
-        }
-        view.ChangeSeparatorsDistance(model.SelectedSignature);
+            int i = 0;
+            for (float t = songLoader.GetSelectedSongSettings().StartingTime;
+                 t < clip.length;
+                 t += model.SignedBeatInterval, i++)
+            {
+                view.CreateSeparator(model.GetSeparatorColorByIndex(i));
+            }
+            view.ChangeSeparatorsDistance(model.SelectedSignature);
+        });
     }
 
     public void Dispose ()
