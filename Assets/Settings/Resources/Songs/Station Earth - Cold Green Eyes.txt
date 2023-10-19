@@ -5,7 +5,7 @@ Cold Green Eyes
 Station Earth
 
 [difficultyName]
-Easy
+Normal
 
 [bpm]
 174
