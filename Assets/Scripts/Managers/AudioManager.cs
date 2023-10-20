@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour, IAudioManager
             sfxDict.Add(clip.name, clip);
         for (int i = 0; i < MAX_SFX_SOURCES; i++)
             sfxPlayers.Add(gameObject.AddComponent<AudioSource>());
+        SetVolumes();
     }
 
     public void SetMusicClip (AudioClip clip)
@@ -110,5 +111,11 @@ public class AudioManager : MonoBehaviour, IAudioManager
     {
         foreach (AudioSource sfxPlayer in sfxPlayers)
             sfxPlayer.volume = value;
+    }
+
+    void SetVolumes ()
+    {
+        SetMusicVolume(SettingsProvider.MainVolume * SettingsProvider.MusicVolume);
+        SetSFXVolume(SettingsProvider.MainVolume * SettingsProvider.SFXVolume);
     }
 }

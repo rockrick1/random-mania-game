@@ -5,14 +5,12 @@ public class SettingsController : IDisposable
     public event Action OnClose;
     
     readonly SettingsView view;
-    readonly ISettingsModel model;
 
     readonly MenuAnimationsController menuAnimationsController;
     
-    public SettingsController (SettingsView view, ISettingsModel model)
+    public SettingsController (SettingsView view)
     {
         this.view = view;
-        this.model = model;
         menuAnimationsController = new MenuAnimationsController(view.transform);
     }
 
@@ -38,19 +36,19 @@ public class SettingsController : IDisposable
         view.OnClose -= HandleClose;
     }
 
-    void HandleMainVolumeChanged (float value) => model.SetMainVolume(value);
+    void HandleMainVolumeChanged (float value) => SettingsProvider.MainVolume = value;
 
-    void HandleMusicVolumeChanged (float value) => model.SetMusicVolume(value);
+    void HandleMusicVolumeChanged (float value) => SettingsProvider.MusicVolume = value;
 
-    void HandleSFXVolumeChanged (float value) => model.SetSFXVolume(value);
+    void HandleSFXVolumeChanged (float value) => SettingsProvider.SFXVolume = value;
 
     void HandleClose () => OnClose?.Invoke();
 
     void SyncView ()
     {
-        view.MainVolumeSlider.value = model.MainVolume;
-        view.MusicVolumeSlider.value = model.MusicVolume;
-        view.SFXVolumeSlider.value = model.SFXVolume;
+        view.MainVolumeSlider.value = SettingsProvider.MainVolume;
+        view.MusicVolumeSlider.value = SettingsProvider.MusicVolume;
+        view.SFXVolumeSlider.value = SettingsProvider.SFXVolume;
     }
 
     public void Open ()
@@ -64,7 +62,6 @@ public class SettingsController : IDisposable
 
     public void Dispose ()
     {
-        model.Dispose();
         RemoveListeners();
     }
 }

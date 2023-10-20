@@ -5,7 +5,6 @@ public class MenuModel : IMenuModel
     public event Action OnBackPressed;
     
     public IMainMenuModel MainMenuModel { get; }
-    public ISettingsModel SettingsModel { get; }
     public ISongMenuModel SongMenuModel { get; }
     public SongLoader SongLoader { get; }
     public IMenuInputManager InputManager { get; }
@@ -13,7 +12,6 @@ public class MenuModel : IMenuModel
     
     public MenuModel (
         IMainMenuModel mainMenuModel,
-        ISettingsModel settingsModel,
         ISongMenuModel songMenuModel,
         SongLoader songLoader,
         IMenuInputManager inputManager,
@@ -21,7 +19,6 @@ public class MenuModel : IMenuModel
     )
     {
         MainMenuModel = mainMenuModel;
-        SettingsModel = settingsModel;
         SongMenuModel = songMenuModel;
         SongLoader = songLoader;
         InputManager = inputManager;
@@ -32,7 +29,6 @@ public class MenuModel : IMenuModel
     {
         AddListeners();
         MainMenuModel.Initialize();
-        SettingsModel.Initialize();
         SongMenuModel.Initialize();
     }
 
@@ -52,7 +48,6 @@ public class MenuModel : IMenuModel
     {
         RemoveListeners();
         MainMenuModel.Dispose();
-        SettingsModel.Dispose();
         SongMenuModel.Dispose();
     }
 }

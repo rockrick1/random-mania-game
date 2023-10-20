@@ -4,7 +4,7 @@
     {
         MainMenuController mainMenuController = new(view.MainMenuView, model.MainMenuModel);
         SongMenuController songMenuController = new(view.SongMenuView, model.SongMenuModel);
-        SettingsController settingsController = new(view.SettingsView, model.SettingsModel);
+        SettingsController settingsController = new(view.SettingsView);
         MenuMusicController menuMusicController = new MenuMusicController(model.AudioManager);
         return new MenuController(
             view,
