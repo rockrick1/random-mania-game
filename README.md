@@ -12,7 +12,7 @@ Notes will fall from one of three lanes. Select which lane to hit using the **le
 ### In game
 ![](https://i.imgur.com/Zst1BA9.jpeg)
 ### Results
-![](https://i.imgur.com/LBY2cFG.jpeg)
+![](https://i.imgur.com/QpSpDt5.jpeg)
 ### Settings
 ![](https://i.imgur.com/8xOaPZK.png)
 

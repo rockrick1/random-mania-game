@@ -2,6 +2,10 @@
 
 public static class SettingsProvider
 {
+    const float DEFAULT_MAIN_VOLUME = .33f;
+    const float DEFAULT_MUSIC_VOLUME = .33f;
+    const float DEFAULT_SFX_VOLUME = .33f;
+    
     const string MAIN_VOLUME_KEY = "mainVolume";
     const string MUSIC_VOLUME_KEY = "musicVolume";
     const string SFX_VOLUME_KEY = "sfxVolume";
@@ -13,7 +17,7 @@ public static class SettingsProvider
         get
         {
             if (!PlayerPrefs.HasKey(MAIN_VOLUME_KEY))
-                MainVolume = 1;
+                MainVolume = DEFAULT_MAIN_VOLUME;
             return PlayerPrefs.GetFloat(MAIN_VOLUME_KEY);
         }
         set
@@ -29,7 +33,7 @@ public static class SettingsProvider
         get
         {
             if (!PlayerPrefs.HasKey(MUSIC_VOLUME_KEY))
-                MusicVolume = 1;
+                MusicVolume = DEFAULT_MUSIC_VOLUME;
             return PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY);
         }
         set
@@ -44,7 +48,7 @@ public static class SettingsProvider
         get
         {
             if (!PlayerPrefs.HasKey(SFX_VOLUME_KEY))
-                SFXVolume = 1;
+                SFXVolume = DEFAULT_SFX_VOLUME;
             return PlayerPrefs.GetFloat(SFX_VOLUME_KEY);
         }
         set
