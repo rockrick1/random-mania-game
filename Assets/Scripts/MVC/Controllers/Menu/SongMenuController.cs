@@ -79,7 +79,7 @@ public class SongMenuController : IDisposable
         view.SetSelectedSongLength(model.SelectedSongSettings.LengthString);
         
         view.SetBackgroundImage(model.SelectedSongSettings.Background);
-        view.SetARSliderValue(GameContext.Current.ApproachRate);
+        view.SetARSliderValue(SettingsProvider.ApproachRate);
     }
 
     void AddListeners ()

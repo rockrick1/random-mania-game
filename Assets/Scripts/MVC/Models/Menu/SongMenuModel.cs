@@ -47,7 +47,7 @@ public class SongMenuModel : ISongMenuModel
     public void SetAR (float value)
     {
         double roundedValue = Math.Round(value, 1);
-        GameContext.Current.ApproachRate = (float)roundedValue;
+        SettingsProvider.ApproachRate = (float)roundedValue;
     }
 
     void AddListeners ()

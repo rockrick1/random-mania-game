@@ -21,7 +21,7 @@ public class SongModel : ISongModel
 
     public SongLoader SongLoader { get; }
     public ISongSettings CurrentSongSettings => SongLoader.GetSelectedSongSettings();
-    public float ApproachRate => GameContext.Current.ApproachRate;
+    public float ApproachRate => SettingsProvider.ApproachRate;
     public bool AllNotesRead { get; private set; }
 
     readonly IGameInputManager inputManager;

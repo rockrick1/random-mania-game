@@ -13,6 +13,8 @@ public class MenuManager : MonoBehaviour
     
     void Start ()
     {
+        SettingsProvider.Initialize();
+        
         audioManager = AudioManager.GetOrCreate();
         Model = MenuModelFactory.Create(inputManager, audioManager);
         Controller = MenuControllerFactory.Create(View, Model);
